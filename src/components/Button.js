@@ -1,0 +1,30 @@
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { wp } from '../../App';
+
+const Button = ({ title, onPress, style, textStyle }) => {
+  return (
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#EEEEEE',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignItems: 'center',
+    width:wp(40),
+    borderRadius:wp(10)
+  },
+  buttonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
+export default Button;
