@@ -17,6 +17,8 @@ export const LoginStyle = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
+    width:wp(90),
+    marginBottom:hp(2)
     // marginVertical:10
   },
   loginBtn: {

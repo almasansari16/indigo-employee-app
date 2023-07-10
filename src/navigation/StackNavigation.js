@@ -12,6 +12,7 @@ import CameraPage from '../screens/addCustomer/Camera';
 import BarcodeScan from '../screens/barcodeScan/BarcodeScan';
 import QrCodeScanner from '../screens/barcodeScan/QrCodeScanner';
 import CustomerDetail from '../screens/customerDetail/CustomerDetail';
+import Color from '../screens';
 
 const CustomHeader2 = props => {
   console.log(props.options.title);
@@ -70,7 +71,7 @@ function StackNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="CustomerDetail"
+        initialRouteName="Login"
         screenOptions={({navigation, route}) => {
           const options = route?.params?.headerOptions || {};
           const backgroundColor = options.headerBackgroundColor || '#EEEEEE';
@@ -156,6 +157,14 @@ function StackNavigation() {
           orientation: 'portrait',
           title: 'Customer Detail',
           headerTitleAlign: 'center',
+        }}/>
+           <Stack.Screen 
+        name='Color'
+        component={Color}
+        options={{
+          ...animationConfig,
+          orientation: 'portrait',
+         headerShown : false
         }}/>
       </Stack.Navigator>
     </NavigationContainer>

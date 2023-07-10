@@ -1,20 +1,23 @@
 import * as React from 'react';
 
-import { StyleSheet, Text } from 'react-native';
-import { runOnJS } from 'react-native-reanimated';
-import { useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
-import { Camera } from 'react-native-vision-camera';
-import { useScanBarcodes, BarcodeFormat, scanBarcodes } from 'vision-camera-code-scanner';
+import {Alert, StyleSheet, Text} from 'react-native';
+import {runOnJS} from 'react-native-reanimated';
+import {useCameraDevices, useFrameProcessor} from 'react-native-vision-camera';
+import {Camera} from 'react-native-vision-camera';
+import {
+  useScanBarcodes,
+  BarcodeFormat,
+  scanBarcodes,
+} from 'vision-camera-code-scanner';
 
-export default function QrCodeScanner() {
+export default function QrCodeScanner({navigation}) {
   const [hasPermission, setHasPermission] = React.useState(false);
   // const [barcodes, setBarcodes] = React.useState('')
   const devices = useCameraDevices();
   const device = devices.back;
-
+  const barcodeRef = React.useRef(null);
   const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
     checkInverted: true,
-    
   });
 
   // Alternatively you can use the underlying function:
@@ -25,7 +28,6 @@ export default function QrCodeScanner() {
   //   runOnJS(setBarcodes)(detectedBarcodes);
   // }, []);
 
-  
   React.useEffect(() => {
     (async () => {
       const status = await Camera.requestCameraPermission();
@@ -43,10 +45,18 @@ export default function QrCodeScanner() {
           isActive={true}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
+          ref={barcodeRef}
         />
         {barcodes.map((barcode, idx) => (
           <Text key={idx} style={styles.barcodeTextURL}>
-            {barcode.displayValue}
+            {Alert.alert('Barcode value', barcode.displayValue, [
+              {
+                text: 'Cancel',
+                onPress: () => console.log("cancel"),
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => navigation.navigate("CustomerDetail")},
+            ])}
           </Text>
         ))}
       </>

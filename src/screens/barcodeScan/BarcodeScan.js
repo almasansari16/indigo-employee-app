@@ -8,6 +8,9 @@ export default function BarcodeScan({navigation}) {
     const handleScanner = () => {
         navigation.navigate("QrCodeScanner")
     }
+    const handleNext = () => {
+      navigation.navigate("CustomerDetail")
+    }
   return (
     <SafeAreaView style={BarcodeStyle.container}>
     <View style={[BarcodeStyle.center]}>
@@ -17,6 +20,7 @@ export default function BarcodeScan({navigation}) {
     </View>
     <View style={BarcodeStyle.btnView}>
         <Button title={"Open Scanner"} onPress={handleScanner}/>
+        <Button title={"user detail"} onPress={handleNext}/>
       </View>
     </SafeAreaView>
   )

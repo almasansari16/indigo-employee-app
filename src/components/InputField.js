@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    width: wp(90),
+    // width: wp(90),
     justifyContent: 'center',
     paddingLeft: wp(2.5),
     height: hp(7),
     backgroundColor: '#EEEEEE',
     borderRadius: 5,
-    marginBottom: hp(1),
+    // marginBottom: hp(1),
   },
 });
 
