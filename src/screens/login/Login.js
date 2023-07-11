@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Dimensions
 } from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -36,6 +37,9 @@ const verifySignatureWithServer = async ({signature, payload}) => {
   return {status: 'success'};
 };
 
+
+const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+
 export default function Login({navigation}) {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
@@ -51,11 +55,26 @@ export default function Login({navigation}) {
       Alert.alert('fill the input fields');
     } else {
       Alert.alert('Signin Sucessfully');
-      navigation.navigate('AddCustomer');
+      navigation.navigate('Dashboard');
     }
   };
   return (
-    <SafeAreaView style={LoginStyle.container}>
+    <SafeAreaView style={[AppStyles.container]}>
+      {/* <View
+        style={{
+          width: 0,
+          height: 0,
+          borderLeftWidth: SCREEN_WIDTH / 2,
+          borderLeftColor: 'transparent',
+          borderBottomWidth: SCREEN_HEIGHT / 2.5,
+          borderBottomColor: 'transparent',
+          borderRightWidth: SCREEN_WIDTH / 2,
+          borderRightColor: 'blue',
+        }}
+      >
+        <Text style={LoginStyle.text}>Login</Text>
+      </View> */}
+
       <View>
         <View style={[LoginStyle.center, {marginTop: hp(10)}]}>
           <Image source={Images.Logo} />

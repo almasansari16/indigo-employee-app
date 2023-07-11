@@ -6,10 +6,13 @@ const isDarkMode = useColorScheme() === 'dark';
 export const AppStyles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        // backgroundColor: isDarkMode ? '#2f2260' : '#fff',
+        backgroundColor: '#2f2260'
     },
     text:{
         fontSize:16,
-        color: isDarkMode ? "red" : "blue"
-    }
+        color: isDarkMode ? "#fff" : "#000"
+  
+    },
+    backgroundColor: '#2f2260'
 })

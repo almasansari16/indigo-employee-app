@@ -21,9 +21,10 @@ export const BarcodeStyle = StyleSheet.create({
   },
   btnView:{
     display:'flex',
+    marginVertical:hp(5),
+    rowGap: 20,
+    width:wp(50),
     justifyContent:'center',
-    alignItems:'flex-end',
-    marginTop:hp(8),
-    width:wp(90)
+    alignSelf:'center'
   }
 });

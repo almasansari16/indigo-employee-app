@@ -32,6 +32,6 @@ const CustomModal = ({ visible, hideModal, children }) => {
       display:'flex',
       justifyContent:'center',
       alignSelf:'center',
-      backgroundColor:'#000'
+      backgroundColor:'#000',
     },
   });

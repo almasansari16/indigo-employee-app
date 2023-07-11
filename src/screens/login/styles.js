@@ -3,7 +3,7 @@ import {hp, wp} from '../../../App';
 
 export const LoginStyle = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: '#2f2260',
     flex: 1,
   },
   center: {
@@ -31,7 +31,7 @@ export const LoginStyle = StyleSheet.create({
   btnText:{
     color: 'black',
     textAlign: 'center',
-    fontSize:hp(2.8),
-    fontWeight:'500'
+    fontSize:hp(2.5),
+    fontWeight:'400'
   }
 });

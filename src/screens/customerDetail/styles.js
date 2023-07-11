@@ -1,9 +1,11 @@
+
 import {StyleSheet} from 'react-native';
 import {hp, wp} from '../../../App';
+import { AppStyles } from '../../theme/AppStyles';
 
 export const CustomerDetailStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#000',
+    // backgroundColor:AppStyles.backgroundColor,
     flex: 1,
     position: 'relative',
   },
@@ -41,10 +43,8 @@ export const CustomerDetailStyles = StyleSheet.create({
     marginTop: hp(2),
   },
   btnView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    width: wp(100),
-    bottom: -250,
+    display:'flex',
+    marginVertical:hp(5),
+    rowGap: 20
   },
 });

@@ -4,6 +4,7 @@ import {CustomerDetailStyles} from './styles';
 import Button from '../../components/Button';
 import { CustomModal, InputField } from '../../components';
 import { TextInput } from 'react-native-paper';
+import { AppStyles } from '../../theme/AppStyles';
 
 export default function CustomerDetail({navigation}) {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -20,7 +21,7 @@ export default function CustomerDetail({navigation}) {
     navigation.navigate("Color")
   };
   return (
-    <SafeAreaView style={CustomerDetailStyles.container}>
+    <SafeAreaView style={[AppStyles.container]}>
       <View style={[CustomerDetailStyles.center]}>
         <Text style={CustomerDetailStyles.heading}>Customer Detail</Text>
         <View style={CustomerDetailStyles.detailView}>
@@ -46,9 +47,9 @@ export default function CustomerDetail({navigation}) {
         </View>
       </View>
       <CustomModal visible={modalVisible} hideModal={hideModal}>
-        <InputField placeholder={'price'}/>
-        <InputField placeholder={'price'}/>
-        <InputField placeholder={'price'}/>
+        <InputField placeholder={'price'} placeholderTextColor={'gray'}/>
+        <InputField placeholder={'price'} placeholderTextColor={'gray'}/>
+        <InputField placeholder={'price'} placeholderTextColor={'gray'}/>
 
       </CustomModal>
     </SafeAreaView>

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: 'center',
-    width:wp(40),
+    // width:wp(40),
     borderRadius:wp(10)
   },
   buttonText: {

@@ -13,6 +13,7 @@ import BarcodeScan from '../screens/barcodeScan/BarcodeScan';
 import QrCodeScanner from '../screens/barcodeScan/QrCodeScanner';
 import CustomerDetail from '../screens/customerDetail/CustomerDetail';
 import Color from '../screens';
+import Dashboard from '../screens/dashboard/Dashboard';
 
 const CustomHeader2 = props => {
   console.log(props.options.title);
@@ -97,6 +98,16 @@ function StackNavigation() {
             orientation: 'portrait',
 
             headerShown: false,
+          }}
+        />
+         <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Dashboard',
+            headerTitleAlign: 'center',
           }}
         />
         <Stack.Screen

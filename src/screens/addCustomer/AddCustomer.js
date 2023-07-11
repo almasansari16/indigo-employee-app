@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {AddCustomerStyle} from './styles';
 import {Icon, IconInput, IconType} from '../../components';
 import Button from '../../components/Button';
+import { AppStyles } from '../../theme/AppStyles';
 
 export default function AddCustomer({navigation}) {
   const [customer, setCustomer] = useState({
@@ -22,7 +23,7 @@ export default function AddCustomer({navigation}) {
     navigation.navigate("CameraPage")
   }
   return (
-    <SafeAreaView style={AddCustomerStyle.container}>
+    <SafeAreaView style={[AppStyles.container]}>
       <ScrollView
        showsVerticalScrollIndicator={false}>
       <View style={[AddCustomerStyle.center]}>

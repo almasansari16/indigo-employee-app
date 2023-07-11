@@ -6,6 +6,7 @@ const InputField = ({
   value,
   onChangeText,
   placeholder,
+  placeholderTextColor,
   secureTextEntry,
   label,
   keyboardType,
@@ -21,6 +22,7 @@ const InputField = ({
         placeholder={placeholder}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
+        placeholderTextColor={placeholderTextColor}
       />
     </View>
   );

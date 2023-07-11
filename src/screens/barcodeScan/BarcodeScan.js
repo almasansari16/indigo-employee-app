@@ -3,6 +3,7 @@ import React from 'react'
 import { BarcodeStyle } from './styles'
 import Images from '../../theme/Images'
 import Button from '../../components/Button'
+import { AppStyles } from '../../theme/AppStyles'
 
 export default function BarcodeScan({navigation}) {
     const handleScanner = () => {
@@ -12,7 +13,7 @@ export default function BarcodeScan({navigation}) {
       navigation.navigate("CustomerDetail")
     }
   return (
-    <SafeAreaView style={BarcodeStyle.container}>
+    <SafeAreaView style={[AppStyles.container]}>
     <View style={[BarcodeStyle.center]}>
       <View style={[BarcodeStyle.imageDiv]}>
         <Image source={Images.qr_code} style={{width:250, height:350, borderRadius:10}}/>
