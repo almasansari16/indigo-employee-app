@@ -1,33 +1,43 @@
-import React from 'react'
-import { View, TextInput, StyleSheet , Text} from 'react-native'
-import { Icon, IconType } from './Icon'
-import { hp, wp } from '../../App'
+import React from 'react';
+import {View, TextInput, StyleSheet, Text} from 'react-native';
+import {Icon, IconType} from './Icon';
+import {hp, wp} from '../../App';
 
-
-
-const IconInput = ({icon , placeholder, onChangeText, value}) => {
+const IconInput = ({icon, placeholder, onChangeText, value, error}) => {
   return (
     <View style={styles.View}>
-            {icon}
-        <TextInput placeholder={placeholder} onChangeText={onChangeText} value={value} placeholderTextColor={'gray'}/>
+      {icon}
+      <TextInput
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        value={value}
+        placeholderTextColor={'gray'}
+        style={[styles.input, error && styles.errorInput]}
+      />
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
-  )
-}
+  );
+};
 
-export default IconInput
-
+export default IconInput;
 
 const styles = StyleSheet.create({
-    View: {
-        flexDirection: 'row',
-        backgroundColor: '#EEEEEE',
-        width: wp(90),
-        height: hp(7),
-        marginTop: hp(4),
-        borderRadius: 8
-    },
-    input: {
-
-    }
-})
-
+  View: {
+    flexDirection: 'row',
+    backgroundColor: '#EEEEEE',
+    width: wp(90),
+    height: hp(7),
+    marginTop: hp(4),
+    borderRadius: 8,
+  },
+  input: {},
+  errorInput: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 5,
+    marginLeft: 10,
+  },
+});

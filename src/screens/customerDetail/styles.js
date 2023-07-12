@@ -13,6 +13,7 @@ export const CustomerDetailStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    width:wp(90)
   },
   heading: {
     color: '#fff',
