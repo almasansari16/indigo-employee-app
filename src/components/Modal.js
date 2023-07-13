@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Portal, Button } from 'react-native-paper';
+import { Modal, Portal } from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import { wp } from '../../App';
 
@@ -8,9 +8,6 @@ const CustomModal = ({ visible, hideModal, children }) => {
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
           {children}
-          <Button mode="contained" onPress={hideModal} style={styles.closeButton}>
-            Save 
-          </Button>
         </Modal>
       </Portal>
     );
