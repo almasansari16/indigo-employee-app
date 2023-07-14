@@ -5,17 +5,19 @@ import {hp, wp} from '../../App';
 
 const IconInput = ({icon, placeholder, onChangeText, value, error}) => {
   return (
-    <View style={styles.View}>
-      {icon}
-      <TextInput
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        value={value}
-        placeholderTextColor={'gray'}
-        style={[styles.input, error && styles.errorInput]}
-      />
+    <>
+      <View style={styles.View}>
+        {icon}
+        <TextInput
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          value={value}
+          placeholderTextColor={'gray'}
+          style={[styles.input, error && styles.errorInput]}
+        />
+      </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
-    </View>
+    </>
   );
 };
 
@@ -30,7 +32,10 @@ const styles = StyleSheet.create({
     marginTop: hp(4),
     borderRadius: 8,
   },
-  input: {},
+  input: {
+    flex: 1,
+    marginLeft: 10,
+  },
   errorInput: {
     borderColor: 'red',
     borderWidth: 1,

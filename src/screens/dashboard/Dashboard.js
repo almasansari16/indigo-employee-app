@@ -14,14 +14,16 @@ export default function Dashboard({navigation}) {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={dashboardStyles.links}>
+        <TouchableOpacity style={dashboardStyles.links}
+        onPress={() => navigation.navigate("AddCollection")}>
           <Text style={[dashboardStyles.linksText, AppStyles.text]}>
             Add Collection
           </Text>
         </TouchableOpacity>
       </View>
       <View style={dashboardStyles.div}>
-        <TouchableOpacity style={dashboardStyles.links}>
+        <TouchableOpacity style={dashboardStyles.links}
+        onPress={() => navigation.navigate("AllCustomersList")}>
           <Text style={[dashboardStyles.linksText, AppStyles.text]}>
             All Customers
           </Text>

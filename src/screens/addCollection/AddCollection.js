@@ -1,12 +1,13 @@
 import {View, Text, SafeAreaView, ScrollView, Alert} from 'react-native';
 import React, {useState} from 'react';
-import {AddCustomerStyle} from './styles';
+import {AddCollectionStyle} from './styles';
 import {Icon, IconInput, IconType} from '../../components';
 import Button from '../../components/Button';
 import {AppStyles} from '../../theme/AppStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AddCustomer({navigation}) {
+
+export default function AddCollection() {
   const [customer, setCustomer] = useState({
     name: '',
     contact: '',
@@ -60,11 +61,10 @@ export default function AddCustomer({navigation}) {
 
     if (Object.keys(errors).length === 0) {
       // Proceed with form submission
-      saveData()
+      saveData();
       navigation.navigate('BarcodeScan');
-    }
-    else{
-      Alert.alert("plz fill the fields")
+    } else {
+      Alert.alert('plz fill the fields');
     }
   };
 
@@ -74,7 +74,7 @@ export default function AddCustomer({navigation}) {
   return (
     <SafeAreaView style={[AppStyles.container]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={[AddCustomerStyle.center]}>
+        <View style={[AddCollectionStyle.center]}>
           <IconInput
             icon={
               <Icon
@@ -87,7 +87,7 @@ export default function AddCustomer({navigation}) {
             placeholder={'Name'}
             onChangeText={name => setCustomer({...customer, name})}
             value={customer.name}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.name}
           />
           <IconInput
@@ -103,7 +103,7 @@ export default function AddCustomer({navigation}) {
             keyboardType={'number-pad'}
             onChangeText={contact => setCustomer({...customer, contact})}
             value={customer.contact}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.contact}
           />
           <IconInput
@@ -118,7 +118,7 @@ export default function AddCustomer({navigation}) {
             placeholder={'Address'}
             onChangeText={address => setCustomer({...customer, address})}
             value={customer.address}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.address}
           />
           <IconInput
@@ -135,7 +135,7 @@ export default function AddCustomer({navigation}) {
               setCustomer({...customer, billingAddress})
             }
             value={customer.billingAddress}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.billingAddress}
           />
           <IconInput
@@ -151,7 +151,7 @@ export default function AddCustomer({navigation}) {
             keyboardType={'email-address'}
             onChangeText={email => setCustomer({...customer, email})}
             value={customer.email}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.email}
           />
           <IconInput
@@ -166,11 +166,11 @@ export default function AddCustomer({navigation}) {
             placeholder={'Front ID'}
             onChangeText={frontId => setCustomer({...customer, frontId})}
             value={customer.frontId}
-            style={AddCustomerStyle.input}
+            style={AddCollectionStyle.input}
             error={validation.frontId}
           />
         </View>
-        <View style={AddCustomerStyle.btnView}>
+        <View style={AddCollectionStyle.btnView}>
           <Button title={'Save'} onPress={handleSave} />
         </View>
       </ScrollView>

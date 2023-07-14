@@ -1,7 +1,6 @@
-
 import {StyleSheet} from 'react-native';
 import {hp, wp} from '../../../App';
-import { AppStyles } from '../../theme/AppStyles';
+import {AppStyles} from '../../theme/AppStyles';
 
 export const CustomerDetailStyles = StyleSheet.create({
   container: {
@@ -13,7 +12,6 @@ export const CustomerDetailStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width:wp(90)
   },
   heading: {
     color: '#fff',
@@ -24,7 +22,7 @@ export const CustomerDetailStyles = StyleSheet.create({
   detailView: {
     backgroundColor: '#EEEEEE',
     borderRadius: wp(5),
-    marginTop:hp(4),
+    marginTop: hp(4),
     paddingHorizontal: wp(5),
     paddingVertical: hp(3),
     shadowColor: '#fff',
@@ -44,8 +42,8 @@ export const CustomerDetailStyles = StyleSheet.create({
     marginTop: hp(2),
   },
   btnView: {
-    display:'flex',
-    marginVertical:hp(5),
-    rowGap: 20
+    display: 'flex',
+    marginVertical: hp(5),
+    rowGap: 20,
   },
 });

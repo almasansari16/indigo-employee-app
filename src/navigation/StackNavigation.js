@@ -14,6 +14,8 @@ import QrCodeScanner from '../screens/barcodeScan/QrCodeScanner';
 import CustomerDetail from '../screens/customerDetail/CustomerDetail';
 import Color from '../screens';
 import Dashboard from '../screens/dashboard/Dashboard';
+import AddCollection from '../screens/addCollection/AddCollection';
+import AllCustomersList from '../screens/allCustomers/AllCustomersList';
 
 const CustomHeader2 = props => {
   console.log(props.options.title);
@@ -167,6 +169,24 @@ function StackNavigation() {
           ...animationConfig,
           orientation: 'portrait',
           title: 'Customer Detail',
+          headerTitleAlign: 'center',
+        }}/>
+        <Stack.Screen 
+        name='AllCustomersList'
+        component={AllCustomersList}
+        options={{
+          ...animationConfig,
+          orientation: 'portrait',
+          title: 'Customers List',
+          headerTitleAlign: 'center',
+        }}/>
+            <Stack.Screen 
+        name='AddCollection'
+        component={AddCollection}
+        options={{
+          ...animationConfig,
+          orientation: 'portrait',
+          title: 'Add Collection',
           headerTitleAlign: 'center',
         }}/>
            <Stack.Screen 
