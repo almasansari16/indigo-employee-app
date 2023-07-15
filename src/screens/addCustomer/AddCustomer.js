@@ -1,10 +1,12 @@
-import {View, Text, SafeAreaView, ScrollView, Alert} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, Alert, ImageBackground} from 'react-native';
 import React, {useState} from 'react';
 import {AddCustomerStyle} from './styles';
 import {Icon, IconInput, IconType} from '../../components';
 import Button from '../../components/Button';
 import {AppStyles} from '../../theme/AppStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Images from '../../theme/Images';
+import { hp, wp } from '../../../App';
 
 export default function AddCustomer({navigation}) {
   const [customer, setCustomer] = useState({
@@ -73,6 +75,7 @@ export default function AddCustomer({navigation}) {
   // }
   return (
     <SafeAreaView style={[AppStyles.container]}>
+      <ImageBackground source={Images.orange_background} style={{width:wp(100), height:hp(100)}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={[AddCustomerStyle.center]}>
           <IconInput
@@ -80,11 +83,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.FontAwesome5}
                 name={'user'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Name'}
+            placeholderTextColor={'#282561'}
             onChangeText={name => setCustomer({...customer, name})}
             value={customer.name}
             style={AddCustomerStyle.input}
@@ -95,11 +99,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.Feather}
                 name={'phone'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Contact'}
+            placeholderTextColor={'#282561'}
             keyboardType={'number-pad'}
             onChangeText={contact => setCustomer({...customer, contact})}
             value={customer.contact}
@@ -111,11 +116,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.Ionicons}
                 name={'location-outline'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Address'}
+            placeholderTextColor={'#282561'}
             onChangeText={address => setCustomer({...customer, address})}
             value={customer.address}
             style={AddCustomerStyle.input}
@@ -126,11 +132,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.Ionicons}
                 name={'location-outline'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Billing Address'}
+            placeholderTextColor={'#282561'}
             onChangeText={billingAddress =>
               setCustomer({...customer, billingAddress})
             }
@@ -143,11 +150,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.MaterialCommunityIcons}
                 name={'email-outline'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Email'}
+            placeholderTextColor={'#282561'}
             keyboardType={'email-address'}
             onChangeText={email => setCustomer({...customer, email})}
             value={customer.email}
@@ -159,11 +167,12 @@ export default function AddCustomer({navigation}) {
               <Icon
                 type={IconType.Feather}
                 name={'camera'}
-                color="black"
+                color="#282561"
                 style={{margin: 15}}
               />
             }
             placeholder={'Front ID'}
+            placeholderTextColor={'#282561'}
             onChangeText={frontId => setCustomer({...customer, frontId})}
             value={customer.frontId}
             style={AddCustomerStyle.input}
@@ -171,9 +180,10 @@ export default function AddCustomer({navigation}) {
           />
         </View>
         <View style={AddCustomerStyle.btnView}>
-          <Button title={'Save'} onPress={handleSave} />
+          <Button title={'Save'} onPress={handleSave} style={AddCustomerStyle.btn} textStyle={AddCustomerStyle.text}/>
         </View>
       </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

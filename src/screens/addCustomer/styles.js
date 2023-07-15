@@ -12,12 +12,13 @@ export const AddCustomerStyle = StyleSheet.create({
     alignSelf: 'center',
   },
   text: {
-    fontSize: 30,
+    fontSize: 16,
     color: 'white',
     textAlign: 'center',
   },
   input: {
-    // marginVertical:10
+    backgroundColor:'red'
+
   },
   loginBtn: {
     width: wp(60),
@@ -36,7 +37,11 @@ export const AddCustomerStyle = StyleSheet.create({
     display:'flex',
     justifyContent:'center',
     alignItems:'flex-end',
-    marginTop:hp(4),
+    marginTop:hp(5),
     width:wp(90)
+  },
+  btn:{
+    backgroundColor: "#282561",
+   width:wp(30),
   }
 });

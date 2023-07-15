@@ -7,7 +7,7 @@ export const AppStyles = StyleSheet.create({
     container: {
         flex:1,
         // backgroundColor: isDarkMode ? '#2f2260' : '#fff',
-        backgroundColor: '#2f2260'
+        // backgroundColor: '#2f2260'
     },
     text:{
         fontSize:16,

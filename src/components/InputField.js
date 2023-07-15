@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     // marginRight: 210,
     textAlign: 'left',
     marginBottom: 5,
+    marginLeft:10,
+    marginBottom:8
   },
 
   input: {
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: wp(2.5),
     height: hp(7),
-    backgroundColor: '#EEEEEE',
+   
     borderRadius: 5,
     // marginBottom: hp(1),
   },

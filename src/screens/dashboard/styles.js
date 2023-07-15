@@ -7,21 +7,25 @@ export const dashboardStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:hp(5),
-    columnGap:wp(8)
-    
+    marginBottom:100
   },
   links: {
-    width: wp(40),
-    height: hp(30),
-    backgroundColor: '#EEEEEE',
-    borderRadius: wp(5),
+    display: 'flex',
     justifyContent:'center',
-    alignItems:'center',
-    display:'flex'
+    alignSelf:'center',
+    marginTop:hp(5),
+
+    width: wp(80),
+    height: hp(20),
+    borderColor:"#EEEEEE",
+    borderWidth:1,
+    borderRadius:wp(5),
+    alignItems:'center'
   },
   linksText:{
     fontSize:wp(5),
-    fontWeight:'500'
+    fontWeight:'500',
+    color:'#EEEEEE',
+    
   }
 });

@@ -12,7 +12,6 @@ const Button = ({ title, onPress, style, textStyle }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#EEEEEE',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -21,9 +20,10 @@ const styles = StyleSheet.create({
     borderRadius:wp(10)
   },
   buttonText: {
-    color: '#000',
+    color: '#282561',
     fontSize: 16,
     fontWeight: 'bold',
+
   },
 });
 

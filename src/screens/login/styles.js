@@ -15,23 +15,40 @@ export const LoginStyle = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     textAlign: 'center',
+    marginTop:hp(3)
+  },
+  horizontalLine:{
+    borderBottomColor:'#EEEEEE',
+    borderBottomWidth:2,
+    width:wp(15),
+    marginTop:hp(2),
+    height:2,
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   input: {
-    width:wp(90),
+    width:wp(80),
+    borderColor:"#EEEEEE",
+    borderWidth:1,
+    borderRadius:wp(10),
     marginBottom:hp(2)
     // marginVertical:10
   },
   loginBtn: {
-    width: wp(60),
+    width: wp(50),
     height: hp(6),
-    backgroundColor: '#EEEEEE',
-    borderRadius: wp(10),
+    // width:wp(80),
+    borderColor:"#EEEEEE",
+    borderWidth:1,
+    borderRadius:wp(10),
     marginVertical:hp(2)
   },
   btnText:{
-    color: 'black',
+    color: '#EEEEEE',
     textAlign: 'center',
     fontSize:hp(2.5),
-    fontWeight:'400'
+    fontWeight:'500',
+
   }
 });

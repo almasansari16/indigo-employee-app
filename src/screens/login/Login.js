@@ -15,7 +15,7 @@ import {AppStyles} from '../../theme/AppStyles';
 import {LoginStyle} from './styles';
 import Images from '../../theme/Images';
 import {InputField} from '../../components';
-import {hp} from '../../../App';
+import {hp, wp} from '../../../App';
 
 import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,30 +60,18 @@ export default function Login({navigation}) {
   };
   return (
     <SafeAreaView style={[AppStyles.container]}>
-      {/* <View
-        style={{
-          width: 0,
-          height: 0,
-          borderLeftWidth: SCREEN_WIDTH / 2,
-          borderLeftColor: 'transparent',
-          borderBottomWidth: SCREEN_HEIGHT / 2.5,
-          borderBottomColor: 'transparent',
-          borderRightWidth: SCREEN_WIDTH / 2,
-          borderRightColor: 'blue',
-        }}
-      >
-        <Text style={LoginStyle.text}>Login</Text>
-      </View> */}
-
+    <ImageBackground source={Images.purple_background} style={{width:wp(100), height:hp(100)}}>
       <View>
         <View style={[LoginStyle.center, {marginTop: hp(10)}]}>
           <Image source={Images.Logo} />
           <Text style={LoginStyle.text}>Login</Text>
+          <View style={[LoginStyle.horizontalLine]}/>
         </View>
         <View style={[LoginStyle.center, {marginTop: hp(5)}]}>
           <InputField
             label={'Email'}
             placeholder={'Enter your email'}
+            placeholderTextColor={'#EEEEEE'}
             keyboardType={'email-address'}
             onChangeText={email => setForm({...form, email})}
             value={form.email}
@@ -92,6 +80,7 @@ export default function Login({navigation}) {
           <InputField
             label={'Password'}
             placeholder={'Enter your password'}
+            placeholderTextColor={'#EEEEEE'}
             keyboardType={'password'}
             onChangeText={password => setForm({...form, password})}
             value={form.password}
@@ -190,6 +179,7 @@ export default function Login({navigation}) {
           <Text style={[LoginStyle.btnText]}>Face Scan</Text>
         </TouchableOpacity>
       </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
