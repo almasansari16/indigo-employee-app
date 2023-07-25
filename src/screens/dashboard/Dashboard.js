@@ -38,7 +38,8 @@ export default function Dashboard({navigation}) {
               <Text style={[dashboardStyles.linksText]}>All Customers</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={dashboardStyles.links}>
+            <TouchableOpacity style={dashboardStyles.links}
+            onPress={() => navigation.navigate('AllCollectionList')}>
               <Text style={[dashboardStyles.linksText]}>All Collections</Text>
             </TouchableOpacity>
           </ScrollView>

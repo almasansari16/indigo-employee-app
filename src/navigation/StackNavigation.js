@@ -16,6 +16,7 @@ import Color from '../screens';
 import Dashboard from '../screens/dashboard/Dashboard';
 import AddCollection from '../screens/addCollection/AddCollection';
 import AllCustomersList from '../screens/allCustomers/AllCustomersList';
+import AllCollectionList from '../screens/allCollection/AllCollectionList';
 
 const CustomHeader2 = props => {
   console.log(props.options.title);
@@ -178,6 +179,15 @@ function StackNavigation() {
           ...animationConfig,
           orientation: 'portrait',
           title: 'Customers List',
+          headerTitleAlign: 'center',
+        }}/>
+         <Stack.Screen 
+        name='AllCollectionList'
+        component={AllCollectionList}
+        options={{
+          ...animationConfig,
+          orientation: 'portrait',
+          title: 'Collection List',
           headerTitleAlign: 'center',
         }}/>
             <Stack.Screen 

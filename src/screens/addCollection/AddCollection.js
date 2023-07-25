@@ -79,14 +79,14 @@ export default function AddCollection() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={[AddCollectionStyle.center]}>
           <IconInput
-            icon={
-              <Icon
-                type={IconType.FontAwesome5}
-                name={'user'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.FontAwesome5}
+            //     name={'user'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Article Name'}
             placeholderTextColor={'#282561'}
             onChangeText={name => setCustomer({...customer, name})}
@@ -95,14 +95,14 @@ export default function AddCollection() {
             error={validation.name}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Feather}
-                name={'phone'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Feather}
+            //     name={'phone'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Finish Type'}
             placeholderTextColor={'#282561'}
             keyboardType={'number-pad'}
@@ -112,14 +112,14 @@ export default function AddCollection() {
             error={validation.contact}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Ionicons}
-                name={'location-outline'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Ionicons}
+            //     name={'location-outline'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Weave'}
             placeholderTextColor={'#282561'}
             onChangeText={address => setCustomer({...customer, address})}
@@ -128,14 +128,14 @@ export default function AddCollection() {
             error={validation.address}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Ionicons}
-                name={'location-outline'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Ionicons}
+            //     name={'location-outline'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Full Width'}
             placeholderTextColor={'#282561'}
             onChangeText={billingAddress =>
@@ -146,14 +146,14 @@ export default function AddCollection() {
             error={validation.billingAddress}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.MaterialCommunityIcons}
-                name={'email-outline'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.MaterialCommunityIcons}
+            //     name={'email-outline'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'$/yard FOB LC Sight'}
             placeholderTextColor={'#282561'}
             keyboardType={'email-address'}
@@ -163,14 +163,14 @@ export default function AddCollection() {
             error={validation.email}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Feather}
-                name={'camera'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Feather}
+            //     name={'camera'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Color'}
             placeholderTextColor={'#282561'}
             onChangeText={frontId => setCustomer({...customer, frontId})}
@@ -179,14 +179,14 @@ export default function AddCollection() {
             error={validation.frontId}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Feather}
-                name={'camera'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Feather}
+            //     name={'camera'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'Before wash weight (OZ)+/-5%'}
             placeholderTextColor={'#282561'}
             onChangeText={frontId => setCustomer({...customer, frontId})}
@@ -195,14 +195,14 @@ export default function AddCollection() {
             error={validation.frontId}
           />
           <IconInput
-            icon={
-              <Icon
-                type={IconType.Feather}
-                name={'camera'}
-                color="#282561"
-                style={{margin: 15}}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     type={IconType.Feather}
+            //     name={'camera'}
+            //     color="#282561"
+            //     style={{margin: 15}}
+            //   />
+            // }
             placeholder={'After wash weight (Oz)+/-5%'}
             placeholderTextColor={'#282561'}
             onChangeText={frontId => setCustomer({...customer, frontId})}

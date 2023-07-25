@@ -11,7 +11,7 @@ import {AppStyles} from '../../theme/AppStyles';
 import Images from '../../theme/Images';
 import {hp, wp} from '../../../App';
 
-export default function AllCustomersList() {
+export default function AllCollectionList() {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPageList] = React.useState([3,4,5]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(

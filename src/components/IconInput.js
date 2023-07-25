@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   errorInput: {
-    borderColor: 'red',
-    borderWidth: 1,
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   errorText: {
     color: 'red',

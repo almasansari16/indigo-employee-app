@@ -37,6 +37,7 @@ export const AddCollectionStyle = StyleSheet.create({
         justifyContent:'center',
         alignItems:'flex-end',
         marginTop:hp(4),
-        width:wp(90)
+        width:wp(90),
+        marginBottom:20
       }
 })
