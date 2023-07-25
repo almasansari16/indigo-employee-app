@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {hp, wp} from '../../../App';
 import {AppStyles} from '../../theme/AppStyles';
 
-export const CustomerDetailStyles = StyleSheet.create({
+export const FinalOrderDetailStyles = StyleSheet.create({
   container: {
     // backgroundColor:AppStyles.backgroundColor,
     flex: 1,
@@ -18,7 +18,7 @@ export const CustomerDetailStyles = StyleSheet.create({
     color: '#fff',
     fontSize: 26,
     fontWeight: '600',
-    marginTop: hp(2),
+    // marginTop: hp(2),
     fontFamily:'Lato-Regular'
   },
   detailView: {
@@ -26,6 +26,23 @@ export const CustomerDetailStyles = StyleSheet.create({
     borderRadius: wp(5),
     width:wp(90),
     marginTop: hp(4),
+    paddingHorizontal: wp(5),
+    paddingVertical: hp(3),
+    shadowColor: '#fff',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
+  },
+  detailView2: {
+    backgroundColor: '#EEEEEE',
+    borderRadius: wp(5),
+    width:wp(90),
+    marginTop:-7,
     paddingHorizontal: wp(5),
     paddingVertical: hp(3),
     shadowColor: '#fff',
@@ -70,5 +87,11 @@ export const CustomerDetailStyles = StyleSheet.create({
   btnText:{
     color:'#FFF',
     fontFamily:'Lato-Regular'
+  },
+  icon :{
+    display:'flex',
+    justifyContent:'flex-end',
+    alignSelf:'flex-end',
+    marginTop:-8,
   }
 });

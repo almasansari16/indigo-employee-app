@@ -1,42 +1,22 @@
-import {View, Text, SafeAreaView} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {CustomerDetailStyles} from './styles';
+import { View, Text, SafeAreaView, ImageBackground } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { CustomerDetailStyles } from './styles';
 import Button from '../../components/Button';
-import {CustomModal, InputField} from '../../components';
-import {TextInput} from 'react-native-paper';
-import {AppStyles} from '../../theme/AppStyles';
+import { CustomModal, InputField } from '../../components';
+import { TextInput } from 'react-native-paper';
+import { AppStyles } from '../../theme/AppStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Images from '../../theme/Images';
+import { wp } from '../../../App';
 
-export default function CustomerDetail({navigation}) {
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [extraDetail, setExtraDetail] = React.useState({
-    one: '',
-    two: '',
-    three: '',
-  });
 
-  const showModal = () => {
-    setModalVisible(true);
-  };
-
-  const hideModal = () => {
-    setModalVisible(false);
-  };
-
+export default function CustomerDetail({ navigation }) {
+  
   const next = () => {
     navigation.navigate('Color');
   };
 
-  const saveExtraDetail = async () => {
-    try {
-      const one = await AsyncStorage.setItem('one', extraDetail.one);
-      const two = await AsyncStorage.setItem('two', extraDetail.two);
-      const three = await AsyncStorage.setItem('three', extraDetail.three);
-      hideModal()
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -44,6 +24,7 @@ export default function CustomerDetail({navigation}) {
   const [address, setAddress] = useState('');
   const [billingAddress, setBillingAddress] = useState('');
   const [frontId, setFrontId] = useState('');
+  const [scanCode, setScanCode] = useState('');
   const [extraDetailOne, setExtraDetailOne] = useState('');
   const [extraDetailTwo, setExtraDetailTwo] = useState('');
   const [extraDetailThree, setExtraDetailThree] = useState('');
@@ -77,18 +58,11 @@ export default function CustomerDetail({navigation}) {
         if (frontId !== null) {
           setFrontId(frontId);
         }
-        const one = await AsyncStorage.getItem('one');
-        if (one !== null) {
-          setExtraDetailOne(extraDetailOne);
+        const scanCodes = await AsyncStorage.getItem('barcode');
+        if (scanCode !== null) {
+          setScanCode(scanCodes);
         }
-        const two = await AsyncStorage.getItem('two');
-        if (two !== null) {
-          setExtraDetailTwo(extraDetailTwo);
-        }
-        const three = await AsyncStorage.getItem('three');
-        if (three !== null) {
-          setExtraDetailThree(extraDetailThree);
-        }
+
       } catch (error) {
         console.log('Error retrieving data:', error);
       }
@@ -96,59 +70,70 @@ export default function CustomerDetail({navigation}) {
 
     fetchData();
   }, []);
-console.log(extraDetailOne , "getitem")
+  console.log(scanCode, '...................')
+  console.log([new Set(scanCode)])
+
+  const getscanCodes = async () => {
+
+    try {
+      const a = await AsyncStorage.getItem('barcode')
+      console.log("sucess gett codeeeeee", JSON.parse(a))
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  useEffect(() => {
+    const fetchModalData = async () => {
+      const one = await AsyncStorage.getItem('one');
+      if (one !== null) {
+        setExtraDetailOne(one);
+      }
+      const two = await AsyncStorage.getItem('two');
+      if (two !== null) {
+        setExtraDetailTwo(two);
+      }
+      const three = await AsyncStorage.getItem('three');
+      if (three !== null) {
+        setExtraDetailThree(three);
+      }
+    }
+    fetchModalData()
+  }, [extraDetailOne, extraDetailTwo, extraDetailThree]);
+
   return (
     <SafeAreaView style={[AppStyles.container]}>
-      <View style={[CustomerDetailStyles.center]}>
-        <Text style={CustomerDetailStyles.heading}>Customer Detail</Text>
-        <View style={CustomerDetailStyles.detailView}>
-          <Text style={CustomerDetailStyles.detailText}>Name : {name}</Text>
-          <Text style={CustomerDetailStyles.detailText}>Email : {email}</Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Address : {address}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Billing Address : {billingAddress}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Contact : {contact}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Front ID : {frontId}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Extra Detail one : {extraDetailOne}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Extra Detail two : {extraDetailTwo}
-          </Text>
-          <Text style={CustomerDetailStyles.detailText}>
-            Extra Detail three : {extraDetailThree}
-          </Text>
+      <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
+        <View style={[CustomerDetailStyles.center]}>
+          <Text style={CustomerDetailStyles.heading}>Customer Detail</Text>
+          <View style={[AppStyles.horizontalLine, { width: wp(40) }]} />
+          <View style={CustomerDetailStyles.detailView}>
+            <Text style={CustomerDetailStyles.detailText}>Name : {name}</Text>
+            <Text style={CustomerDetailStyles.detailText}>Email : {email}</Text>
+            <Text style={CustomerDetailStyles.detailText}>
+              Address : {address}
+            </Text>
+            <Text style={CustomerDetailStyles.detailText}>
+              Billing Address : {billingAddress}
+            </Text>
+            <Text style={CustomerDetailStyles.detailText}>
+              Contact : {contact}
+            </Text>
+            <Text style={CustomerDetailStyles.detailText}>
+              Front ID : {frontId}
+            </Text>
+            <Text style={CustomerDetailStyles.detailText}>
+              Barcode : {scanCode}
+            </Text>
+
+          </View>
+          <View style={CustomerDetailStyles.btnView}>
+            {/* <Button title={'Add Extra Detail'} onPress={showModal} style={CustomerDetailStyles.btn} /> */}
+            <Button title={'Next'} onPress={() => navigation.navigate("AddExtraDetail")} style={CustomerDetailStyles.btn} />
+          </View>
         </View>
-        <View style={CustomerDetailStyles.btnView}>
-          <Button title={'Add Extra Detail'} onPress={showModal} />
-          <Button title={'Next'} onPress={next} />
-        </View>
-      </View>
-      <CustomModal visible={modalVisible} hideModal={hideModal}>
-        <InputField
-          placeholder={'one'}
-          placeholderTextColor={'gray'}
-          onChangeText={one => setExtraDetail({...extraDetail, one})}
-        />
-        <InputField
-          placeholder={'two'}
-          placeholderTextColor={'gray'}
-          onChangeText={two => setExtraDetail({...extraDetail, two})}
-        />
-        <InputField
-          placeholder={'three'}
-          placeholderTextColor={'gray'}
-          onChangeText={three => setExtraDetail({...extraDetail, three})}
-        />
-        <Button title={'Save'} onPress={saveExtraDetail} />
-      </CustomModal>
+       
+      </ImageBackground>
     </SafeAreaView>
   );
 }

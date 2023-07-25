@@ -15,7 +15,9 @@ export const LoginStyle = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     textAlign: 'center',
-    marginTop:hp(3)
+    marginTop:hp(3),
+    fontFamily:'Lato-Regular'
+
   },
   horizontalLine:{
     borderBottomColor:'#EEEEEE',
@@ -32,7 +34,9 @@ export const LoginStyle = StyleSheet.create({
     borderColor:"#EEEEEE",
     borderWidth:1,
     borderRadius:wp(10),
-    marginBottom:hp(2)
+    marginBottom:hp(2),
+    fontFamily:'Lato-Regular'
+
     // marginVertical:10
   },
   loginBtn: {
@@ -49,6 +53,22 @@ export const LoginStyle = StyleSheet.create({
     textAlign: 'center',
     fontSize:hp(2.5),
     fontWeight:'500',
+    fontFamily:'Lato-Regular'
+
+  },
+  linkText :{
+    color: '#EEEEEE',
+    textAlign: 'center',
+    fontSize:hp(1.8),
+    fontWeight:'500',
+    alignSelf:'center',
+    marginVertical:hp(2),
+    fontFamily:'Lato-Regular'
+  },
+  boldText:{
+    fontWeight: '700',
+    fontSize:hp(2),
+    fontFamily:'Lato-Regular'
 
   }
 });

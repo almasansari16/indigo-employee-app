@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
-import {Appbar} from 'react-native-paper';
-import {wp} from '../../App';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import { wp } from '../../App';
 import Login from '../screens/login/Login';
 import AddCustomer from '../screens/addCustomer/AddCustomer';
 import { CameraView } from '../components/camera/CameraView';
@@ -17,6 +17,10 @@ import Dashboard from '../screens/dashboard/Dashboard';
 import AddCollection from '../screens/addCollection/AddCollection';
 import AllCustomersList from '../screens/allCustomers/AllCustomersList';
 import AllCollectionList from '../screens/allCollection/AllCollectionList';
+import Signup from '../screens/signup/Signup';
+import AddExtraDetail from '../screens/extraDetail/AddExtraDetail';
+import FinalOrderDetail from '../screens/finalOrderDetail/FinalOrderDetail';
+
 
 const CustomHeader2 = props => {
   console.log(props.options.title);
@@ -35,7 +39,7 @@ const CustomHeader2 = props => {
       <Appbar.BackAction
         animated
         android_ripple
-        style={{color: '#000'}}
+        style={{ color: '#000' }}
         color="#000"
         onPress={() => {
           props?.navigation.goBack();
@@ -44,7 +48,7 @@ const CustomHeader2 = props => {
       <Appbar.Content
         title={props.options.title}
         mode="small"
-        style={{color: 'white'}}
+        style={{ color: 'white' }}
         color="black"
         titleStyle={styles.headerText}
       />
@@ -61,6 +65,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     margin: 15,
     textAlign: 'left',
+    fontFamily:'Lato-Regular'
+
   },
 });
 
@@ -72,11 +78,27 @@ const animationConfig = {
 };
 
 function StackNavigation() {
+  const [isSignedIn, setIsSignedIn] = React.useState(null);
+
+  React.useEffect(() => {
+    checkIsSignedIn();
+  }, []);
+
+  const checkIsSignedIn = async () => {
+    try {
+      const signedInValue = await AsyncStorage.getItem('isSignedIn');
+      setIsSignedIn(!!signedInValue); // Convert the value to a boolean
+    } catch (error) {
+      console.error('Error retrieving signed-in status:', error);
+    }
+  };
+
   return (
     <NavigationContainer>
+
       <Stack.Navigator
         initialRouteName="Login"
-        screenOptions={({navigation, route}) => {
+        screenOptions={({ navigation, route }) => {
           const options = route?.params?.headerOptions || {};
           const backgroundColor = options.headerBackgroundColor || '#EEEEEE';
           const fontColor = options.fontColor || 'white';
@@ -103,7 +125,18 @@ function StackNavigation() {
             headerShown: false,
           }}
         />
-         <Stack.Screen
+
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="Dashboard"
           component={Dashboard}
           options={{
@@ -123,7 +156,7 @@ function StackNavigation() {
             headerTitleAlign: 'center',
           }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="BarcodeScan"
           component={BarcodeScan}
           options={{
@@ -133,7 +166,7 @@ function StackNavigation() {
             headerTitleAlign: 'center',
           }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="CameraView"
           component={CameraView}
           options={{
@@ -143,7 +176,7 @@ function StackNavigation() {
             headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="CameraPage"
           component={CameraPage}
           options={{
@@ -153,7 +186,7 @@ function StackNavigation() {
             headerShown: false,
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="QrCodeScanner"
           component={QrCodeScanner}
           options={{
@@ -163,50 +196,68 @@ function StackNavigation() {
             headerShown: false,
           }}
         />
-        <Stack.Screen 
-        name='CustomerDetail'
-        component={CustomerDetail}
-        options={{
-          ...animationConfig,
-          orientation: 'portrait',
-          title: 'Customer Detail',
-          headerTitleAlign: 'center',
-        }}/>
-        <Stack.Screen 
-        name='AllCustomersList'
-        component={AllCustomersList}
-        options={{
-          ...animationConfig,
-          orientation: 'portrait',
-          title: 'Customers List',
-          headerTitleAlign: 'center',
-        }}/>
-         <Stack.Screen 
-        name='AllCollectionList'
-        component={AllCollectionList}
-        options={{
-          ...animationConfig,
-          orientation: 'portrait',
-          title: 'Collection List',
-          headerTitleAlign: 'center',
-        }}/>
-            <Stack.Screen 
-        name='AddCollection'
-        component={AddCollection}
-        options={{
-          ...animationConfig,
-          orientation: 'portrait',
-          title: 'Add Collection',
-          headerTitleAlign: 'center',
-        }}/>
-           <Stack.Screen 
-        name='Color'
-        component={Color}
-        options={{
-          ...animationConfig,
-          orientation: 'portrait',
-         headerShown : false
-        }}/>
+        <Stack.Screen
+          name='CustomerDetail'
+          component={CustomerDetail}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Customer Order Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='AllCustomersList'
+          component={AllCustomersList}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Customers List',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='AllCollectionList'
+          component={AllCollectionList}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Collection List',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='AddCollection'
+          component={AddCollection}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Add Collection',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='Color'
+          component={Color}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            headerShown: false
+          }} />
+        <Stack.Screen
+          name='AddExtraDetail'
+          component={AddExtraDetail}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Add Extra Detail',
+            headerTitleAlign: 'center',
+          }} />
+          <Stack.Screen
+          name='FinalOrderDetail'
+          component={FinalOrderDetail}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Final Order Detail',
+            headerTitleAlign: 'center',
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

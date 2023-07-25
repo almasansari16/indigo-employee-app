@@ -1,25 +1,33 @@
-import React, {Component} from 'react';
-import {View, Dimensions} from 'react-native';
+import React from 'react'
+import { StyleSheet, View, Text } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'; // import LinearGradient
+import { wp } from '../../App';
 
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
-
-const Color = () => {
+function Color() {
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          width: 0,
-          height: 0,
-          borderLeftWidth: SCREEN_WIDTH / 2,
-          borderLeftColor: 'transparent',
-          borderBottomWidth: SCREEN_HEIGHT / 2.5,
-          borderBottomColor: 'transparent',
-          borderRightWidth: SCREEN_WIDTH / 2,
-          borderRightColor: 'blue',
-        }}
-      />
+    <View style={styles.container}>
+      <LinearGradient
+        colors={['#ba6b4d', '#f9f1da', '#ba6b4d']}
+        style={styles.linearGradient}
+        start={{x: 0.3, y: 0}}
+        end={{x: 1, y: 1}}
+      >
+        <Text>Vertical Gradient</Text>
+      </LinearGradient>
     </View>
-  );
-};
+  )
+}
 
-export default Color;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  linearGradient: {
+    flex: 1,
+    width: wp(100)
+
+  },
+})
+export default Color

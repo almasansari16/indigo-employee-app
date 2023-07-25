@@ -7,6 +7,7 @@ import {AppStyles} from '../../theme/AppStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Images from '../../theme/Images';
 import { hp, wp } from '../../../App';
+import LinearGradient from 'react-native-linear-gradient'; // import LinearGradient
 
 export default function AddCustomer({navigation}) {
   const [customer, setCustomer] = useState({
@@ -65,9 +66,7 @@ export default function AddCustomer({navigation}) {
       saveData()
       navigation.navigate('BarcodeScan');
     }
-    else{
-      Alert.alert("plz fill the fields")
-    }
+  
   };
 
   // const handleCamera = () => {
@@ -75,7 +74,12 @@ export default function AddCustomer({navigation}) {
   // }
   return (
     <SafeAreaView style={[AppStyles.container]}>
-      <ImageBackground source={Images.orange_background} style={{width:wp(100), height:hp(100)}}>
+        <LinearGradient
+        colors={['#ba6b4d', '#f9f1da', '#ba6b4d']}
+        style={{flex:1}}
+        start={{x: 0.3, y: 0}}
+        end={{x: 1, y: 1}}
+      >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={[AddCustomerStyle.center]}>
           <IconInput
@@ -183,7 +187,7 @@ export default function AddCustomer({navigation}) {
           <Button title={'Save'} onPress={handleSave} style={AddCustomerStyle.btn} textStyle={AddCustomerStyle.text}/>
         </View>
       </ScrollView>
-      </ImageBackground>
+      </LinearGradient>
     </SafeAreaView>
   );
 }

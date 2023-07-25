@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#282561',
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily:'Lato-Bold',
 
   },
 });

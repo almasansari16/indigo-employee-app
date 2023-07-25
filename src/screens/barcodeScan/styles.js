@@ -26,5 +26,16 @@ export const BarcodeStyle = StyleSheet.create({
     width:wp(50),
     justifyContent:'center',
     alignSelf:'center'
+  },
+  btn:{
+    backgroundColor:'#EEEEEE',
+    display:'flex',
+    justifyContent:'center',
+    alignSelf:'center',
+    // marginVertical:20,
+    width:wp(40)
+  },
+  btnText:{
+    color:'#2f2260'
   }
 });

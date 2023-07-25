@@ -7332,6 +7332,11 @@ react-native-hole-view@^3.0.0-alpha3:
   resolved "https://registry.yarnpkg.com/react-native-hole-view/-/react-native-hole-view-3.0.0-alpha3.tgz#8eca30b04b3ef7abd3360b0b76d617eefea648a1"
   integrity sha512-GzKsirikGaDdynN/IA6tM2gfTZVvKOa4ISiKGcd34K3N/DrR0SLB62SOFRhhOisCcvTFZOegb4jyTQLg2+pCzg==
 
+react-native-linear-gradient@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.0.tgz#767eda0a5c5dbed852f99e4c07fb7d54a8ee3030"
+  integrity sha512-ZuvNXEB98CMEOAphV/8N9eWrIQTbzUIZD5Tb8IqFoDE8ESERISPT2hTZMvoHTSfjvaB1zge6YpWVg3rpwiTZow==
+
 react-native-mmkv@^2.8.0:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.1.tgz#1a4e64edbf9561fe81a5ae3cefde17e88dfc669f"

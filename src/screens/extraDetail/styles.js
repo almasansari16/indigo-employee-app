@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { hp, wp } from "../../../App";
 
-export const AddCollectionStyle = StyleSheet.create({
+export const ExtraDetail = StyleSheet.create({
     container: {
         backgroundColor: 'black',
         flex: 1,
@@ -15,9 +15,11 @@ export const AddCollectionStyle = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         textAlign: 'center',
+        fontFamily:'Lato-Regular',
       },
       input: {
-        // marginVertical:10
+        backgroundColor:'red'
+    
       },
       loginBtn: {
         width: wp(60),
@@ -36,9 +38,8 @@ export const AddCollectionStyle = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'flex-end',
-        marginTop:hp(4),
-        width:wp(90),
-        marginBottom:20
+        marginTop:hp(5),
+        width:wp(90)
       },
       btn:{
         backgroundColor: "#282561",

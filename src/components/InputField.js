@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: wp(2.5),
     height: hp(7),
-   
+    fontFamily:'Lato-Regular',
     borderRadius: 5,
     // marginBottom: hp(1),
   },

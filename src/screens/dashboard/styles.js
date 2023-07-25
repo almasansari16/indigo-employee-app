@@ -14,7 +14,6 @@ export const dashboardStyles = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginTop:hp(5),
-
     width: wp(80),
     height: hp(20),
     borderColor:"#EEEEEE",
@@ -23,9 +22,9 @@ export const dashboardStyles = StyleSheet.create({
     alignItems:'center'
   },
   linksText:{
-    fontSize:wp(5),
+    fontSize:wp(6),
     fontWeight:'500',
     color:'#EEEEEE',
-    
+    fontFamily:'Lato-Regular',
   }
 });

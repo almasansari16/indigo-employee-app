@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 10,
+    fontFamily:'Lato-Regular',
+    fontSize:wp(4.5),
+    color:'#282561'
   },
   errorInput: {
     // borderColor: 'red',
@@ -45,5 +48,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 5,
     marginLeft: 10,
+    fontFamily:'Lato-Regular',
   },
 });
