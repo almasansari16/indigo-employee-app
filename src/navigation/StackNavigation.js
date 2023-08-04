@@ -20,6 +20,9 @@ import AllCollectionList from '../screens/allCollection/AllCollectionList';
 import Signup from '../screens/signup/Signup';
 import AddExtraDetail from '../screens/extraDetail/AddExtraDetail';
 import FinalOrderDetail from '../screens/finalOrderDetail/FinalOrderDetail';
+import SendEmail from '../screens/sendEmail/SendEmail';
+import SingleCustomer from '../screens/singleCustomer/SingleCustomer';
+import QrCode from '../screens/qrCode/QrCode';
 
 
 const CustomHeader2 = props => {
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     margin: 15,
     textAlign: 'left',
-    fontFamily:'Lato-Regular'
+    fontFamily: 'Lato-Regular'
 
   },
 });
@@ -215,6 +218,15 @@ function StackNavigation() {
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
+          name='SingleCustomer'
+          component={SingleCustomer}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Customer Data',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
           name='AllCollectionList'
           component={AllCollectionList}
           options={{
@@ -249,13 +261,31 @@ function StackNavigation() {
             title: 'Add Extra Detail',
             headerTitleAlign: 'center',
           }} />
-          <Stack.Screen
+        <Stack.Screen
           name='FinalOrderDetail'
           component={FinalOrderDetail}
           options={{
             ...animationConfig,
             orientation: 'portrait',
             title: 'Final Order Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='SendEmail'
+          component={SendEmail}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Send Email',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='QrCode'
+          component={QrCode}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'QR Code',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

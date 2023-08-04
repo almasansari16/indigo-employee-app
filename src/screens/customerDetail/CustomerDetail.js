@@ -13,7 +13,7 @@ import { wp } from '../../../App';
 export default function CustomerDetail({ navigation }) {
   
   const next = () => {
-    navigation.navigate('Color');
+    navigation.navigate('SendEmail');
   };
 
 
@@ -25,9 +25,9 @@ export default function CustomerDetail({ navigation }) {
   const [billingAddress, setBillingAddress] = useState('');
   const [frontId, setFrontId] = useState('');
   const [scanCode, setScanCode] = useState('');
-  const [extraDetailOne, setExtraDetailOne] = useState('');
-  const [extraDetailTwo, setExtraDetailTwo] = useState('');
-  const [extraDetailThree, setExtraDetailThree] = useState('');
+  // const [extraDetailOne, setExtraDetailOne] = useState('');
+  // const [extraDetailTwo, setExtraDetailTwo] = useState('');
+  // const [extraDetailThree, setExtraDetailThree] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,33 +73,33 @@ export default function CustomerDetail({ navigation }) {
   console.log(scanCode, '...................')
   console.log([new Set(scanCode)])
 
-  const getscanCodes = async () => {
+  // const getscanCodes = async () => {
 
-    try {
-      const a = await AsyncStorage.getItem('barcode')
-      console.log("sucess gett codeeeeee", JSON.parse(a))
+  //   try {
+  //     const a = await AsyncStorage.getItem('barcode')
+  //     console.log("sucess gett codeeeeee", JSON.parse(a))
 
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-  useEffect(() => {
-    const fetchModalData = async () => {
-      const one = await AsyncStorage.getItem('one');
-      if (one !== null) {
-        setExtraDetailOne(one);
-      }
-      const two = await AsyncStorage.getItem('two');
-      if (two !== null) {
-        setExtraDetailTwo(two);
-      }
-      const three = await AsyncStorage.getItem('three');
-      if (three !== null) {
-        setExtraDetailThree(three);
-      }
-    }
-    fetchModalData()
-  }, [extraDetailOne, extraDetailTwo, extraDetailThree]);
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
+  // useEffect(() => {
+  //   const fetchModalData = async () => {
+  //     const one = await AsyncStorage.getItem('one');
+  //     if (one !== null) {
+  //       setExtraDetailOne(one);
+  //     }
+  //     const two = await AsyncStorage.getItem('two');
+  //     if (two !== null) {
+  //       setExtraDetailTwo(two);
+  //     }
+  //     const three = await AsyncStorage.getItem('three');
+  //     if (three !== null) {
+  //       setExtraDetailThree(three);
+  //     }
+  //   }
+  //   fetchModalData()
+  // }, [extraDetailOne, extraDetailTwo, extraDetailThree]);
 
   return (
     <SafeAreaView style={[AppStyles.container]}>
@@ -128,8 +128,8 @@ export default function CustomerDetail({ navigation }) {
 
           </View>
           <View style={CustomerDetailStyles.btnView}>
-            {/* <Button title={'Add Extra Detail'} onPress={showModal} style={CustomerDetailStyles.btn} /> */}
-            <Button title={'Next'} onPress={() => navigation.navigate("AddExtraDetail")} style={CustomerDetailStyles.btn} />
+            <Button title={'next'} onPress={next} style={CustomerDetailStyles.btn} />
+            <Button title={'Add Extra Detail'} onPress={() => navigation.navigate("AddExtraDetail")} style={CustomerDetailStyles.btn} />
           </View>
         </View>
        

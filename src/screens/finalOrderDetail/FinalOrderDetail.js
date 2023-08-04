@@ -8,7 +8,7 @@ import { Icon, IconType } from '../../components';
 import Button from '../../components/Button';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function FinalOrderDetail() {
+export default function FinalOrderDetail({navigation}) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
@@ -135,7 +135,7 @@ export default function FinalOrderDetail() {
                     </View>
                     <View style={FinalOrderDetailStyles.btnView}>
                         {/* <Button title={'Add Extra Detail'} onPress={showModal} style={CustomerDetailStyles.btn} />  */}
-                        <Button title={'Next'} onPress={() => navigation.navigate("AddExtraDetail")} style={FinalOrderDetailStyles.btn} />
+                        <Button title={'Next'} onPress={() => navigation.navigate("SendEmail")} style={FinalOrderDetailStyles.btn} />
                     </View>
                 </View>
 

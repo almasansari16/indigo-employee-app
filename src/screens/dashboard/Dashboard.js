@@ -7,19 +7,24 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
-import {AppStyles} from '../../theme/AppStyles';
-import {dashboardStyles} from './styles';
+import { AppStyles } from '../../theme/AppStyles';
+import { dashboardStyles } from './styles';
 import Images from '../../theme/Images';
-import {hp, wp} from '../../../App';
+import { hp, wp } from '../../../App';
 
-export default function Dashboard({navigation}) {
+export default function Dashboard({ navigation }) {
   return (
     <SafeAreaView style={[AppStyles.container]}>
       <ImageBackground
         source={Images.purple_background}
-        style={{width: wp(100), height: hp(100)}}>
+        style={{ width: wp(100), height: hp(100) }}>
         <View style={[dashboardStyles.div]}>
           <ScrollView>
+            <TouchableOpacity
+              style={dashboardStyles.links}
+              onPress={() => navigation.navigate('QrCode')}>
+              <Text style={[dashboardStyles.linksText]}>Scan QR Code</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={dashboardStyles.links}
               onPress={() => navigation.navigate('AddCustomer')}>
@@ -39,7 +44,7 @@ export default function Dashboard({navigation}) {
             </TouchableOpacity>
 
             <TouchableOpacity style={dashboardStyles.links}
-            onPress={() => navigation.navigate('AllCollectionList')}>
+              onPress={() => navigation.navigate('AllCollectionList')}>
               <Text style={[dashboardStyles.linksText]}>All Collections</Text>
             </TouchableOpacity>
           </ScrollView>

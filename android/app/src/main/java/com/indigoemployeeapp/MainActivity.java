@@ -11,6 +11,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 import android.content.Intent;
 import android.content.res.Configuration;
+import com.chirag.RNMail.*; 
 
 public class MainActivity extends ReactActivity {
   @Override
