@@ -55,12 +55,12 @@ const saveSigninData = async() => {
   }
 }
 const handleSignin = () => {
-  if (form.email != '' && form.password != '') {
+  if (form.email == '' && form.password == '') {
     Alert.alert('fill the input fields');
   } else {
     // Alert.alert('Signin Sucessfully');
     saveSigninData()
-    navigation.navigate('Dashboard');
+    navigation.navigate('TabNavigation');
   }
 };
   return (

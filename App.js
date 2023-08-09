@@ -37,6 +37,8 @@ import {
 import SplashScreen from 'react-native-splash-screen';
 import StackNavigation from './src/navigation/StackNavigation';
 import Login from './src/screens/login/Login';
+import TabNavigation from './src/navigation/TabNavigation';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 function Section({children, title}){
@@ -84,6 +86,9 @@ function App(){
     <GestureHandlerRootView style={{flex: 1}}>
       <StatusBar backgroundColor="#000" />
       <StackNavigation />
+      {/* <NavigationContainer>
+      <TabNavigation />
+      </NavigationContainer> */}
     </GestureHandlerRootView>
   );
 }

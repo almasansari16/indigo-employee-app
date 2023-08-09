@@ -23,6 +23,10 @@ import FinalOrderDetail from '../screens/finalOrderDetail/FinalOrderDetail';
 import SendEmail from '../screens/sendEmail/SendEmail';
 import SingleCustomer from '../screens/singleCustomer/SingleCustomer';
 import QrCode from '../screens/qrCode/QrCode';
+import SingleCollection from '../screens/singleCollection/SingleCollection';
+import Scanner from '../screens/qrCode/Scanner';
+import TabNavigation from './TabNavigation';
+import DisplayBarcodeVlaue from '../screens/qrCode/DisplayBarcodeVlaue';
 
 
 const CustomHeader2 = props => {
@@ -150,6 +154,15 @@ function StackNavigation() {
           }}
         />
         <Stack.Screen
+          name="TabNavigation"
+          component={TabNavigation}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="AddCustomer"
           component={AddCustomer}
           options={{
@@ -236,6 +249,15 @@ function StackNavigation() {
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
+          name='SingleCollection'
+          component={SingleCollection}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Collection Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
           name='AddCollection'
           component={AddCollection}
           options={{
@@ -286,6 +308,26 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'QR Code',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='Scanner'
+          component={Scanner}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            headerShown: false
+            // title: 'QR Code',
+            // headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          name='DisplayBarcodeVlaue'
+          component={DisplayBarcodeVlaue}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            // headerShown: false
+            title: 'Barcode Value',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

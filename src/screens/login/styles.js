@@ -35,8 +35,8 @@ export const LoginStyle = StyleSheet.create({
     borderWidth:1,
     borderRadius:wp(10),
     marginBottom:hp(2),
-    fontFamily:'Lato-Regular'
-
+    fontFamily:'Lato-Regular',
+    color: "#EEEEEE"
     // marginVertical:10
   },
   loginBtn: {

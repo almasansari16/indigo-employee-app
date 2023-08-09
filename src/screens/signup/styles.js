@@ -35,7 +35,8 @@ export const SignupStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: wp(10),
     marginBottom: hp(2),
-    fontFamily: 'Lato-Regular'
+    fontFamily: 'Lato-Regular',
+    color: "#EEEEEE"
     // marginVertical:10
   },
   signupBtn: {
@@ -63,7 +64,8 @@ export const SignupStyles = StyleSheet.create({
     fontWeight: '500',
     alignSelf: 'center',
     marginVertical: hp(2),
-    fontFamily: 'Lato-Regular'
+    fontFamily: 'Lato-Regular',
+    
 
   },
   boldText: {

@@ -105,7 +105,7 @@ export default function AllCustomersList({ navigation, route }) {
     setPage(0); // Reset the page to the first page
   };
   const customerDetail = (item) => {
-    navigation.navigate('SingleCustomer', {
+    navigation.navigate('TabNavigation', {
       item
     })
   }

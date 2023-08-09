@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, useColorScheme, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Image, useColorScheme, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Images from '../../theme/Images'
 import { AppStyles } from '../../theme/AppStyles'
@@ -19,11 +19,11 @@ export default function Signup({navigation}) {
     });
 
     const handleSignin = () => {
-        if (form.email != '' && form.password != '') {
+        if (form.email == '' && form.password == '') {
             Alert.alert('fill the input fields');
         } else {
             // Alert.alert('Signin Sucessfully');
-            navigation.navigate('Dashboard');
+            navigation.navigate('Login');
         }
     };
     return (
@@ -78,7 +78,7 @@ export default function Signup({navigation}) {
                             />
                         </View>
                         <TouchableOpacity
-                        onPress={() => navigation.navigate("Login")}
+                        onPress={handleSignin}
                         style={[SignupStyles.signupBtn, SignupStyles.center]}>
                             <Text style={[SignupStyles.btnText]}>
                                 Signup
