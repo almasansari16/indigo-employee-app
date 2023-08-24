@@ -3,7 +3,7 @@ import {View, TextInput, StyleSheet, Text} from 'react-native';
 import {Icon, IconType} from './Icon';
 import {hp, wp} from '../../App';
 
-const IconInput = ({icon, placeholder, placeholderTextColor, onChangeText, value, error}) => {
+const IconInput = ({icon,style, placeholder, placeholderTextColor, onChangeText, value, error}) => {
   return (
     <>
       <View style={styles.View}>
@@ -13,7 +13,7 @@ const IconInput = ({icon, placeholder, placeholderTextColor, onChangeText, value
           onChangeText={onChangeText}
           value={value}
           placeholderTextColor={placeholderTextColor}
-          style={[styles.input, error && styles.errorInput]}
+          style={[styles.input, error && styles.errorInput,style]}
         />
       </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
    borderColor:'#282561',
    borderWidth:2,
     width: wp(90),
-    height: hp(8),
+    height: hp(7),
     marginTop: hp(4),
     borderRadius: wp(10),
   },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily:'Lato-Regular',
     fontSize:wp(4.5),
-    color:'#282561'
+    color:'#282561',
   },
   errorInput: {
     // borderColor: 'red',

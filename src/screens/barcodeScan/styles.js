@@ -4,8 +4,9 @@ const {StyleSheet} = require('react-native');
 
 export const BarcodeStyle = StyleSheet.create({
   container: {
-    backgroundColor: '#000',
+    // backgroundColor: '#000',
     flex: 1,
+    position:'relative'
   },
   center: {
     display: 'flex',
@@ -21,19 +22,25 @@ export const BarcodeStyle = StyleSheet.create({
   },
   btnView:{
     display:'flex',
+    flexDirection:'row',
     marginVertical:hp(5),
-    rowGap: 20,
-    width:wp(50),
-    justifyContent:'center',
-    alignSelf:'center'
+    width:wp(100),
+    justifyContent:'space-around',
+    alignSelf:'flex-end',
+
   },
   btn:{
     backgroundColor:'#EEEEEE',
     display:'flex',
     justifyContent:'center',
     alignSelf:'center',
-    // marginVertical:20,
-    width:wp(40)
+  },
+  btn2:{
+    backgroundColor:'#EEEEEE',
+    display:'flex',
+    justifyContent:'center',
+    alignSelf:'center',
+    top:0
   },
   btnText:{
     color:'#2f2260'

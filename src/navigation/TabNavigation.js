@@ -50,8 +50,8 @@ export default TabNavigation = () => {
         options={{
           tabBarIcon: (focused, color, size) => (
             <Icon
-              name={'video'}
-              type={IconType.Feather}
+              name={'view-dashboard'}
+              type={IconType.MaterialCommunityIcons}
               size={hp(2.3)}
               color={focused ? 'white' : '#00000065'}
             />
@@ -64,8 +64,8 @@ export default TabNavigation = () => {
         options={{
           tabBarIcon: (focused, color, size) => (
             <Icon
-              name={'film'}
-              type={IconType.Feather}
+              name={'collections'}
+              type={IconType.MaterialIcons}
               size={hp(2.3)}
               color={focused ? 'white' : '#00000065'}
             />
@@ -78,8 +78,8 @@ export default TabNavigation = () => {
         options={{
           tabBarIcon: (focused, color, size) => (
             <Icon
-              name={'settings'}
-              type={IconType.Feather}
+              name={'users'}
+              type={IconType.FontAwesome}
               size={hp(2.3)}
               color={focused ? 'white' : '#00000065'}
             />

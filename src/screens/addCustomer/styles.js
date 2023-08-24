@@ -16,10 +16,10 @@ export const AddCustomerStyle = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  input: {
-    backgroundColor:'red'
+  // input: {
+  //   backgroundColor:'red'
 
-  },
+  // },
   loginBtn: {
     width: wp(60),
     height: hp(6),

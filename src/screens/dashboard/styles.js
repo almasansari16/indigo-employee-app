@@ -26,5 +26,6 @@ export const dashboardStyles = StyleSheet.create({
     fontWeight:'500',
     color:'#EEEEEE',
     fontFamily:'Lato-Regular',
-  }
+  },
+
 });

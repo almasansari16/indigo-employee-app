@@ -2,7 +2,7 @@ import { StyleSheet, useColorScheme } from "react-native";
 import {
     Colors,
   } from 'react-native/Libraries/NewAppScreen';
-import { hp } from "../../App";
+import { hp, wp } from "../../App";
 const isDarkMode = useColorScheme() === 'dark';
 export const AppStyles = StyleSheet.create({
     container: {
@@ -29,5 +29,15 @@ export const AppStyles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignSelf: 'center',
+      },
+      header: {
+        height: 64, // Adjust the height as needed
+      },
+      headerText: {
+        fontSize: wp(5.5),
+        fontWeight: '600',
+        margin: 15,
+        textAlign: 'left',
+        fontFamily: 'Lato-Regular'
       },
 })

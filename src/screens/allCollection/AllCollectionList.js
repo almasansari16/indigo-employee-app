@@ -7,27 +7,27 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import {DataTable, Searchbar} from 'react-native-paper';
-import {AppStyles} from '../../theme/AppStyles';
+import { Appbar, DataTable, Searchbar } from 'react-native-paper';
+import { AppStyles } from '../../theme/AppStyles';
 import Images from '../../theme/Images';
-import {hp, wp} from '../../../App';
+import { hp, wp } from '../../../App';
 
-export default function AllCollectionList({navigation}) {
+export default function AllCollectionList({ navigation }) {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPageList] = React.useState([10]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0],
   );
 
-  const [items , setItems] = React.useState([
+  const [items, setItems] = React.useState([
     {
       key: 1,
       img: Images.CollectionImg1,
       articleName: 'Snoop',
       ids: '5767',
       color: 'Pure Indigo',
-      finishType:'NHP',
-      weave:'3/1 RHT',
+      finishType: 'NHP',
+      weave: '3/1 RHT',
     },
     {
       key: 2,
@@ -35,8 +35,8 @@ export default function AllCollectionList({navigation}) {
       articleName: 'SOFIA',
       ids: '5079',
       color: 'Blue',
-      finishType:'ME',
-      weave:'3/1 RHT',
+      finishType: 'ME',
+      weave: '3/1 RHT',
     },
     {
       key: 3,
@@ -44,8 +44,8 @@ export default function AllCollectionList({navigation}) {
       articleName: 'Suez',
       ids: '4898',
       color: 'Blue',
-      finishType:'NC',
-      weave:'3/1 RHT',
+      finishType: 'NC',
+      weave: '3/1 RHT',
     },
     {
       key: 4,
@@ -53,8 +53,8 @@ export default function AllCollectionList({navigation}) {
       articleName: 'Madonna',
       ids: '4349',
       color: 'Blue',
-      finishType:'MD',
-      weave:'3/1 RHT',
+      finishType: 'MD',
+      weave: '3/1 RHT',
     },
     {
       key: 5,
@@ -62,9 +62,9 @@ export default function AllCollectionList({navigation}) {
       articleName: 'Vilma In Less Stretch',
       ids: '9682',
       color: 'Blue',
-      finishType:'SHM ',
-      weave:'3/1 RHT',
-    },   
+      finishType: 'SHM ',
+      weave: '3/1 RHT',
+    },
     //  {
     //   key: 6,
     //   name: 'john',
@@ -106,7 +106,7 @@ export default function AllCollectionList({navigation}) {
     setPage(0); // Reset the page to the first page
   };
   const collectionDetail = (item) => {
-    navigation.navigate('TabNavigation', {
+    navigation.navigate('SingleCollection', {
       item
     })
   }
@@ -114,8 +114,36 @@ export default function AllCollectionList({navigation}) {
     <SafeAreaView style={[AppStyles.container]}>
       <ImageBackground
         source={Images.purple_background}
-        style={{width: wp(100), height: hp(100)}}>
-          <View style={{ marginTop: 0 }}>
+        style={{ width: wp(100), height: hp(100) }}>
+          <Appbar.Header
+          style={{
+            backgroundColor: '#EEEEEE',
+          }}
+          theme={{
+            colors: {
+              backgroundColor: '#D11F27',
+              accent: 'white',
+              secondary: 'yellow',
+            },
+          }}>
+          <Appbar.BackAction
+            animated
+            android_ripple
+            style={{ color: '#000' }}
+            color="#000"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <Appbar.Content
+            title={"All Collections"}
+            mode="small"
+            style={{ color: 'white' }}
+            color="black"
+          titleStyle={AppStyles.headerText}
+          />
+        </Appbar.Header>
+        <View style={{ marginTop: 0 }}>
           <Searchbar
             placeholder="Search..."
             mode='view'
@@ -125,38 +153,41 @@ export default function AllCollectionList({navigation}) {
         </View>
         <DataTable>
           <DataTable.Header>
-            <DataTable.Title textStyle={{color: '#EEEEEE'}}>
-            Article name
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+              Article name
             </DataTable.Title>
-            <DataTable.Title textStyle={{color: '#EEEEEE'}}>
-              IDS      
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+              IDS
             </DataTable.Title>
-            <DataTable.Title textStyle={{color: '#EEEEEE'}}>
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
               Color
             </DataTable.Title>
-            <DataTable.Title textStyle={{color: '#EEEEEE'}}>
-            Finish Type
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+              Finish Type
             </DataTable.Title>
-            <DataTable.Title textStyle={{color: '#EEEEEE', marginLeft:5}} >
-            Weave
+            <DataTable.Title textStyle={{ color: '#EEEEEE', marginLeft: 5 }} >
+              Weave
             </DataTable.Title>
-            <DataTable.Title textStyle={{color: '#EEEEEE'}} >
-            Image
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
+              Image
             </DataTable.Title>
           </DataTable.Header>
           {filteredItems.slice(from, to).map(item => (
-            <DataTable.Row key={item.key} onPress={() => collectionDetail(item)}>
-              <DataTable.Cell textStyle={{color:'#EEEEEE'}} >{item.articleName}</DataTable.Cell>
-              <DataTable.Cell textStyle={{color:'#EEEEEE'}} >{item.ids}</DataTable.Cell>
-              <DataTable.Cell textStyle={{color:'#EEEEEE'}} >{item.color}</DataTable.Cell>
-              <DataTable.Cell textStyle={{color:'#EEEEEE'}} >{item.finishType}</DataTable.Cell>
-              <DataTable.Cell textStyle={{color:'#EEEEEE'}} >{item.weave}</DataTable.Cell>
+            <DataTable.Row
+              key={item.key}
+              onPress={() =>
+              collectionDetail(item)}
+              >
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.articleName}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ids}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.color}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.finishType}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.weave}</DataTable.Cell>
               <DataTable.Cell>
                 <Image source={item.img} style={{ width: 50, height: 50 }} />
               </DataTable.Cell>
             </DataTable.Row>
           ))}
-
         </DataTable>
 
         <DataTable.Pagination

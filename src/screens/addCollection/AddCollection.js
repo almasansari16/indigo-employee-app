@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient'; // import LinearGradi
 export default function AddCollection({ navigation }) {
   const [addCollection, setAddCollection] = useState({
     articleName: '',
+    IDS:'',
     finishType: '',
     weave: '',
     fullWidth: '',
@@ -32,6 +33,7 @@ export default function AddCollection({ navigation }) {
   const saveData = async () => {
     try {
       await AsyncStorage.setItem('ArticleName', addCollection.articleName);
+      await AsyncStorage.setItem('IDS' , addCollection.IDS);
       await AsyncStorage.setItem('FinishType', addCollection.finishType);
       await AsyncStorage.setItem('FullWidth', addCollection.fullWidth);
       await AsyncStorage.setItem('Weave', addCollection.weave);
@@ -60,6 +62,9 @@ export default function AddCollection({ navigation }) {
       errors.articleName = 'Article Name is required';
     }
 
+    if (!addCollection.IDS) {
+      errors.IDS = 'IDS is required';
+    }
     if (!addCollection.finishType) {
       errors.finishType = 'Finish Type is required';
     }
@@ -89,7 +94,7 @@ export default function AddCollection({ navigation }) {
     }
 
     if (!addCollection.stretch) {
-      errors.stretch = 'Strech is required';
+      errors.stretch = 'stretch is required';
     }
     if (!addCollection.growth) {
       errors.growth = 'Growth is required';
@@ -102,7 +107,7 @@ export default function AddCollection({ navigation }) {
     if (Object.keys(errors).length === 0) {
       // Proceed with form submission
       saveData();
-      navigation.navigate('AllCollectionList');
+      navigation.navigate('CollectionDetail');
     }
   };
 
@@ -134,6 +139,22 @@ export default function AddCollection({ navigation }) {
               value={addCollection.articleName}
               style={AddCollectionStyle.input}
               error={validation.articleName}
+            />
+             <IconInput
+              // icon={
+              //   <Icon
+              //     type={IconType.FontAwesome5}
+              //     name={'user'}
+              //     color="#282561"
+              //     style={{margin: 15}}
+              //   />
+              // }
+              placeholder={'IDS'}
+              placeholderTextColor={'#282561'}
+              onChangeText={IDS => setAddCollection({ ...addCollection, IDS })}
+              value={addCollection.IDS}
+              style={AddCollectionStyle.input}
+              error={validation.IDS}
             />
             <IconInput
               // icon={

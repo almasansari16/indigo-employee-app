@@ -5,6 +5,7 @@ import { AppStyles } from '../../theme/AppStyles'
 import { SignupStyles } from './styles'
 import { hp } from '../../../App'
 import { InputField } from '../../components'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Signup({navigation}) {
     const isDarkMode = useColorScheme() === 'dark';
@@ -17,13 +18,24 @@ export default function Signup({navigation}) {
         password: '',
         contact: ''
     });
-
+const saveData = async() => {
+    try {
+       await AsyncStorage.setItem("UserName" , form.fullName);
+       await AsyncStorage.setItem("UserEmail" , form.email);
+       await AsyncStorage.setItem("UserPassword" , form.password);
+       await AsyncStorage.setItem("UserContact" , form.contact);
+    } catch (error) {
+        console.log(error.message)
+    }
+}
     const handleSignin = () => {
-        if (form.email == '' && form.password == '') {
+        if (form.email == '' || form.password == '' || form.fullName == '' || form.contact == '') {
             Alert.alert('fill the input fields');
         } else {
             // Alert.alert('Signin Sucessfully');
+            saveData()
             navigation.navigate('Login');
+
         }
     };
     return (

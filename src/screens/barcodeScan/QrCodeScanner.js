@@ -11,6 +11,7 @@ import {
 } from 'vision-camera-code-scanner';
 import Button from '../../components/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BarcodeStyle } from './styles';
 
 export default function Scanner({ navigation }) {
   const [hasPermission, setHasPermission] = React.useState(false);
@@ -53,14 +54,17 @@ export default function Scanner({ navigation }) {
       await AsyncStorage.setItem('barcode', JSON.stringify(updatedBarcodeValues));
       setBarcodeValues(updatedBarcodeValues);
   
-      navigation.navigate("CustomerDetail");
+      // navigation.navigate("CustomerDetail");           
     } catch (error) {
       console.log(error.message);
     }
   }
   
 console.log(barcodeValues , "multile barcode values")
-
+const multipleBarcode = () => {
+  scanCodes();
+  navigation.navigate("QrCodeScanner")
+}
 
   return (
     device != null &&
@@ -79,13 +83,13 @@ console.log(barcodeValues , "multile barcode values")
             {barcode.displayValue}
           </Text>
         ))}
-        <View>
+        <View style={[BarcodeStyle.btnView]}>
           <View>
             <Button title={'ok'} onPress={scanCodes} />
           </View>
 
           <View>
-            <Button title={'Again Scan'} onPress={() => navigation.navigate("QrCodeScanner")} />
+            <Button title={'Again Scan'} onPress={multipleBarcode} />
           </View>
         </View>
       </>

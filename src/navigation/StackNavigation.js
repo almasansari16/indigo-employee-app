@@ -27,6 +27,9 @@ import SingleCollection from '../screens/singleCollection/SingleCollection';
 import Scanner from '../screens/qrCode/Scanner';
 import TabNavigation from './TabNavigation';
 import DisplayBarcodeVlaue from '../screens/qrCode/DisplayBarcodeVlaue';
+import CollectionDetail from '../screens/collectionDetail/CollectionDetail';
+import NewQrCode from '../screens/barcodeScan/NewQrCode';
+import FinalDetail from '../screens/finalDetail/FinalDetail';
 
 
 const CustomHeader2 = props => {
@@ -266,6 +269,15 @@ function StackNavigation() {
             title: 'Add Collection',
             headerTitleAlign: 'center',
           }} />
+                <Stack.Screen
+          name='CollectionDetail'
+          component={CollectionDetail}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Add Collection',
+            headerTitleAlign: 'center',
+          }} />
         <Stack.Screen
           name='Color'
           component={Color}
@@ -326,8 +338,25 @@ function StackNavigation() {
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            // headerShown: false
             title: 'Barcode Value',
+            headerTitleAlign: 'center',
+          }} />
+          <Stack.Screen 
+          component={NewQrCode}
+          name='NewQrCode'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Barcode Value',
+            headerTitleAlign: 'center',
+          }} />
+             <Stack.Screen 
+          component={FinalDetail}
+          name='FinalDetail'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Final Detail....',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

@@ -32,40 +32,11 @@ export default function AddExtraDetail({navigation}) {
   };
 
   const handleSave = () => {
-    // const errors = {};
-
-    // if (!extraDetail.name) {
-    //   errors.name = 'Customer Name is required';
-    // }
-
-    // if (!extraDetail.contact) {
-    //   errors.contact = 'Contact is required';
-    // }
-    // if (!extraDetail.email) {
-    //   errors.email = 'Email is required';
-    // }
-    // if (!extraDetail.address) {
-    //   errors.address = 'Contact is required';
-    // }
-    // if (!extraDetail.billingAddress) {
-    //   errors.billingAddress = 'Billing Address is required';
-    // }
-    // if (!extraDetail.frontId) {
-    //   errors.frontId = 'Front ID is required';
-    // }
-    // setValidation(errors);
-
-    // if (Object.keys(errors).length === 0) {
-    //   // Proceed with form submission
-      
-    // }
     saveData()
     navigation.navigate('FinalOrderDetail');
   };
 
-  // const handleCamera = () => {
-  //   navigation.navigate("CameraPage")
-  // }
+ 
   return (
     <SafeAreaView style={[AppStyles.container]}>
         <LinearGradient

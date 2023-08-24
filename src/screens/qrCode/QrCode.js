@@ -10,7 +10,7 @@ export default function QrCode({navigation}) {
     navigation.navigate("Scanner")
   }
   const handleNext = () => {
-    navigation.navigate("CustomerDetail")
+    navigation.navigate("AddCollection")
   }
   return (
     <SafeAreaView style={[AppStyles.container]}>
@@ -22,7 +22,7 @@ export default function QrCode({navigation}) {
         </View>
         <View style={QrCodeStyle.btnView}>
           <Button title={"Open Scanner"} onPress={handleScanner} style={QrCodeStyle.btn} textStyle={QrCodeStyle.btnText}/>
-          <Button title={"user detail"} onPress={handleNext} style={QrCodeStyle.btn} textStyle={QrCodeStyle.btnText}/>
+          <Button title={"Add Manually"} onPress={handleNext} style={QrCodeStyle.btn} textStyle={QrCodeStyle.btnText}/>
         </View>
       </ImageBackground>
     </SafeAreaView>
