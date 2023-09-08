@@ -50,8 +50,9 @@ export const FinalDetailStyle = StyleSheet.create({
       },
       detailText: {
         color: '#2f2260',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '500',
+        lineHeight: hp(4),
         // marginTop: hp(1.5),
         fontFamily:'Lato-Regular',
       },

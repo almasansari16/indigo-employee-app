@@ -13,6 +13,9 @@ import { AppStyles } from '../../theme/AppStyles';
 import Images from '../../theme/Images';
 import { hp, wp } from '../../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '../../components/Button';
+import { Icon, IconType } from '../../components';
+import { AllCustomersListStyle } from './styles';
 // import { SearchBar } from 'react-native-screens';
 
 
@@ -63,7 +66,27 @@ export default function AllCustomersList({ navigation, route }) {
           designation: "SENIOR RESEARCHER AND DEVELOPER"
         },
       ]
-    }
+    },
+    {
+      brandName: "H&M",
+      address: "MÄSTER SAMUELSGATAN 46A, 106 38 STOCKHOLM, SWEDEN",
+      concernPersons :[]
+    },
+    {
+      brandName: "Mayoral",
+      address: "Mayoral international stores S.A. La Oratava 118. 29006 MALAGA",
+      concernPersons :[]
+    },
+    {
+      brandName: "Inditex",
+      address: "Avda de la Diputaciona 15143 Arteixo ACoruna",
+      concernPersons :[]
+    },
+    {
+      brandName: "KappAhl",
+      address: "KAPPAHL SVERIGE AB, IDROTTSVAGEN 14 BOX 303 431 24 MOLDAL,SWEDEN",
+      concernPersons :[]
+    },
   ]);
   useEffect(async () => {
     try {
@@ -99,6 +122,10 @@ export default function AllCustomersList({ navigation, route }) {
     navigation.navigate('SingleCustomer', {
       item
     })
+  };
+
+  const addNewBrandName = () => {
+    navigation.navigate("AddBrand")
   }
   return (
     <SafeAreaView style={[AppStyles.container]}>
@@ -141,6 +168,14 @@ export default function AllCustomersList({ navigation, route }) {
             value={searchText}
           />
         </View>
+        <View>
+          <Button
+            icon={<Icon name={'plus'}
+              type={IconType.AntDesign} size={30}
+              style={AllCustomersListStyle.icon} />}
+            style={AllCustomersListStyle.addBtn}
+            onPress={addNewBrandName} />
+        </View>
         {/* <ScrollView horizontal > */}
         <DataTable>
           <DataTable.Header>
@@ -150,15 +185,6 @@ export default function AllCustomersList({ navigation, route }) {
             <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
               Address
             </DataTable.Title>
-            {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-              Email
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-              Address
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ color: '#EEEEEE' }} numeric>
-              Contact
-            </DataTable.Title> */}
           </DataTable.Header>
           <TouchableOpacity >
             {filteredItems.slice(from, to).map(item => (

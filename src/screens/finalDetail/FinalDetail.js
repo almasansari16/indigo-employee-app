@@ -24,7 +24,28 @@ export default function FinalDetail({ navigation }) {
     };
     console.log(barcodesValue, "kmvcksdmvkd")
     const [brandName, setBrandName] = useState('');
-    const [name, setName] = useState('');
+
+    const [selectedPersons, setSelectedPersons] = useState([]);
+
+
+
+    const fetchSelectedPersons = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('SelectedConcernPersons');
+            console.log('Retrieved JSON:', jsonValue); // Check the retrieved JSON string
+            const storedSelectedPersons = JSON.parse(jsonValue);
+            console.log('Parsed Selected Persons:', storedSelectedPersons); // Check the parsed array
+            setSelectedPersons(storedSelectedPersons);
+            console.log(selectedPersons, "selected statr")
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchSelectedPersons();
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -81,7 +102,18 @@ export default function FinalDetail({ navigation }) {
 
                             <View>
                                 <Text style={FinalDetailStyle.detailText}>Brand Name: {brandName}</Text>
-                                {/* <Text style={FinalDetailStyle.detailText}>Email: {email}</Text> */}
+                                {selectedPersons.map((person, index) => (
+                                    <>
+                                        <Text style={FinalDetailStyle.detailText}
+                                            key={index}>
+                                            {`${index + 1} ) Concern Person: ${person.name}`}
+                                        </Text>
+                                        <Text style={FinalDetailStyle.detailText}
+                                            key={index}>
+                                            {`${person.email}`}
+                                        </Text>
+                                    </>
+                                ))}
                             </View>
 
                         </View>

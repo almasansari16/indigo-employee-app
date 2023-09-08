@@ -30,6 +30,7 @@ import DisplayBarcodeVlaue from '../screens/qrCode/DisplayBarcodeVlaue';
 import CollectionDetail from '../screens/collectionDetail/CollectionDetail';
 import NewQrCode from '../screens/barcodeScan/NewQrCode';
 import FinalDetail from '../screens/finalDetail/FinalDetail';
+import AddBrand from '../screens/addBrand/AddBrand';
 
 
 const CustomHeader2 = props => {
@@ -269,7 +270,17 @@ function StackNavigation() {
             title: 'Add Collection',
             headerTitleAlign: 'center',
           }} />
-                <Stack.Screen
+        <Stack.Screen
+          name='AddBrand'
+          component={AddBrand}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Add New Brand',
+            headerTitleAlign: 'center',
+          }} />
+          
+        <Stack.Screen
           name='CollectionDetail'
           component={CollectionDetail}
           options={{
@@ -341,7 +352,7 @@ function StackNavigation() {
             title: 'Barcode Value',
             headerTitleAlign: 'center',
           }} />
-          <Stack.Screen 
+        <Stack.Screen
           component={NewQrCode}
           name='NewQrCode'
           options={{
@@ -350,13 +361,13 @@ function StackNavigation() {
             title: 'Barcode Value',
             headerTitleAlign: 'center',
           }} />
-             <Stack.Screen 
+        <Stack.Screen
           component={FinalDetail}
           name='FinalDetail'
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Final Detail....',
+            title: 'Final Detail',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

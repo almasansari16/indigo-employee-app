@@ -2,10 +2,11 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { wp } from '../../App';
 
-const Button = ({ title, onPress, style, textStyle }) => {
+const Button = ({ title, onPress, style, textStyle,icon  }) => {
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+     {icon}
+      <Text style={[styles.buttonText, textStyle]}>{title}  </Text>
     </TouchableOpacity>
   );
 };

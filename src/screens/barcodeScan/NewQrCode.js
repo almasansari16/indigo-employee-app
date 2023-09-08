@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useCameraDevices, Camera } from 'react-native-vision-camera';
 import { useScanBarcodes, BarcodeFormat, scanBarcodes } from 'vision-camera-code-scanner';
@@ -15,7 +15,7 @@ export default function NewQrCode({ navigation }) {
 
     const devices = useCameraDevices();
     const device = devices.back;
-    const barcodeRef = React.useRef(null);
+    const barcodeRef = useRef(null);
     const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
         checkInverted: true,
     });
@@ -30,6 +30,7 @@ export default function NewQrCode({ navigation }) {
     useEffect(() => {
         if (isScanning && barcodes.length > 0) {
             scanCodes();
+            setIsScanning(true)
         }
     }, [barcodes, isScanning]);
 
@@ -42,7 +43,7 @@ export default function NewQrCode({ navigation }) {
             await AsyncStorage.setItem('barcodeValues', JSON.stringify(updatedBarcodeValues));
             setBarcodeValues(updatedBarcodeValues);
 
-            // setIsScanning(false); // Stop scanning after successful scan
+            setIsScanning(false); // Stop scanning after successful scan
         } catch (error) {
             console.log(error.message);
         }
@@ -52,8 +53,9 @@ export default function NewQrCode({ navigation }) {
 
     const handleScanAgain = () => {
         setIsScanning(true)
+        // navigation.navigate('NewQrCode')
         setBarcodeValues([])
-        console.log(isScanning, "isscanning")
+        console.log(isScanning, "isscanning.......")
     }
 
     return (

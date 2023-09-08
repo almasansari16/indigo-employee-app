@@ -6,14 +6,14 @@ import {hp, wp} from '../../App';
 const IconInput = ({icon,style, placeholder, placeholderTextColor, onChangeText, value, error}) => {
   return (
     <>
-      <View style={styles.View}>
+      <View style={[styles.View , style]}>
         {icon}
         <TextInput
           placeholder={placeholder}
           onChangeText={onChangeText}
           value={value}
           placeholderTextColor={placeholderTextColor}
-          style={[styles.input, error && styles.errorInput,style]}
+          style={[styles.input, error && styles.errorInput]}
         />
       </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
    borderColor:'#282561',
    borderWidth:2,
-    width: wp(90),
+    // width: wp(90),
     height: hp(7),
     marginTop: hp(4),
     borderRadius: wp(10),

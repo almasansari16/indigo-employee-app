@@ -146,7 +146,8 @@ export default function SendEmail() {
                 if (email !== null) {
                     const concernPersonsEmails = JSON.parse(email);
                     setEmail(concernPersonsEmails); // Store the emails array directly
-                  }
+                    console.log(email , "emails........")
+                }
 
             } catch (error) {
                 console.log(error)
@@ -157,18 +158,17 @@ export default function SendEmail() {
 
     useEffect(() => {
         if (email) {
-          const emailObjects = email.map(emailValue => ({
-            label: emailValue,
-            value: emailValue,
-          }));
-          setCustomerEmails(emailObjects);
-        //   setSelectedCustomerEmails(email); // Set the default selected emails
+            const emailObjects = email.map(emailValue => ({
+                label: emailValue,
+                value: emailValue,
+            }));
+            setCustomerEmails(emailObjects);
+            //   setSelectedCustomerEmails(email); // Set the default selected emails
         }
-      }, [email]);
+    }, [email]);
 
     const [emailopen, setEmailopen] = useState(false);
     const [customerEmails, setCustomerEmails] = useState([
-        
     ]);
     const [selectedCustomerEmails, setSelectedCustomerEmails] = useState([]);
 
@@ -197,13 +197,13 @@ export default function SendEmail() {
                                 theme="LIGHT"
                                 zIndex={1000}
                                 zIndexInverse={3000}
-                                style={{ width: wp(80), justifyContent: 'center',alignSelf:'center' , marginHorizontal: wp(10) }}
-                                containerStyle={{width:wp(80), alignSelf:'center'}}
-                                textStyle={{fontSize: wp(4) , color:'#2f2260'}}
-                           />
+                                style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
+                                containerStyle={{ width: wp(80), alignSelf: 'center' }}
+                                textStyle={{ fontSize: wp(4), color: '#2f2260' }}
+                            />
                         </View>
                         <View
-                            style={{ zIndex: 1000 , marginTop:hp(5) }}>
+                            style={{ zIndex: 1000, marginTop: hp(5) }}>
                             <DropDownPicker
                                 placeholder={'Select Marketing Person Email'}
                                 open={emailOpen}
@@ -216,10 +216,10 @@ export default function SendEmail() {
                                 theme="LIGHT"
                                 zIndex={1000}
                                 zIndexInverse={3000}
-                                style={{ width: wp(80), justifyContent: 'center',alignSelf:'center' , marginHorizontal: wp(10) }}
-                                containerStyle={{width:wp(80), alignSelf:'center'}}
-                                textStyle={{fontSize: wp(4) , color:'#2f2260'}}
-                                
+                                style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
+                                containerStyle={{ width: wp(80), alignSelf: 'center' }}
+                                textStyle={{ fontSize: wp(4), color: '#2f2260' }}
+
                             />
                         </View>
                         <Button title={'Send Email'}

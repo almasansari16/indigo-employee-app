@@ -63,21 +63,21 @@ export default function Login({ navigation }) {
     const MIN_PASSWORD_LENGTH = 8; // Minimum password length requirement
 
     const handleSignin = () => {
-        if (form.email === '' || form.password === '') {
-            Alert.alert('Fill in all input fields');
-        }
-        else if (!isValidEmail(form.email)) {
-            Alert.alert('Invalid Email', 'Please enter a valid email address.');
-        }
-        else if (form.password.length < MIN_PASSWORD_LENGTH) {
-            Alert.alert('Password Too Short', `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
-        }
-        else {
-            saveSigninData();
+        // if (form.email === '' || form.password === '') {
+        //     Alert.alert('Fill in all input fields');
+        // }
+        // else if (!isValidEmail(form.email)) {
+        //     Alert.alert('Invalid Email', 'Please enter a valid email address.');
+        // }
+        // else if (form.password.length < MIN_PASSWORD_LENGTH) {
+        //     Alert.alert('Password Too Short', `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
+        // }
+        // else {
+        //     saveSigninData();
             navigation.navigate('TabNavigation');
             // Clear the input fields
             setForm({ email: '', password: '' });
-        }
+        // }
     };
     return (
         // <KeyboardAvoidingView>

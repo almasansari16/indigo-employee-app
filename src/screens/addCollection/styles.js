@@ -17,8 +17,9 @@ export const AddCollectionStyle = StyleSheet.create({
         textAlign: 'center',
       },
       input: {
-        // marginVertical:10
-      },
+        width:wp(90),
+        height:hp(8)
+       },
       loginBtn: {
         width: wp(60),
         height: hp(6),
