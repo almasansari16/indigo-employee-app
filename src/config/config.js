@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://indigo-backend.vercel.app/api';

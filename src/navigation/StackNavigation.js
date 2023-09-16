@@ -31,8 +31,10 @@ import CollectionDetail from '../screens/collectionDetail/CollectionDetail';
 import NewQrCode from '../screens/barcodeScan/NewQrCode';
 import FinalDetail from '../screens/finalDetail/FinalDetail';
 import AddBrand from '../screens/addBrand/AddBrand';
+// import { AuthContext } from '../context/authContext';
 
 
+const Stack = createNativeStackNavigator();
 const CustomHeader2 = props => {
   console.log(props.options.title);
   return (
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Stack = createNativeStackNavigator();
+
 
 const animationConfig = {
   animation: 'slide_from_right',
@@ -89,20 +91,21 @@ const animationConfig = {
 };
 
 function StackNavigation() {
-  const [isSignedIn, setIsSignedIn] = React.useState(null);
+  // const [isSignedIn, setIsSignedIn] = React.useState(null);
 
-  React.useEffect(() => {
-    checkIsSignedIn();
-  }, []);
+  // React.useEffect(() => {
+  //   checkIsSignedIn();
+  // }, []);
 
-  const checkIsSignedIn = async () => {
-    try {
-      const signedInValue = await AsyncStorage.getItem('isSignedIn');
-      setIsSignedIn(!!signedInValue); // Convert the value to a boolean
-    } catch (error) {
-      console.error('Error retrieving signed-in status:', error);
-    }
-  };
+  // const checkIsSignedIn = async () => {
+  //   try {
+  //     const signedInValue = await AsyncStorage.getItem('isSignedIn');
+  //     setIsSignedIn(!!signedInValue); // Convert the value to a boolean
+  //   } catch (error) {
+  //     console.error('Error retrieving signed-in status:', error);
+  //   }
+  // };
+  // const {userInfo, splashLoading} = React.useContext(AuthContext);
 
   return (
     <NavigationContainer>
@@ -279,7 +282,7 @@ function StackNavigation() {
             title: 'Add New Brand',
             headerTitleAlign: 'center',
           }} />
-          
+
         <Stack.Screen
           name='CollectionDetail'
           component={CollectionDetail}

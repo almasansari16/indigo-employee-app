@@ -11,7 +11,7 @@ import {
     KeyboardAvoidingView,
     ScrollView
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AppStyles } from '../../theme/AppStyles';
 import { LoginStyle } from './styles';
@@ -20,7 +20,10 @@ import { InputField } from '../../components';
 import { hp, wp } from '../../../App';
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { AuthContext } from '../../context/authContext';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { login } from '../../store/actions/authActions'
+import { connect } from 'react-redux';
 // mock server functions
 const verifyUserCredentials = payload => {
     // make an HTTP request to the server and verify user credentials
@@ -40,45 +43,23 @@ const verifySignatureWithServer = async ({ signature, payload }) => {
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function Login({ navigation }) {
+ function Login({ navigation, login, loading, error }) {
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
-    const [form, setForm] = useState({
-        email: '',
-        password: '',
-    });
-    const saveSigninData = async () => {
-        try {
-            await AsyncStorage.setItem('isSignedIn', form)
-        } catch (error) {
-            console.log(error.message)
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [success, setSuccess] = useState(false)
+    const handleSignin = async () => {
+        await login( email, password);
+
+        if (!error) {
+           setSuccess(true)
+           navigation.navigate('Dashboard')
         }
     }
-    const isValidEmail = (email) => {
-        const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-        return emailPattern.test(email);
-    };
-    const MIN_PASSWORD_LENGTH = 8; // Minimum password length requirement
 
-    const handleSignin = () => {
-        // if (form.email === '' || form.password === '') {
-        //     Alert.alert('Fill in all input fields');
-        // }
-        // else if (!isValidEmail(form.email)) {
-        //     Alert.alert('Invalid Email', 'Please enter a valid email address.');
-        // }
-        // else if (form.password.length < MIN_PASSWORD_LENGTH) {
-        //     Alert.alert('Password Too Short', `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
-        // }
-        // else {
-        //     saveSigninData();
-            navigation.navigate('TabNavigation');
-            // Clear the input fields
-            setForm({ email: '', password: '' });
-        // }
-    };
     return (
         // <KeyboardAvoidingView>
         <SafeAreaView style={{ flex: 1 }}>
@@ -104,6 +85,7 @@ export default function Login({ navigation }) {
                     alignSelf: 'center',
                 }}> */}
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
+                <Spinner visible={loading} />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
                         <View style={[LoginStyle.center, { marginTop: hp(10) }]}>
@@ -117,8 +99,8 @@ export default function Login({ navigation }) {
                                 placeholder={'Enter your email'}
                                 placeholderTextColor={'#EEEEEE'}
                                 keyboardType={'email-address'}
-                                onChangeText={email => setForm({ ...form, email })}
-                                value={form.email}
+                                onChangeText={text => setEmail(text)}
+                                value={email}
                                 style={LoginStyle.input}
                             />
                             <InputField
@@ -126,14 +108,14 @@ export default function Login({ navigation }) {
                                 placeholder={'Enter your password'}
                                 placeholderTextColor={'#EEEEEE'}
                                 keyboardType={'password'}
-                                onChangeText={password => setForm({ ...form, password })}
-                                value={form.password}
+                                onChangeText={text => setPassword(text)}
+                                value={password}
                                 secureTextEntry={true}
                                 style={LoginStyle.input}
                             />
                         </View>
                         <TouchableOpacity
-                            onPress={handleSignin}
+                            onPress={handleSignin }
                             style={[LoginStyle.loginBtn, LoginStyle.center]}>
                             <Text style={[LoginStyle.btnText]}>Login</Text>
                         </TouchableOpacity>
@@ -237,3 +219,14 @@ export default function Login({ navigation }) {
         // </KeyboardAvoidingView>
     );
 }
+
+const mapStateToProps = (state) => ({
+    loading: state.auth.loading,
+    error: state.auth.error,
+  });
+
+const mapDispatchToProps = {
+    login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

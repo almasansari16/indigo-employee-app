@@ -1,34 +1,47 @@
-// actions/authActions.js
+// authActions.js
 import axios from 'axios';
-import {
-    SIGNUP_REQUEST,
-    SIGNUP_SUCCESS,
-    SIGNUP_FAILURE,
-    API_BASE_URL,
-  } from './constant';
-  
-export const signupRequest = () => ({ type: SIGNUP_REQUEST });
-export const signupSuccess = () => ({ type: SIGNUP_SUCCESS });
-export const signupFailure = (error) => ({ type: SIGNUP_FAILURE, payload: error });
+import { BASE_URL } from '../../config/config';
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './actionTypes';
+import { Alert } from 'react-native';
+import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const signup = (userData) => {
-  return async (dispatch) => {
-    dispatch(signupRequest());
+const login = (email, password) => async (dispatch) => {
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/signup`, userData);
-      
-      // Check for validation errors returned by the backend
-      if (response.data.errors) {
-        dispatch(signupFailure(response.data.errors));
-        console.log(response.data.errors , "resnopse error")
-      } else {
-        dispatch(signupSuccess(response.data));
-        console.log(response.data, "sucesss")
-      }
+        // Dispatch action to set loading state
+        dispatch({ type: LOGIN_REQUEST });
+
+        // Make an API request to authenticate the user
+        const response = await axios.post(`${BASE_URL}/login`, { email, password });
+
+        // Dispatch action to set user data and authentication status
+        dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+        console.log(response.data.user, "user data")
+        await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
+        Alert.alert(response.data.msg)
     } catch (error) {
-      dispatch(signupFailure(error.message));
-      console.log(error.message, "failuredjbhj")
+        // Dispatch action to handle login failure
+        dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }
-  };
-}
+};
+
+const signup = (name, email, password, contact) => async (dispatch) => {
+    try {
+        // Dispatch action to set loading state
+        dispatch({ type: SIGNUP_REQUEST });
+
+        // Make an API request to authenticate the user
+        const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact });
+        console.log(response.data, "response")
+        Alert.alert(response.data.msg)
+        // Dispatch action to set user data and authentication status
+        dispatch({ type: SIGNUP_SUCCESS, payload: response.data });
+    } catch (error) {
+        // Dispatch action to handle login failure
+        console.log(error, "error")
+        dispatch({ type: SIGNUP_FAILURE, payload: error.message });
+    }
+};
+
+export { login, signup };

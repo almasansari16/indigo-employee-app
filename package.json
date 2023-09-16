@@ -34,6 +34,7 @@
     "react-native-gesture-handler": "^2.11.0",
     "react-native-hole-view": "^3.0.0-alpha3",
     "react-native-linear-gradient": "^2.8.0",
+    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-mail": "^6.1.1",
     "react-native-mmkv": "^2.8.0",
     "react-native-modal": "^13.0.1",

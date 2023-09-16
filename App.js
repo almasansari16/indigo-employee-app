@@ -42,7 +42,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import store from './src/store/store';
 import { ToastProvider } from 'react-native-paper-toast';
-
+import { AuthProvider } from './src/context/authContext';
 // function Section({children, title}){
 //   const isDarkMode = useColorScheme() === 'dark';
 //   return (
@@ -90,9 +90,11 @@ function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#000" />
       <Provider store={store}>
-        <ToastProvider>
-          <StackNavigation />
-        </ToastProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <StackNavigation />
+          </ToastProvider>
+        </AuthProvider>
       </Provider>
     </GestureHandlerRootView>
   );
