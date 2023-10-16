@@ -20,7 +20,10 @@ const login = (email, password) => async (dispatch) => {
         console.log(response.data.user, "user data")
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         Alert.alert(response.data.msg)
+        
     } catch (error) {
+        Alert.alert(error.response.data.message)
+        console.log(error.response.data.message, "error..........")
         // Dispatch action to handle login failure
         dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }

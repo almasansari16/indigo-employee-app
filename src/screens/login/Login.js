@@ -53,10 +53,12 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
     const [success, setSuccess] = useState(false)
     const handleSignin = async () => {
         await login( email, password);
-
+        if(email == "" && password ==""){
+            Alert.alert("Please enter your Email or Password")
+        }
         if (!error) {
            setSuccess(true)
-           navigation.navigate('Dashboard')
+           navigation.navigate('TabNavigation')
         }
     }
 

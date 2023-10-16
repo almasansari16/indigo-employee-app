@@ -25,7 +25,7 @@ export const SingleCustomerStyle = StyleSheet.create({
         padding: 5
     },
     subHeading: {
-        color: '##282561',
+        color: '#282561',
         textAlign: 'center',
         fontSize: wp(5.5),
         fontWeight: '700',

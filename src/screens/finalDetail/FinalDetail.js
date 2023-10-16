@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jestConfig from '../../../jest.config';
 import { FinalDetailStyle } from './styles';
 import { AppStyles } from '../../theme/AppStyles';
-import { IconInput } from '../../components';
+import { IconInput, Table } from '../../components';
 import Button from '../../components/Button';
 import { hp, wp } from '../../../App';
 
@@ -22,7 +22,7 @@ export default function FinalDetail({ navigation }) {
             console.log(error.message);
         }
     };
-    console.log(barcodesValue, "kmvcksdmvkd")
+    console.log(barcodesValue, "kmvcksdmvkdbfbd")
     const [brandName, setBrandName] = useState('');
 
     const [selectedPersons, setSelectedPersons] = useState([]);
@@ -92,6 +92,7 @@ export default function FinalDetail({ navigation }) {
         saveData()
         navigation.navigate('SendEmail', { customer });
     };
+   
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
@@ -134,6 +135,9 @@ export default function FinalDetail({ navigation }) {
                                 </View>
                             )}
                         </View>
+                        <View>
+                            {/* <Table data={data}/> */}
+                        </View>
                         <View style={[FinalDetailStyle.detailView2, { height: hp(40) }]}>
                             <Text style={[FinalDetailStyle.heading,
                             { color: '#282561', marginTop: -5 }]}>Note Option</Text>
@@ -143,7 +147,7 @@ export default function FinalDetail({ navigation }) {
                                     multiline={true}
                                     placeholderTextColor={'#2f2260'}
                                     numberOfLines={4}
-                                    style={{ width: wp(90) }}
+                                    style={{ width: wp(90) , color:'#2f2260'}}
                                 />
                             </ScrollView>
                         </View>

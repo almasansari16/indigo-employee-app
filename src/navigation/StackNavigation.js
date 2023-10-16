@@ -31,6 +31,9 @@ import CollectionDetail from '../screens/collectionDetail/CollectionDetail';
 import NewQrCode from '../screens/barcodeScan/NewQrCode';
 import FinalDetail from '../screens/finalDetail/FinalDetail';
 import AddBrand from '../screens/addBrand/AddBrand';
+import ExcelExportScreen from '../screens';
+import Testing from '../screens/testingScreen/Testing';
+import AddConcernPerson from '../screens/addNewConcernPerson/AddConcernPerson';
 // import { AuthContext } from '../context/authContext';
 
 
@@ -282,7 +285,15 @@ function StackNavigation() {
             title: 'Add New Brand',
             headerTitleAlign: 'center',
           }} />
-
+        <Stack.Screen
+          name='AddConcernPerson'
+          component={AddConcernPerson}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Add New Concern Person',
+            headerTitleAlign: 'center',
+          }} />
         <Stack.Screen
           name='CollectionDetail'
           component={CollectionDetail}
@@ -367,6 +378,15 @@ function StackNavigation() {
         <Stack.Screen
           component={FinalDetail}
           name='FinalDetail'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Final Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={Testing}
+          name='Testing'
           options={{
             ...animationConfig,
             orientation: 'portrait',

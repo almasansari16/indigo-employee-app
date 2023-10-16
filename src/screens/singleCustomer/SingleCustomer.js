@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Dimensions, ScrollView, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, Dimensions, ScrollView, ImageBackground, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles';
 import { SingleCustomerStyle } from './styles';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Images from '../../theme/Images';
 import { hp } from '../../../App';
 import { CustomModal, Icon, IconInput, IconType } from '../../components';
+import { createConcernPerson } from '../../store/actions/concernPersonAction';
 
 
 
@@ -16,7 +17,13 @@ export default function SingleCustomer({ route, navigation }) {
   const [customer, setCustomer] = useState(null); // Initialize customer as null
   const [selectedPersons, setSelectedPersons] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [concernPerson, setConcernPerson] = useState({
+    name: '',
+    email: '',
+    designation: '',
+    id:'652920f2498e960b1333e41c'
+   
+  })
   const openModal = () => {
     setModalVisible(true);
   };
@@ -37,9 +44,10 @@ export default function SingleCustomer({ route, navigation }) {
   useEffect(() => {
     console.log('Route Params:', route.params); // Check if route params are being received
     const { item } = route.params;
-    console.log('Customer Item:', item); // Check the customer item data
+    console.log('Customer Item:', item._id);
+    AsyncStorage.setItem("brandID" , item._id) // Check the customer item data
     setCustomer(item);
-    // console.log(customer.concernPersons, "concern person")
+    // console.log(customer._id, "concern person")
   }, [route.params]);
 
   if (!customer) {
@@ -79,6 +87,9 @@ export default function SingleCustomer({ route, navigation }) {
     } catch (error) {
       console.log(error.message)
     }
+  }
+  const handleCreateConcernPerson = async () => {
+    await createConcernPerson(concernPerson)
   }
   return (
     <SafeAreaView>
@@ -133,7 +144,7 @@ export default function SingleCustomer({ route, navigation }) {
           </ScrollView>
           <View style={SingleCustomerStyle.btnView}>
             <Button title={"Add New Person"}
-              onPress={openModal} style={SingleCustomerStyle.btn} />
+              onPress={() => navigation.navigate("AddConcernPerson")} style={SingleCustomerStyle.btn} />
             <Button title={"Scan Code"}
               onPress={handleSave} style={SingleCustomerStyle.btn} />
           </View>
@@ -149,11 +160,10 @@ export default function SingleCustomer({ route, navigation }) {
                     style={{ margin: 15 }}
                   />
                 }
-                placeholder={'Address'}
+                placeholder={'Name'}
                 placeholderTextColor={'#282561'}
-                keyboardType={'number-pad'}
-                // onChangeText={address => setCustomer({ ...customer, address })}
-                // value={customer.address}
+                onChangeText={name => setConcernPerson({ ...concernPerson, name })}
+                value={concernPerson.name}
                 style={SingleCustomerStyle.input}
               // error={validation.address}
               />
@@ -166,11 +176,10 @@ export default function SingleCustomer({ route, navigation }) {
                     style={{ margin: 15 }}
                   />
                 }
-                placeholder={'Address'}
+                placeholder={'Email'}
                 placeholderTextColor={'#282561'}
-                keyboardType={'number-pad'}
-                // onChangeText={address => setCustomer({ ...customer, address })}
-                // value={customer.address}
+                onChangeText={email => setConcernPerson({ ...concernPerson, email })}
+                value={concernPerson.email}
                 style={SingleCustomerStyle.input}
               // error={validation.address}
               />
@@ -183,18 +192,17 @@ export default function SingleCustomer({ route, navigation }) {
                     style={{ margin: 15 }}
                   />
                 }
-                placeholder={'Address'}
+                placeholder={'Designation'}
                 placeholderTextColor={'#282561'}
-                keyboardType={'number-pad'}
-                // onChangeText={address => setCustomer({ ...customer, address })}
-                // value={customer.address}
+                onChangeText={designation => setConcernPerson({ ...concernPerson, designation })}
+                value={concernPerson.designation}
                 style={SingleCustomerStyle.input}
               // error={validation.address}
               />
               <Button title={'Save'}
                 style={[SingleCustomerStyle.modalbtn]}
                 textStyle={{ color: '#EEEEEE' }}
-                onPress={closeModal} />
+                onPress={ handleCreateConcernPerson} />
             </View>
           </CustomModal>
         </View>

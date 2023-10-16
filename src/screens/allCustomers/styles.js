@@ -8,5 +8,10 @@ export const AllCustomersListStyle = StyleSheet.create({
     icon : {
         color: '#EEEEEE',
         fontWeight: '700'
-    }
+    },
+    Pagination:{
+        color:'white',
+        fontSize: 40
+    },
+
 })

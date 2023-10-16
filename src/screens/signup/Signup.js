@@ -35,7 +35,7 @@ function Signup({ navigation, signup, loading, error }) {
 
         if (!error) {
            setSuccess(true)
-           navigation.navigate('Login')
+        
         }
     }
     return (

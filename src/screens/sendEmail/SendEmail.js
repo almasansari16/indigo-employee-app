@@ -134,10 +134,54 @@ import Button from '../../components/Button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { hp, wp } from '../../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../config/config';
+import axios from 'axios';
 
 
 export default function SendEmail() {
+    const emailOptions = [];
     const [email, setEmail] = useState('');
+    const [selectedEmail, setSelectedEmail] = useState(emailOptions[0]); // Default to the first option
+    const [subject, setSubject] = useState('INDIGO PVT LTD');
+    const [text, setText] = useState('testing email from application');
+    const sendEmailMarketing = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/marketing-email`, {
+                to: selectedEmail,
+                subject,
+                text,
+            });
+
+            // Handle success (e.g., show a success message)
+            console.log('Email sent successfully:', response.data.message);
+            Alert.alert(response.data.message)
+        } catch (error) {
+            // Handle error (e.g., show an error message)
+            console.error('Error sending email:', error);
+            Alert.alert(error.message)
+        }
+    };
+
+    const selectedOptions = [];
+    const [selectedConcernPersonEmail , setSelectedConcernPersonEmail ] = useState(selectedOptions[0]);
+    const sendEmailConcernPerson = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/customer-email`, {
+                to: selectedConcernPersonEmail,
+                subject,
+                text,
+            });
+
+            // Handle success (e.g., show a success message)
+            console.log('Email sent successfully:', response.data.message);
+            Alert.alert(response.data.message)
+        } catch (error) {
+            // Handle error (e.g., show an error message)
+            console.error('Error sending email:', error);
+            Alert.alert(error.message)
+        }
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -146,7 +190,7 @@ export default function SendEmail() {
                 if (email !== null) {
                     const concernPersonsEmails = JSON.parse(email);
                     setEmail(concernPersonsEmails); // Store the emails array directly
-                    console.log(email , "emails........")
+                    console.log(email, "emails........")
                 }
 
             } catch (error) {
@@ -174,8 +218,10 @@ export default function SendEmail() {
 
     const [emailOpen, setEmailOpen] = useState(false);
     const [availableEmails, setvAilableEmails] = useState([
-        { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
+        // { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
+        { label: 'almas.ansari@indigo.com.pk', value: 'almas.ansari@indigo.com.pk' },
+        {label:'almashanif126@gmail.com', value:'almashanif126@gmail.com'}
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
     return (
@@ -202,6 +248,9 @@ export default function SendEmail() {
                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
                             />
                         </View>
+                        <Button title={'Send Email Concern Persons'}
+                            style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
+                            onPress={sendEmailConcernPerson} />
                         <View
                             style={{ zIndex: 1000, marginTop: hp(5) }}>
                             <DropDownPicker
@@ -212,6 +261,8 @@ export default function SendEmail() {
                                 multiple={true}
                                 setOpen={setEmailOpen}
                                 setValue={setSelectedEmails}
+                                onChangeValue={(itemValue) => setSelectedEmail(itemValue)}
+
                                 setItems={setvAilableEmails}
                                 theme="LIGHT"
                                 zIndex={1000}
@@ -222,9 +273,9 @@ export default function SendEmail() {
 
                             />
                         </View>
-                        <Button title={'Send Email'}
+                        <Button title={'Send Email Marketing Team'}
                             style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
-                            onPress={() => Alert.alert("Email send sucessfully!")} />
+                            onPress={sendEmailMarketing} />
                     </View>
 
                 </View>

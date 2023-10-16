@@ -6,19 +6,21 @@ import { Icon, IconInput, IconType } from '../../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AddBrandStyle } from './styles';
 import Button from '../../components/Button';
+import { createBrand } from '../../store/actions/brandAction';
+import { connect } from 'react-redux';
 
-export default function AddBrand({ navigation }) {
-  const [customer, setCustomer] = useState({
+function AddBrand({ navigation, createBrand }) {
+  const [brand, setBrand] = useState({
     brandName: '',
     address: '',
   });
-
+  console.log(brand, "brand...........")
   const [validation, setValidation] = useState({});
 
   const saveData = async () => {
     try {
-      await AsyncStorage.setItem('CustomerName', customer.brandName);
-      await AsyncStorage.setItem('CustomerAddress', customer.address);
+      await AsyncStorage.setItem('BrandName', brand.brandName);
+      await AsyncStorage.setItem('BrandAddress', brand.address);
     } catch (error) {
       console.log(error.message);
     }
@@ -27,23 +29,43 @@ export default function AddBrand({ navigation }) {
   const handleSave = () => {
     const errors = {};
 
-    if (!customer.brandName) {
+    if (!brand.brandName) {
       errors.brandName = 'Brand Name is required';
     }
-    if (!customer.address) {
-      errors.address = 'Contact is required';
+    if (!brand.address) {
+      errors.address = 'Address is required';
     }
 
     setValidation(errors);
 
     if (Object.keys(errors).length === 0) {
       // Proceed with form submission
+      handleCreateBrand()
       saveData()
-      Alert.alert("Brand save sucessfully")
-      setCustomer({brandName : " " , address: " " })
-      navigation.navigate('AllCustomersList')
+      setBrand({ brandName: " ", address: " "})
+      navigation.navigate('TabNavigation')
     }
 
+  };
+  const handleCreateBrand = async () => {
+    await createBrand(brand);
+
+
+  };
+  const handleConcernPersonChange = (index, key, value) => {
+    const updatedConcernPersons = [...brand.concernPersons];
+    updatedConcernPersons[index][key] = value;
+    setBrand({
+      ...brand,
+      concernPersons: updatedConcernPersons,
+    });
+  };
+
+  const addConcernPerson = () => {
+    setBrand({
+      ...brand,
+      concernPersons: [...brand.concernPersons, { name: '', email: '', designation:'' }],
+    });
   };
 
   return (
@@ -67,8 +89,8 @@ export default function AddBrand({ navigation }) {
               }
               placeholder={'Brand Name'}
               placeholderTextColor={'#282561'}
-              onChangeText={brandName => setCustomer({ ...customer, brandName })}
-              value={customer.brandName}
+              onChangeText={brandName => setBrand({ ...brand, brandName })}
+              value={brand.brandName}
               style={AddBrandStyle.input}
               error={validation.brandName}
             />
@@ -84,11 +106,44 @@ export default function AddBrand({ navigation }) {
               placeholder={'Address'}
               placeholderTextColor={'#282561'}
               keyboardType={'number-pad'}
-              onChangeText={address => setCustomer({ ...customer, address })}
-              value={customer.address}
+              onChangeText={address => setBrand({ ...brand, address })}
+              value={brand.address}
               style={AddBrandStyle.input}
               error={validation.address}
             />
+            {/* {brand.concernPersons.map((person, index) => (
+              <View key={index}>
+                <IconInput
+                  placeholder={`Name ${index + 1}`}
+                  placeholderTextColor={'#282561'}
+                  value={person.name}
+                  style={AddBrandStyle.input}
+                  onChangeText={(text) =>
+                    handleConcernPersonChange(index, 'name', text)
+                  }
+                />
+                <IconInput
+                  placeholder={`Email ${index + 1}`}
+                  placeholderTextColor={'#282561'}
+                  value={person.email}
+                  style={AddBrandStyle.input}
+                  onChangeText={(text) =>
+                    handleConcernPersonChange(index, 'email', text)
+                  }
+                />
+                  <IconInput
+                  placeholder={`Designation ${index + 1}`}
+                  placeholderTextColor={'#282561'}
+                  value={person.designation}
+                  style={AddBrandStyle.input}
+                  onChangeText={(text) =>
+                    handleConcernPersonChange(index, 'designation', text)
+                  }
+                />
+              </View>
+            ))}
+            <Button title="Add Concern Person" onPress={addConcernPerson} /> */}
+
           </View>
           <View style={AddBrandStyle.btnView}>
             <Button title={'Save'} onPress={handleSave} style={AddBrandStyle.btn} textStyle={AddBrandStyle.text} />
@@ -98,3 +153,14 @@ export default function AddBrand({ navigation }) {
     </SafeAreaView>
   )
 }
+
+const mapStateToProps = (state) => ({
+  brands: state.brand.brands, // Assuming your reducer updates the "brands" property
+  loading: state.brand.loading, // Assuming your reducer updates the "loading" property
+  error: state.brand.error, // Assuming your reducer updates the "error" property
+});
+
+const mapDispatchToProps = {
+  createBrand, // This makes the createBrand action available as a prop
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AddBrand);

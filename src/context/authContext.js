@@ -65,7 +65,7 @@ export const AuthProvider = ({ children , navigation}) => {
         navigateToDashboard(navigation)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error,"ycvhgvgv")
         setIsLoading(false);
         if (error.response) {
           // The request was made, but the server responded with an error
