@@ -44,7 +44,7 @@ export default function Dashboard({ navigation }) {
             mode="small"
             style={{ color: 'white' }}
             color="black"
-          titleStyle={AppStyles.headerText}
+            titleStyle={AppStyles.headerText}
           />
         </Appbar.Header>
         <View style={[dashboardStyles.div]}>
@@ -54,12 +54,15 @@ export default function Dashboard({ navigation }) {
               onPress={() => navigation.navigate('QrCode')}>
               <Text style={[dashboardStyles.linksText]}>Scan QR Code</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={dashboardStyles.links}
+              onPress={() => navigation.navigate('Testing')}>
+              <Text style={[dashboardStyles.linksText]}>My Orders</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={dashboardStyles.links}
               onPress={() => navigation.navigate('AddCustomer')}>
               <Text style={[dashboardStyles.linksText]}>Add Customer</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
               style={dashboardStyles.links}
               onPress={() => navigation.navigate('AddCollection')}>

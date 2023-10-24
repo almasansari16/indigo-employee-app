@@ -5,8 +5,6 @@ import { AppStyles } from '../../theme/AppStyles';
 import { SignupStyles } from './styles';
 import { hp } from '../../../App';
 import { InputField } from '../../components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { signup } from '../../store/actions/authActions'
 import { connect } from 'react-redux';
@@ -19,23 +17,13 @@ function Signup({ navigation, signup, loading, error }) {
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('')
     const [success, setSuccess] = useState(false)
-    // const { isLoading, register } = useContext(AuthContext);
-    // const saveData = async () => {
-    //     try {
-    //         await AsyncStorage.setItem("UserName", form.name);
-    //         await AsyncStorage.setItem("UserEmail", form.email);
-    //         await AsyncStorage.setItem("UserPassword", form.password);
-    //         await AsyncStorage.setItem("UserContact", form.contact);
-    //     } catch (error) {
-    //         console.log(error.message)
-    //     }
-    // }
+ 
     const handleSignup = async () => {
         await signup(name, email, password, contact);
 
         if (!error) {
            setSuccess(true)
-        
+            navigation.navigate("Login")
         }
     }
     return (

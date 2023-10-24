@@ -138,32 +138,39 @@ import { BASE_URL } from '../../config/config';
 import axios from 'axios';
 
 
-export default function SendEmail() {
+export default function SendEmail({navigation}) {
     const emailOptions = [];
     const [email, setEmail] = useState('');
+    const [extraNote, setExtraNote] = useState('')
     const [selectedEmail, setSelectedEmail] = useState(emailOptions[0]); // Default to the first option
     const [subject, setSubject] = useState('INDIGO PVT LTD');
+    const [data, setData] = useState([])
     const [text, setText] = useState('testing email from application');
-    const sendEmailMarketing = async () => {
-        try {
-            const response = await axios.post(`${BASE_URL}/marketing-email`, {
-                to: selectedEmail,
-                subject,
-                text,
-            });
 
-            // Handle success (e.g., show a success message)
-            console.log('Email sent successfully:', response.data.message);
-            Alert.alert(response.data.message)
+    const sendEmailMarketing = async () => {
+        const requestData = {
+            //   data: data,
+            to: selectedEmail,
+            subject,
+            extraNote: extraNote,
+        };
+
+        console.log('Request data:', requestData);
+
+        try {
+            const response = await axios.post(`${BASE_URL}/send-email`, requestData);
+
+            console.log('Response:', response.data);
+            Alert.alert(response.data.message);
         } catch (error) {
-            // Handle error (e.g., show an error message)
-            console.error('Error sending email:', error);
-            Alert.alert(error.message)
+            console.error('Error sending email:', error.message);
+            Alert.alert(error.message);
         }
     };
 
+
     const selectedOptions = [];
-    const [selectedConcernPersonEmail , setSelectedConcernPersonEmail ] = useState(selectedOptions[0]);
+    const [selectedConcernPersonEmail, setSelectedConcernPersonEmail] = useState(selectedOptions[0]);
     const sendEmailConcernPerson = async () => {
         try {
             const response = await axios.post(`${BASE_URL}/customer-email`, {
@@ -199,7 +206,18 @@ export default function SendEmail() {
         }
         fetchData();
     }, []);
-
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const extraDetail = await AsyncStorage.getItem("Extra Detail")
+                console.log(extraDetail)
+                setExtraNote(extraDetail)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [])
     useEffect(() => {
         if (email) {
             const emailObjects = email.map(emailValue => ({
@@ -221,13 +239,13 @@ export default function SendEmail() {
         // { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
         { label: 'almas.ansari@indigo.com.pk', value: 'almas.ansari@indigo.com.pk' },
-        {label:'almashanif126@gmail.com', value:'almashanif126@gmail.com'}
+        { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' }
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
-                <View style={AppStyles.center}>
+                <View style={[AppStyles.center]}>
                     <View style={SendEmailStyle.view}>
                         <View
                             style={{ zIndex: 2000 }}>
@@ -277,7 +295,10 @@ export default function SendEmail() {
                             style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
                             onPress={sendEmailMarketing} />
                     </View>
-
+                    <Button
+                        title={"check your order"}
+                        style={[SendEmailStyle.btn, {top: 0, width: wp(50) }]}
+                        onPress={() => navigation.navigate("Testing")} />
                 </View>
             </ImageBackground>
         </SafeAreaView>

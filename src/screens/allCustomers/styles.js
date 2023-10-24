@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { wp } from "../../../App";
+import { hp, wp } from "../../../App";
 
 export const AllCustomersListStyle = StyleSheet.create({
     addBtn : {
@@ -11,7 +11,8 @@ export const AllCustomersListStyle = StyleSheet.create({
     },
     Pagination:{
         color:'white',
-        fontSize: 40
+        fontSize: 40,
+       marginBottom: 50   
     },
 
-})
+})    

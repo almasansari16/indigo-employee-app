@@ -55,7 +55,7 @@ const meetingReducer = (state = initialState, action) => {
                 loading: false
             };
         default:
-            state;
+          return state;
     };
 };
 

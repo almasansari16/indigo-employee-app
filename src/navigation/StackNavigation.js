@@ -390,7 +390,7 @@ function StackNavigation() {
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Final Detail',
+            title: 'Orders',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

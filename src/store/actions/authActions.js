@@ -5,6 +5,7 @@ import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQ
 import { Alert } from 'react-native';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigateToDashboard } from '../../utils/navigationUtils';
 
 const login = (email, password) => async (dispatch) => {
 
@@ -20,6 +21,7 @@ const login = (email, password) => async (dispatch) => {
         console.log(response.data.user, "user data")
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         Alert.alert(response.data.msg)
+        // navigateToDashboard(navigation)
         
     } catch (error) {
         Alert.alert(error.response.data.message)

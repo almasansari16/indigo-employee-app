@@ -23,7 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { login } from '../../store/actions/authActions'
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 // mock server functions
 const verifyUserCredentials = payload => {
     // make an HTTP request to the server and verify user credentials
@@ -48,6 +48,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
+
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false)

@@ -6,10 +6,11 @@ import {
   ScrollView,
   ImageBackground,
   Text,
+  RefreshControl,
   TouchableOpacity,
-  ActivityIndicator,
+
 } from 'react-native';
-import { Appbar, DataTable, Searchbar } from 'react-native-paper';
+import { ActivityIndicator, Appbar, DataTable, Searchbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../../components/Button';
 import { Icon, IconType } from '../../components';
@@ -23,6 +24,7 @@ import { hp, wp } from '../../../App';
 function AllCustomersList({ navigation, route }) {
   const [page, setPage] = useState(0);
   const [numberOfItemsPerPageList] = useState([5]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brand.brands);
@@ -70,7 +72,7 @@ function AllCustomersList({ navigation, route }) {
         item.brandName.toLowerCase().includes(text.toLowerCase()) ||
         item.address.toLowerCase().includes(text.toLowerCase())
     );
-    console.log(filteredData , "filter data"); 
+    console.log(filteredData, "filter data");
     setFilteredItems(filteredData);
     setPage(0);
   };
@@ -84,13 +86,24 @@ function AllCustomersList({ navigation, route }) {
   const addNewBrandName = () => {
     navigation.navigate('AddBrand');
   };
-  console.log(filteredItems , "filterdItems...")
+  console.log(filteredItems, "filterdItems...")
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+
+    try {
+      await getBrands();
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
   return (
     <SafeAreaView style={AppStyles.container}>
       <ImageBackground
         source={Images.purple_background}
-        style={{ width:wp(100) , height:hp(100)}}>
+        style={{ width: wp(100), height: hp(100) }}>
         <Appbar.Header
           style={{
             backgroundColor: '#EEEEEE',
@@ -134,24 +147,32 @@ function AllCustomersList({ navigation, route }) {
             onPress={addNewBrandName}
           />
         </View>
-        {filteredItems.length > 0 ? (
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Brand Name</DataTable.Title>
-            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Address</DataTable.Title>
-          </DataTable.Header>
-          <TouchableOpacity>
-            {filteredItems.slice(from, to).map((item) => (
-              <DataTable.Row key={item.key} onPress={() => customerDetail(item)}>
-                <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
-                <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
-              </DataTable.Row>
-            ))}
-          </TouchableOpacity>
-        </DataTable>
-        ) : (
-          <ActivityIndicator size="large" />
-        )}
+        <ScrollView 
+           refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+            />
+          }>
+          {filteredItems.length > 0 ? (
+            <DataTable>
+              <DataTable.Header>
+                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Brand Name</DataTable.Title>
+                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Address</DataTable.Title>
+              </DataTable.Header>
+              <TouchableOpacity>
+                {filteredItems.slice(from, to).map((item) => (
+                  <DataTable.Row key={item.key} onPress={() => customerDetail(item)}>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              </TouchableOpacity>
+            </DataTable>
+          ) : (
+            <ActivityIndicator color='#EEEEEE' size="large" />
+          )}
+        </ScrollView>
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(items.length / itemsPerPage)}
@@ -159,7 +180,7 @@ function AllCustomersList({ navigation, route }) {
           label={`${from + 1}-${to} of ${items.length}`}
           numberOfItemsPerPageList={numberOfItemsPerPageList}
           numberOfItemsPerPage={itemsPerPage}
-          style={AllCustomersListStyle.Pagination}  
+          style={AllCustomersListStyle.Pagination}
           onItemsPerPageChange={onItemsPerPageChange}
           showFastPaginationControls
           selectPageDropdownLabel={'Rows per page'}
@@ -169,12 +190,6 @@ function AllCustomersList({ navigation, route }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 100,
-    paddingHorizontal: 30,
-  },
-});
 
 
 const mapStateToProps = (state) => ({

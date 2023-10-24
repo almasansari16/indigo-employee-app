@@ -16,36 +16,22 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export default function SingleCustomer({ route, navigation }) {
   const [customer, setCustomer] = useState(null); // Initialize customer as null
   const [selectedPersons, setSelectedPersons] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [concernPerson, setConcernPerson] = useState({
-    name: '',
-    email: '',
-    designation: '',
-    id:'652920f2498e960b1333e41c'
-   
-  })
-  const openModal = () => {
-    setModalVisible(true);
-  };
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      // Reset the modal visibility when navigating away from the screen
-      setModalVisible(false);
-    })
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('blur', () => {
+  //     // Reset the modal visibility when navigating away from the screen
+  //     setModalVisible(false);
+  //   })
 
-    return unsubscribe;
-  }, [navigation]);
+  //   return unsubscribe;
+  // }, [navigation]);
 
 
   useEffect(() => {
     console.log('Route Params:', route.params); // Check if route params are being received
     const { item } = route.params;
     console.log('Customer Item:', item._id);
-    AsyncStorage.setItem("brandID" , item._id) // Check the customer item data
+    AsyncStorage.setItem("brandID", item._id) // Check the customer item data
     setCustomer(item);
     // console.log(customer._id, "concern person")
   }, [route.params]);
@@ -62,16 +48,17 @@ export default function SingleCustomer({ route, navigation }) {
 
   const togglePersonSelection = (person) => {
     if (selectedPersons.some(selectedPerson => selectedPerson.email === person.email)) {
-      setSelectedPersons(selectedPersons.filter(selectedPerson => selectedPerson.email !== person.email));
+      setSelectedPersons(selectedPersons => selectedPersons.filter(selectedPerson => selectedPerson.email !== person.email));
     } else {
-      setSelectedPersons([...selectedPersons, person]);
+      setSelectedPersons(selectedPersons => [...selectedPersons, person]);
     }
   };
+console.log(selectedPersons , "selected persons array ")  
+
 
   const handleSave = async () => {
     try {
       await AsyncStorage.setItem("BrandName", customer.brandName);
-
       const selectedConcernPersons = concernPersons.filter(person => selectedPersons.some(selectedPerson => selectedPerson.email === person.email));
       const selectedPersonDetails = selectedConcernPersons.map(person => ({
         name: person.name,
@@ -80,7 +67,7 @@ export default function SingleCustomer({ route, navigation }) {
       }));
       const emails = concernPersons.map(person => person.email);
       await AsyncStorage.setItem("ConcernPerson Emails", JSON.stringify(emails))
-      await AsyncStorage.setItem("SelectedConcernPersons", JSON.stringify(selectedPersonDetails));
+      await AsyncStorage.setItem("SelectedConcernPersons", JSON.stringify(selectedConcernPersons));
 
       navigation.navigate("NewQrCode")
 
@@ -88,9 +75,7 @@ export default function SingleCustomer({ route, navigation }) {
       console.log(error.message)
     }
   }
-  const handleCreateConcernPerson = async () => {
-    await createConcernPerson(concernPerson)
-  }
+
   return (
     <SafeAreaView>
       <ImageBackground source={Images.purple_background}>
@@ -101,26 +86,33 @@ export default function SingleCustomer({ route, navigation }) {
           </View>
           <ScrollView style={{ marginVertical: hp(3) }} showsVerticalScrollIndicator={false}>
             {concernPersons.map((person, index) => (
-              <TouchableOpacity key={index}
-                onPress={() => togglePersonSelection(person)}
+              <TouchableOpacity
+                key={person._id}
+                onPress={() => {
+                  console.log("Person clicked:", person);
+                  togglePersonSelection(person);
+                }
+                }
                 style={[
                   SingleCustomerStyle.personView,
                   {
                     backgroundColor:
-                      selectedPersons.some
-                        (selectedPerson => selectedPerson.email === person.email)
-                        ? '#20154d' : '#EEEEEE'
+                      selectedPersons.some(
+                        selectedPerson => selectedPerson._id === person._id
+                      )
+                        ? '#20154d'
+                        : '#EEEEEE'
                   }
-                ]}>
-                <Text style={[
-                  SingleCustomerStyle.detailText,
-                  {
-                    color:
-                      selectedPersons.some
-                        (selectedPerson => selectedPerson.email === person.email)
-                        ? '#EEEEEE' : '#20154d'
-                  }
-                ]}>Name: {person.name}</Text>
+                ]}
+              ><Text style={[
+                SingleCustomerStyle.detailText,
+                {
+                  color:
+                    selectedPersons.some
+                      (selectedPerson => selectedPerson.email === person.email)
+                      ? '#EEEEEE' : '#20154d'
+                }
+              ]}>Name: {person.name}</Text>
                 <Text style={[
                   SingleCustomerStyle.detailText,
                   {
@@ -148,7 +140,7 @@ export default function SingleCustomer({ route, navigation }) {
             <Button title={"Scan Code"}
               onPress={handleSave} style={SingleCustomerStyle.btn} />
           </View>
-          <CustomModal visible={modalVisible} hideModal={closeModal}>
+          {/* <CustomModal visible={modalVisible} hideModal={closeModal}>
             <View>
               <Text style={SingleCustomerStyle.subHeading}>Add New Concern Person Detail</Text>
               <IconInput
@@ -204,7 +196,7 @@ export default function SingleCustomer({ route, navigation }) {
                 textStyle={{ color: '#EEEEEE' }}
                 onPress={ handleCreateConcernPerson} />
             </View>
-          </CustomModal>
+          </CustomModal> */}
         </View>
       </ImageBackground>
     </SafeAreaView>

@@ -8,10 +8,21 @@ import { AppStyles } from '../../theme/AppStyles';
 import { IconInput, Table } from '../../components';
 import Button from '../../components/Button';
 import { hp, wp } from '../../../App';
+import { createMeeting } from '../../store/actions/meetingAction';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { BASE_URL } from '../../config/config';
 
-export default function FinalDetail({ navigation }) {
+function FinalDetail({ navigation, createMeeting }) {
     const [barcodesValue, setBarcodeValues] = useState([])
     const [customer, setCustomer] = useState(null)
+    const [extraDetail , setExtraDetail] = useState("")
+    const [meetingData, setMeetingData] = useState({
+        brandId: "",
+        concernPersonId: [],
+        emailRecipient: [],
+        userId: ""
+    })
     const retrieveStoredValues = async () => {
         try {
             const storedValues = await AsyncStorage.getItem('barcodeValues');
@@ -22,7 +33,6 @@ export default function FinalDetail({ navigation }) {
             console.log(error.message);
         }
     };
-    console.log(barcodesValue, "kmvcksdmvkdbfbd")
     const [brandName, setBrandName] = useState('');
 
     const [selectedPersons, setSelectedPersons] = useState([]);
@@ -34,9 +44,9 @@ export default function FinalDetail({ navigation }) {
             const jsonValue = await AsyncStorage.getItem('SelectedConcernPersons');
             console.log('Retrieved JSON:', jsonValue); // Check the retrieved JSON string
             const storedSelectedPersons = JSON.parse(jsonValue);
-            console.log('Parsed Selected Persons:', storedSelectedPersons); // Check the parsed array
+            console.log('Parsed Selected Persons..:', storedSelectedPersons); // Check the parsed array
             setSelectedPersons(storedSelectedPersons);
-            console.log(selectedPersons, "selected statr")
+            console.log(selectedPersons, "selected person")
         } catch (error) {
             console.log(error.message);
         }
@@ -53,10 +63,6 @@ export default function FinalDetail({ navigation }) {
                 if (brandName !== null) {
                     setBrandName(brandName);
                 }
-                // const name = await AsyncStorage.getItem('name');
-                // if (name !== null) {
-                //     setName(name);
-                // }
             } catch (error) {
                 console.log(error)
             }
@@ -67,32 +73,71 @@ export default function FinalDetail({ navigation }) {
     useEffect(() => {
         retrieveStoredValues();
     }, []);
-    const [extraDetail, setExtraDetail] = useState({
-        extraDetail1: '',
-        extraDetail2: '',
-        extraDetail3: '',
-        extraDetail4: '',
-    });
+    useEffect(async () => {
+        await AsyncStorage.getItem("brandID")
+            .then((id) => {
+                console.log(id, "id.........");
 
-    const [validation, setValidation] = useState({});
+                setMeetingData((meetingData) => ({
+                    ...meetingData,
+                    brandId: id,
+                }));
+            })
+            .catch((error) => {
+                // Handle errors here
+                console.log(error);
+            });
+        await AsyncStorage.getItem("SelectedConcernPersons")
+            .then((person) => {
+                if (person !== null) {
+                    const parsedPersons = JSON.parse(person);
+                    const ids = parsedPersons.map(person => person._id);
+                    const personsName = parsedPersons.map(personName => personName.name);
+                    console.log("Person IDs:", ids, personsName);
+                    setMeetingData((meetingData) => ({
+                        ...meetingData,
+                        concernPersonId: ids,
+                        emailRecipient: personsName
+                    }));
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        await AsyncStorage.getItem("userData")
+            .then((userData) => {
+                try {
+                    const parsedData = JSON.parse(userData);
+                    const { _id, } = parsedData;
+                    console.log("User ID:", _id);
+                    setMeetingData((meetingData) => ({
+                        ...meetingData,
+                        userId: _id,
+                    }));
+                } catch (error) {
+                    console.log("Error parsing the data:", error);
+                }
+            })
+            .catch((error) => {
+                // Handle errors here
+                console.log(error);
+            });
 
-    const saveData = async () => {
+    }, []);
+
+    
+    const handleSave = async() => {
         try {
-            await AsyncStorage.setItem('extraDetail1', extraDetail.extraDetail1);
-            await AsyncStorage.setItem('extraDetail2', extraDetail.extraDetail2);
-            await AsyncStorage.setItem('extraDetail3', extraDetail.extraDetail3);
-            await AsyncStorage.setItem('extraDetail4', extraDetail.extraDetail4);
-
+           await AsyncStorage.setItem("Extra Detail" , extraDetail)
         } catch (error) {
-            console.log(error.message);
+            console.log(error)
         }
-    };
-
-    const handleSave = () => {
-        saveData()
+        console.log(meetingData, "meeting data before sending in api")
+        createMeeting(meetingData)
         navigation.navigate('SendEmail', { customer });
     };
-   
+
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
@@ -100,7 +145,6 @@ export default function FinalDetail({ navigation }) {
                     <View style={AppStyles.center}>
                         <Text style={FinalDetailStyle.heading}>Customer Detail</Text>
                         <View style={FinalDetailStyle.detailView}>
-
                             <View>
                                 <Text style={FinalDetailStyle.detailText}>Brand Name: {brandName}</Text>
                                 {selectedPersons.map((person, index) => (
@@ -147,7 +191,9 @@ export default function FinalDetail({ navigation }) {
                                     multiline={true}
                                     placeholderTextColor={'#2f2260'}
                                     numberOfLines={4}
-                                    style={{ width: wp(90) , color:'#2f2260'}}
+                                    value={extraDetail}
+                                    onChangeText={text => setExtraDetail(text)}
+                                    style={{ width: wp(90), color: '#2f2260' }}
                                 />
                             </ScrollView>
                         </View>
@@ -158,3 +204,15 @@ export default function FinalDetail({ navigation }) {
         </SafeAreaView>
     )
 }
+
+
+const mapStateToProps = (state) => ({
+    meetings: state.meeting.meetings, // Assuming your reducer updates the "brands" property
+    loading: state.meeting.loading, // Assuming your reducer updates the "loading" property
+    error: state.meeting.error, // Assuming your reducer updates the "error" property
+});
+
+const mapDispatchToProps = {
+    createMeeting, // This makes the createBrand action available as a prop
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FinalDetail);
