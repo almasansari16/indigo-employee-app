@@ -34,6 +34,7 @@ import AddBrand from '../screens/addBrand/AddBrand';
 import ExcelExportScreen from '../screens';
 import Testing from '../screens/testingScreen/Testing';
 import AddConcernPerson from '../screens/addNewConcernPerson/AddConcernPerson';
+import GenerateQRcode from '../screens/generateQRcode/GenerateQRcode';
 // import { AuthContext } from '../context/authContext';
 
 
@@ -391,6 +392,15 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'Orders',
+            headerTitleAlign: 'center',
+          }} />
+             <Stack.Screen
+          component={GenerateQRcode}
+          name='GenerateQRcode'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Generate QR code',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>
