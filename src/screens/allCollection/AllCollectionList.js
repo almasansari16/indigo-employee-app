@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,79 +11,23 @@ import { Appbar, DataTable, Searchbar } from 'react-native-paper';
 import { AppStyles } from '../../theme/AppStyles';
 import Images from '../../theme/Images';
 import { hp, wp } from '../../../App';
+import { getSheetData } from '../../store/actions/sheetDataAction';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-export default function AllCollectionList({ navigation }) {
+ function AllCollectionList({ navigation }) {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPageList] = React.useState([10]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0],
   );
+  const dispatch = useDispatch();
+  const sheetData = useSelector((state) => state.sheet.allData);
+  // console.log(sheetData , "sheetdata")
 
-  const [items, setItems] = React.useState([
-    {
-      key: 1,
-      img: Images.CollectionImg1,
-      articleName: 'Snoop',
-      ids: '5767',
-      color: 'Pure Indigo',
-      finishType: 'NHP',
-      weave: '3/1 RHT',
-    },
-    {
-      key: 2,
-      img: Images.CollectionImg2,
-      articleName: 'SOFIA',
-      ids: '5079',
-      color: 'Blue',
-      finishType: 'ME',
-      weave: '3/1 RHT',
-    },
-    {
-      key: 3,
-      img: Images.CollectionImg2,
-      articleName: 'Suez',
-      ids: '4898',
-      color: 'Blue',
-      finishType: 'NC',
-      weave: '3/1 RHT',
-    },
-    {
-      key: 4,
-      img: Images.CollectionImg1,
-      articleName: 'Madonna',
-      ids: '4349',
-      color: 'Blue',
-      finishType: 'MD',
-      weave: '3/1 RHT',
-    },
-    {
-      key: 5,
-      img: Images.CollectionImg2,
-      articleName: 'Vilma In Less Stretch',
-      ids: '9682',
-      color: 'Blue',
-      finishType: 'SHM ',
-      weave: '3/1 RHT',
-    },
-    //  {
-    //   key: 6,
-    //   name: 'john',
-    //   email: 'john@kindacode.com',
-    //   address: 'karachi pakistan',
-    //   billingAddress:'Business Avenue suite 102',
-    //   contact:1234567,
-    // },    {
-    //   key: 7,
-    //   name: 'john',
-    //   email: 'john@kindacode.com',
-    //   address: 'karachi pakistan',
-    //   billingAddress:'Business Avenue suite 102',
-    //   contact:1234567,
-    // },
-  ]);
+  const [items, setItems] = React.useState([]);
 
   const from = page * itemsPerPage;
-  const to = Math.min((page + 1) * itemsPerPage, items.length);
+  const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
 
   React.useEffect(() => {
     setPage(0);
@@ -91,15 +35,32 @@ export default function AllCollectionList({ navigation }) {
   const [searchText, setSearchText] = React.useState('');
   const [filteredItems, setFilteredItems] = React.useState(items);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getSheetData());
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (sheetData.length === 0) {
+      fetchData();
+    } else {
+      setItems(sheetData);
+      setFilteredItems(sheetData)
+    }
+  }, [dispatch, sheetData]);
+
   const handleSearch = (text) => {
     setSearchText(text);
 
     const filteredData = items.filter(item =>
-      item.articleName.toLowerCase().includes(text.toLowerCase()) ||
-      item.ids.toLowerCase().includes(text.toLowerCase()) ||
-      item.color.toLowerCase().includes(text.toLowerCase()) ||
-      item.finishType.toLowerCase().includes(text.toLowerCase()) ||
-      item.weave.toString().includes(text)
+      item.ArticleName.toLowerCase().includes(text.toLowerCase()) ||
+      item.IDS.toLowerCase().includes(text.toLowerCase()) ||
+      item.Colour.toLowerCase().includes(text.toLowerCase()) ||
+      item.FinishType.toLowerCase().includes(text.toLowerCase()) ||
+      item.Weave.toString().includes(text)
     );
 
     setFilteredItems(filteredData);
@@ -115,7 +76,7 @@ export default function AllCollectionList({ navigation }) {
       <ImageBackground
         source={Images.purple_background}
         style={{ width: wp(100), height: hp(100) }}>
-          <Appbar.Header
+        <Appbar.Header
           style={{
             backgroundColor: '#EEEEEE',
           }}
@@ -140,7 +101,7 @@ export default function AllCollectionList({ navigation }) {
             mode="small"
             style={{ color: 'white' }}
             color="black"
-          titleStyle={AppStyles.headerText}
+            titleStyle={AppStyles.headerText}
           />
         </Appbar.Header>
         <View style={{ marginTop: 0 }}>
@@ -168,24 +129,24 @@ export default function AllCollectionList({ navigation }) {
             <DataTable.Title textStyle={{ color: '#EEEEEE', marginLeft: 5 }} >
               Weave
             </DataTable.Title>
-            <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
+            {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
               Image
-            </DataTable.Title>
+            </DataTable.Title> */}
           </DataTable.Header>
           {filteredItems.slice(from, to).map(item => (
             <DataTable.Row
               key={item.key}
               onPress={() =>
-              collectionDetail(item)}
-              >
-              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.articleName}</DataTable.Cell>
-              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ids}</DataTable.Cell>
-              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.color}</DataTable.Cell>
-              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.finishType}</DataTable.Cell>
-              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.weave}</DataTable.Cell>
-              <DataTable.Cell>
+                collectionDetail(item)}
+            >
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
+              <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
+              {/* <DataTable.Cell>
                 <Image source={item.img} style={{ width: 50, height: 50 }} />
-              </DataTable.Cell>
+              </DataTable.Cell> */}
             </DataTable.Row>
           ))}
         </DataTable>
@@ -207,3 +168,11 @@ export default function AllCollectionList({ navigation }) {
 }
 
 
+const mapStateToProps = (state) => ({
+  allData: state.sheet.allData,
+  loading: state.sheet.loading,
+  error: state.sheet.error,
+});
+
+// Connect your component to the Redux store
+export default connect(mapStateToProps)(AllCollectionList);

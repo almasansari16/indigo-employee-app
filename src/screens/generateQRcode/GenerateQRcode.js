@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View, StyleSheet, Platform, PermissionsAndroid,
-    ToastAndroid, Text, TouchableOpacity
+    ToastAndroid, Text, TouchableOpacity, SafeAreaView, Alert
 }
     from 'react-native';
 import RNFS from "react-native-fs";
 import CameraRoll from "@react-native-community/cameraroll";
 import { QRCODE } from '../../components';
 
-const GenerateQRcode = () => {
+const GenerateQRcode = ({ route, navigation }) => {
+    const [collectionData, setCollection] = useState(null); // Initialize customer as null
+    const [item, setItem] = useState(collectionData);
+    const [productQRref, setProductQRref] = useState();
+    useEffect(() => {
+        // console.log('Route Params:', route.params); // Check if route params are being received
+        const { collection } = route.params;
+        console.log('Customer Item:', collection); // Check the customer item data
+        setCollection(collection);
+    }, [route.params]);
 
-    const initialItemState = {
-        name: 'Sugar',
-        expiryDate: '2023-12-31',
-        manufacturer: 'Kakira Sugar Estate'
+    if (!collectionData) {
+        return (
+            <SafeAreaView>
+                <Text>Loading...</Text>
+            </SafeAreaView>
+        );
     }
 
-    const [item, setItem] = useState(initialItemState);
-    const [productQRref, setProductQRref] = useState();
+
+
 
     const saveQrToDisk = async () => {
 
@@ -25,15 +36,19 @@ const GenerateQRcode = () => {
             !(await hasAndroidPermission())) {
             return;
         }
-
+        console.log(item)
+        console.log(collectionData.ArticleName, "lfvcfvfmn")
         if (productQRref) {
 
             productQRref.toDataURL((data) => {
 
-                let filePath = RNFS.CachesDirectoryPath + `/${item.name}.png`;
+                let filePath = RNFS.CachesDirectoryPath + `/${collectionData.ArticleName}.png`;
                 RNFS.writeFile(filePath, data, 'base64')
                     .then((success) => {
+                        Alert.alert("QR Code save successfully")
+                        navigation.navigate("AllCollectionList")
                         return CameraRoll.save(filePath, 'photo')
+
                     })
                     .then(() => {
                         ToastAndroid.show('QRCode saved to gallery', ToastAndroid.LONG);
@@ -60,11 +75,7 @@ const GenerateQRcode = () => {
         <View style={styles.container}>
             <Text style={styles.qrText}>QR Code</Text>
             <QRCODE
-                value={JSON.stringify({
-                    name: item.name,
-                    expiry: item.expiryDate,
-                    manufacturer: item.manufacturer
-                })}
+                value={JSON.stringify(collectionData)}
                 getRef={(c) => setProductQRref(c)} />
             <TouchableOpacity
                 style={styles.button}
