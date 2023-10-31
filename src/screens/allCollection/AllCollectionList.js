@@ -6,6 +6,7 @@ import {
   ScrollView,
   ImageBackground,
   Image,
+  Alert,
 } from 'react-native';
 import { Appbar, DataTable, Searchbar } from 'react-native-paper';
 import { AppStyles } from '../../theme/AppStyles';
@@ -14,9 +15,10 @@ import { hp, wp } from '../../../App';
 import { getSheetData } from '../../store/actions/sheetDataAction';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
- function AllCollectionList({ navigation }) {
+function AllCollectionList({ navigation }) {
   const [page, setPage] = React.useState(0);
-  const [numberOfItemsPerPageList] = React.useState([10]);
+  const [numberOfItemsPerPageList] = React.useState([5]);
+  const [selectedItems, setSelectedItems] = React.useState([]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0],
   );
@@ -71,6 +73,26 @@ import { connect, useDispatch, useSelector } from 'react-redux';
       item
     })
   }
+  const handleLongPress = (item) => {
+    setSelectedItems((prevSelectedItems) => {
+        // Check if the item is already in the selectedItems array
+        const isItemSelected = prevSelectedItems.some((selectedItem) => selectedItem.key === item.key);
+
+        // If the item is not in the array, add it
+        if (!isItemSelected) {
+            return [...prevSelectedItems, item];
+        } else {
+            // If the item is already in the array, remove it
+            return prevSelectedItems.filter((selectedItem) => selectedItem.key !== item.key);
+        }
+    });
+
+    // The updated selectedItems will be available in the callback, you can log it here.
+    console.log(selectedItems, "Updated selectedItems");
+};
+
+  
+
   return (
     <SafeAreaView style={[AppStyles.container]}>
       <ImageBackground
@@ -138,6 +160,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
               key={item.key}
               onPress={() =>
                 collectionDetail(item)}
+              onLongPress={() => handleLongPress(item)}
             >
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>

@@ -7,6 +7,7 @@ import concernPersonReducer from './concernpersonReducer';
 import meetingReducer from './meetingReducer';
 import fetchMeetingReducer from './fetchMeetingsByUserReducer';
 import sheetReducer from './sheetReducer';
+import selectGarmentReducer from './selectGarmentReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   concernPerson : concernPersonReducer,
   meeting: meetingReducer,
   fetchMeeting: fetchMeetingReducer,
-  sheet: sheetReducer
+  sheet: sheetReducer,
+  selectGarment : selectGarmentReducer
   // Add other reducers here if needed
 });
 
