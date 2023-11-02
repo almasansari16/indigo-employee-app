@@ -27,7 +27,7 @@ export default function NewQrCode({ navigation }) {
         })();
     }, []);
 
-    
+
     useEffect(() => {
         if (isScanning && barcodes.length > 0) {
             scanCodes();
@@ -42,6 +42,7 @@ export default function NewQrCode({ navigation }) {
         }
     }, [barcodes, isScanning]);
 
+    
     const scanCodes = async () => {
         try {
             const newBarcodeValues = barcodes.map((barcode) => barcode.displayValue);
