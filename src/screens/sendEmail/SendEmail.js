@@ -138,7 +138,7 @@ import { BASE_URL } from '../../config/config';
 import axios from 'axios';
 
 
-export default function SendEmail({navigation}) {
+export default function SendEmail({ navigation }) {
     const emailOptions = [];
     const [email, setEmail] = useState('');
     const [extraNote, setExtraNote] = useState('')
@@ -236,9 +236,11 @@ export default function SendEmail({navigation}) {
 
     const [emailOpen, setEmailOpen] = useState(false);
     const [availableEmails, setvAilableEmails] = useState([
-        // { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
+        { label: 'shiraz@indigo.com.pk', value: 'shiraz@indigo.com.pk' },
+        { label: 'shakaib@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
+        { label: 'sharjeel@indigo.com.pk', value: 'sharjeel@indigo.com.pk' },
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
-        { label: 'almas.ansari@indigo.com.pk', value: 'almas.ansari@indigo.com.pk' },
+        { label: 'ali.arain@indigo.com.pk', value: 'ali.arain@indigo.com.pk' },
         { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' }
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
@@ -294,11 +296,12 @@ export default function SendEmail({navigation}) {
                         <Button title={'Send Email Marketing Team'}
                             style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
                             onPress={sendEmailMarketing} />
+                        <Button
+                            title={"check your order"}
+                            style={[SendEmailStyle.btn, { top: 0, width: wp(50) }]}
+                            onPress={() => navigation.navigate("Testing")} />
                     </View>
-                    <Button
-                        title={"check your order"}
-                        style={[SendEmailStyle.btn, {top: 0, width: wp(50) }]}
-                        onPress={() => navigation.navigate("Testing")} />
+
                 </View>
             </ImageBackground>
         </SafeAreaView>

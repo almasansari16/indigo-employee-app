@@ -17,14 +17,14 @@ const initialState = {
 const meetingReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_MEETING_SUCCESS:
-            console.log(action.payload, "action console")
+            // console.log(action.payload, "action console")
             return {
                 ...state,
                 meetings: [...state.meetings, action.payload],
                 loading: false,
             };
         case CREATE_MEETING_FAILURE:
-            console.log(action.payload, "failuer console in reducer")
+            // console.log(action.payload, "failuer console in reducer")
             return {
                 ...state,
                 error: action.payload,

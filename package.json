@@ -36,6 +36,7 @@
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.11.0",
     "react-native-hole-view": "^3.0.0-alpha3",
+    "react-native-image-picker": "5.3.1",
     "react-native-linear-gradient": "^2.8.0",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-mail": "^6.1.1",

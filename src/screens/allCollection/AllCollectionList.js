@@ -7,6 +7,8 @@ import {
   ImageBackground,
   Image,
   Alert,
+  ToastAndroid,
+  Platform
 } from 'react-native';
 import { Appbar, DataTable, Searchbar } from 'react-native-paper';
 import { AppStyles } from '../../theme/AppStyles';
@@ -14,10 +16,12 @@ import Images from '../../theme/Images';
 import { hp, wp } from '../../../App';
 import { getSheetData } from '../../store/actions/sheetDataAction';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '../../components/Button';
 
 function AllCollectionList({ navigation }) {
   const [page, setPage] = React.useState(0);
-  const [numberOfItemsPerPageList] = React.useState([5]);
+  const [numberOfItemsPerPageList] = React.useState([7]);
   const [selectedItems, setSelectedItems] = React.useState([]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0],
@@ -29,8 +33,10 @@ function AllCollectionList({ navigation }) {
   const [items, setItems] = React.useState([]);
 
   const from = page * itemsPerPage;
-  const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
-
+  // const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
+  const to = from + itemsPerPage;
+  console.log(from , "from");
+  console.log(to, "tooo");
   React.useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
@@ -49,8 +55,28 @@ function AllCollectionList({ navigation }) {
     if (sheetData.length === 0) {
       fetchData();
     } else {
-      setItems(sheetData);
-      setFilteredItems(sheetData)
+      const images = [
+        require("../../assets/images/image1.jpeg"),
+        require("../../assets/images/image2.jpeg"),
+        require("../../assets/images/image3.jpeg"),
+        require("../../assets/images/image4.jpeg"),
+        require("../../assets/images/image5.jpeg"),
+        require("../../assets/images/image6.jpeg"),
+        require("../../assets/images/image7.jpeg"),
+        require("../../assets/images/image8.jpeg"),
+        require("../../assets/images/image9.jpeg"),
+        require("../../assets/images/image10.jpeg")
+      ];
+
+      const updateItems = sheetData.map((item, index) => (
+        {
+          ...item,
+          Image: images[index]
+        }
+      ))
+      console.log(updateItems, "updateitems.............")
+      setItems(updateItems);
+      setFilteredItems(updateItems)
     }
   }, [dispatch, sheetData]);
 
@@ -73,25 +99,55 @@ function AllCollectionList({ navigation }) {
       item
     })
   }
+
+
   const handleLongPress = (item) => {
     setSelectedItems((prevSelectedItems) => {
-        // Check if the item is already in the selectedItems array
-        const isItemSelected = prevSelectedItems.some((selectedItem) => selectedItem.key === item.key);
+      // Check if the item is not already in the selectedItems array
+      if (!prevSelectedItems.some((selectedItem) =>
+        selectedItem.ArticleName === item.ArticleName)) {
+        const message = "Item has been selected: " + item.ArticleName;
 
-        // If the item is not in the array, add it
-        if (!isItemSelected) {
-            return [...prevSelectedItems, item];
-        } else {
-            // If the item is already in the array, remove it
-            return prevSelectedItems.filter((selectedItem) => selectedItem.key !== item.key);
+        if (Platform.OS === 'android') {
+          ToastAndroid.showWithGravityAndOffset(
+            message,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+          );
+        } else if (Platform.OS === 'ios') {
+          Alert.alert(message);
         }
+
+        return [...prevSelectedItems, item];
+      }
+      AsyncStorage.setItem('SelectedGarmentforExhibition', JSON.stringify(selectedItems))
+        .then(() => {
+          console.log('Array saved to AsyncStorage');
+        })
+        .catch(error => {
+          console.error('Error saving array to AsyncStorage:', error);
+        });
+      // If the item is already in the array, return the previous state
+      const message = item.ArticleName + " has already selected ";
+
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravityAndOffset(
+          message,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      } else if (Platform.OS === 'ios') {
+        Alert.alert(message);
+      }
+      return prevSelectedItems;
     });
+  };
 
-    // The updated selectedItems will be available in the callback, you can log it here.
-    console.log(selectedItems, "Updated selectedItems");
-};
 
-  
 
   return (
     <SafeAreaView style={[AppStyles.container]}>
@@ -151,9 +207,9 @@ function AllCollectionList({ navigation }) {
             <DataTable.Title textStyle={{ color: '#EEEEEE', marginLeft: 5 }} >
               Weave
             </DataTable.Title>
-            {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
+            <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
               Image
-            </DataTable.Title> */}
+            </DataTable.Title>
           </DataTable.Header>
           {filteredItems.slice(from, to).map(item => (
             <DataTable.Row
@@ -167,13 +223,16 @@ function AllCollectionList({ navigation }) {
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
-              {/* <DataTable.Cell>
-                <Image source={item.img} style={{ width: 50, height: 50 }} />
-              </DataTable.Cell> */}
+              <DataTable.Cell>
+                <Image source={item.Image} style={{ width: 50, height: 50 }} />
+              </DataTable.Cell>
             </DataTable.Row>
           ))}
         </DataTable>
-
+        <Button
+          title={'Check Exibition List'}
+          style={{ backgroundColor: '#EEEEEE', width: wp(50), marginTop: hp(5) }}
+          onPress={() => navigation.navigate('SelectedGarments')} />
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(items.length / itemsPerPage)}

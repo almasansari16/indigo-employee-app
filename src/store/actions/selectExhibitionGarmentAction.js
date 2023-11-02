@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BASE_URL } from "../../config/config";
 import {
     GET_SELECT_EXHIBITION_GARMENT_FAILURE,
@@ -10,7 +11,7 @@ import {
 
 export const selectGarmentForExibition = (selectedGarment) => async (dispatch) => {
     try {
-        const response = await axios.post(`${BASE_URL}/create-concernPerson`, selectedGarment);
+        const response = await axios.post(`${BASE_URL}/saved-garment`, selectedGarment);
         dispatch({ type: SELECT_EXHIBITION_GARMENT_SUCCESS, payload: response.data });
         Alert.alert(response.data.message)
         console.log(response.data)

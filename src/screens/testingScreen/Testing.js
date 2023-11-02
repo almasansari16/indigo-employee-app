@@ -203,7 +203,11 @@ function Testing({ fetchMeetingsByUserId, navigation }) {
       setIsRefreshing(false);
     }
   };
-
+  const handleDetail = (meeting) => {
+    navigation.navigate("orderDetail", {
+      meeting
+    })
+  }
   return (
     <SafeAreaView>
       <ImageBackground
@@ -217,6 +221,7 @@ function Testing({ fetchMeetingsByUserId, navigation }) {
               onRefresh={handleRefresh}
             />
           }
+          style={{ marginBottom: 5 }}
         >
           {meetingData.length > 0 ? (
             <DataTable>
@@ -238,28 +243,36 @@ function Testing({ fetchMeetingsByUserId, navigation }) {
                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
                   Concern Person
                 </DataTable.Title>
+                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                  Meeting Date
+                </DataTable.Title>
               </DataTable.Header>
-              <TouchableOpacity>
+         
                 {meetingData.map((meeting) => {
                   const {
                     _id: meetingId,
                     brandId: { brandName },
                     concernPersonId,
+                    meetingDate
                   } = meeting;
+                  let dateString = new Date(meetingDate).toLocaleDateString();
                   return (
                     <>
-                      <DataTable.Row key={meetingId}>
+                      <DataTable.Row key={meetingId} onPress={() => handleDetail(meeting)}>
                         <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>
                           {brandName}
                         </DataTable.Cell>
                         <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>
                           {concernPersonId.map(person => person.name).join(', ')}
                         </DataTable.Cell>
+                        <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>
+                          {dateString}
+                        </DataTable.Cell>
                       </DataTable.Row>
                     </>
                   );
                 })}
-              </TouchableOpacity>
+             
             </DataTable>
           ) : (
             <ActivityIndicator color='#EEEEEE' size="large" />

@@ -12,6 +12,7 @@ const initialState = {
 const sheetReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_SHEET_DATA_SUCCESS:
+            // console.log(action.payload , "console in reducer")
             return {
                 ...state,
                 allData: action.payload,

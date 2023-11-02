@@ -17,7 +17,7 @@ const fetchMeetingReducer = (state = initialState, action) => {
     case FETCH_MEETINGS_REQUEST:
       return { ...state, loading: true, error: null };
     case FETCH_MEETINGS_SUCCESS:
-      console.log(action.payload , "reducer success")
+      // console.log(action.payload , "reducer success")
       return { ...state, loading: false, meetings: action.payload, error: null };
     case FETCH_MEETINGS_FAILURE:
       console.log(action.error , "reducer failure")

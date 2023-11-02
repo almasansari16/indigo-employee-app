@@ -16,12 +16,13 @@ import { BASE_URL } from '../../config/config';
 function FinalDetail({ navigation, createMeeting }) {
     const [barcodesValue, setBarcodeValues] = useState([])
     const [customer, setCustomer] = useState(null)
-    const [extraDetail , setExtraDetail] = useState("")
+    const [extraDetail, setExtraDetail] = useState("")
     const [meetingData, setMeetingData] = useState({
         brandId: "",
         concernPersonId: [],
         emailRecipient: [],
-        userId: ""
+        userId: "",
+        extraNote: extraDetail
     })
     const retrieveStoredValues = async () => {
         try {
@@ -125,10 +126,10 @@ function FinalDetail({ navigation, createMeeting }) {
 
     }, []);
 
-    
-    const handleSave = async() => {
+    console.log(barcodesValue, "barcodes value selection.....")
+    const handleSave = async () => {
         try {
-           await AsyncStorage.setItem("Extra Detail" , extraDetail)
+            await AsyncStorage.setItem("Extra Detail", extraDetail)
         } catch (error) {
             console.log(error)
         }
@@ -166,18 +167,32 @@ function FinalDetail({ navigation, createMeeting }) {
                         <View style={FinalDetailStyle.detailView}>
                             {barcodesValue && (
                                 <View>
-                                    {barcodesValue.map((i) => (
-                                        <>
-                                            <Text style={FinalDetailStyle.detailText}>{i}</Text>
-                                            <View style={{
-                                                borderBottomWidth: 1,
-                                                borderBottomColor: '#2f2260',
-                                                marginVertical: 10,
-                                            }} />
-                                        </>
-                                    ))}
+                                    {barcodesValue
+                                        .map((jsonString) => JSON.parse(jsonString))
+                                        .filter((data, index, self) => {
+                                            // Use JSON.stringify to compare objects as strings
+                                            const jsonString = JSON.stringify(data);
+                                            return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
+                                        })
+                                        .map((data, index) => (
+                                            <View key={index}>
+                                                <Text style={FinalDetailStyle.detailText}>Article Name: {data.ArticleName}</Text>
+                                                <Text style={FinalDetailStyle.detailText}>IDS: {data.IDS}</Text>
+                                                <Text style={FinalDetailStyle.detailText}>Finish Type: {data.FinishType}</Text>
+                                                <Text style={FinalDetailStyle.detailText}>Weave: {data.Weave}</Text>
+                                                <View
+                                                    style={{
+                                                        borderBottomWidth: 1,
+                                                        borderBottomColor: '#2f2260',
+                                                        marginVertical: 10,
+                                                    }}
+                                                />
+                                            </View>
+                                        ))}
                                 </View>
                             )}
+
+
                         </View>
                         <View>
                             {/* <Table data={data}/> */}

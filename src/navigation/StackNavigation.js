@@ -35,6 +35,9 @@ import ExcelExportScreen from '../screens';
 import Testing from '../screens/testingScreen/Testing';
 import AddConcernPerson from '../screens/addNewConcernPerson/AddConcernPerson';
 import GenerateQRcode from '../screens/generateQRcode/GenerateQRcode';
+import SelectedGarments from '../screens/selectedExhibitionGarments/SelectedGarments';
+import SingleGarmentDetail from '../screens/singleGarmentDetail/SingleGarmentDetail';
+import OrderDetail from '../screens/orderDetail/OrderDetail';
 // import { AuthContext } from '../context/authContext';
 
 
@@ -394,13 +397,40 @@ function StackNavigation() {
             title: 'Orders',
             headerTitleAlign: 'center',
           }} />
-             <Stack.Screen
+        <Stack.Screen
           component={GenerateQRcode}
           name='GenerateQRcode'
           options={{
             ...animationConfig,
             orientation: 'portrait',
             title: 'Generate QR code',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={SelectedGarments}
+          name='SelectedGarments'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Selected Garments',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={SingleGarmentDetail}
+          name='singleGarmentDetail'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Selected Garment Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={OrderDetail}
+          name='orderDetail'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Order Detail',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, ToastAndroid } from 'react-native';
 import { useCameraDevices, Camera } from 'react-native-vision-camera';
 import { useScanBarcodes, BarcodeFormat, scanBarcodes } from 'vision-camera-code-scanner';
 import Button from '../../components/Button';
@@ -31,6 +31,13 @@ export default function NewQrCode({ navigation }) {
         if (isScanning && barcodes.length > 0) {
             scanCodes();
             setIsScanning(true)
+            ToastAndroid.showWithGravityAndOffset(
+                'Barcode Scanned Successfully!',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+                25,
+                50
+            );
         }
     }, [barcodes, isScanning]);
 
@@ -43,7 +50,7 @@ export default function NewQrCode({ navigation }) {
             await AsyncStorage.setItem('barcodeValues', JSON.stringify(updatedBarcodeValues));
             setBarcodeValues(updatedBarcodeValues);
 
-            setIsScanning(false); // Stop scanning after successful scan
+            // setIsScanning(false); // Stop scanning after successful scan
         } catch (error) {
             console.log(error.message);
         }
@@ -74,7 +81,7 @@ export default function NewQrCode({ navigation }) {
                         ref={barcodeRef}
                     />
                 )}
-                <ScrollView>
+                {/* <ScrollView>
                     {barcodeValues.map((value, idx) => (
 
                         <Text key={idx} style={styles.barcodeTextURL}>
@@ -82,7 +89,7 @@ export default function NewQrCode({ navigation }) {
                         </Text>
 
                     ))}
-                </ScrollView>
+                </ScrollView> */}
                 <View style={[BarcodeStyle.btnView]}>
                     <Button title={'Scan Again'} style={BarcodeStyle.btn} onPress={handleScanAgain} />
                     <Button title={'Final Detail'} style={[BarcodeStyle.btn2]} onPress={() => navigation.navigate('FinalDetail')} />
