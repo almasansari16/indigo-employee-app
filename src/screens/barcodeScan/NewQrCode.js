@@ -27,6 +27,7 @@ export default function NewQrCode({ navigation }) {
         })();
     }, []);
 
+    
     useEffect(() => {
         if (isScanning && barcodes.length > 0) {
             scanCodes();
