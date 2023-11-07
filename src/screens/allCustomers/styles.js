@@ -12,7 +12,7 @@ export const AllCustomersListStyle = StyleSheet.create({
     Pagination:{
         color:'white',
         fontSize: 40,
-       marginBottom: 50   
+       marginBottom: hp(10)  
     },
 
 })    

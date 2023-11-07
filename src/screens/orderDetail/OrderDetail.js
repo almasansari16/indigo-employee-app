@@ -22,7 +22,7 @@ export default function OrderDetail({ route }) {
             </SafeAreaView>
         );
     }
-    const { brandId, concernPersonId, meetingDate, userId } = collection;
+    const { brandId, concernPersonId, meetingDate, userId , extraNote } = collection;
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -34,6 +34,8 @@ export default function OrderDetail({ route }) {
 
                     <Text style={SingleCollectionStyle.detailText}>Meeting Date : { new Date(meetingDate).toLocaleDateString()}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Employee name : {userId.name}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Extra Note : {extraNote}</Text>
+
                 </View>
             </ImageBackground>
         </SafeAreaView>

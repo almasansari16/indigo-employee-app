@@ -48,6 +48,7 @@ function AddBrand({ navigation, createBrand }) {
 
   };
   const handleCreateBrand = async () => {
+   
     await createBrand(brand);
 
 

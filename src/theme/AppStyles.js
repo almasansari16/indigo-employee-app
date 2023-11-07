@@ -40,4 +40,11 @@ export const AppStyles = StyleSheet.create({
         textAlign: 'left',
         fontFamily: 'Lato-Regular'
       },
+      flexEvenly: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'space-evenly',
+        display: 'flex',
+        width: wp(100)
+      }
 })

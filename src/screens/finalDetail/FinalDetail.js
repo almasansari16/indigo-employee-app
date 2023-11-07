@@ -22,8 +22,9 @@ function FinalDetail({ navigation, createMeeting }) {
         concernPersonId: [],
         emailRecipient: [],
         userId: "",
-        extraNote: extraDetail
+        extraNote: ""
     })
+    console.log(extraDetail , "extra detail....")
     const retrieveStoredValues = async () => {
         try {
             const storedValues = await AsyncStorage.getItem('barcodeValues');
@@ -110,10 +111,11 @@ function FinalDetail({ navigation, createMeeting }) {
                 try {
                     const parsedData = JSON.parse(userData);
                     const { _id, } = parsedData;
-                    console.log("User ID:", _id);
+                    // console.log("User ID:", _id);
                     setMeetingData((meetingData) => ({
                         ...meetingData,
                         userId: _id,
+                        extraNote: extraDetail
                     }));
                 } catch (error) {
                     console.log("Error parsing the data:", error);
@@ -133,10 +135,12 @@ function FinalDetail({ navigation, createMeeting }) {
         } catch (error) {
             console.log(error)
         }
-        console.log(meetingData, "meeting data before sending in api")
-        createMeeting(meetingData)
+        const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
+        console.log(updatedMeetingData, "meeting data before sending in api")
+        createMeeting(updatedMeetingData)
         navigation.navigate('SendEmail', { customer });
     };
+
 
 
     return (

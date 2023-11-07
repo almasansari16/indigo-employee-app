@@ -237,11 +237,13 @@ export default function SendEmail({ navigation }) {
     const [emailOpen, setEmailOpen] = useState(false);
     const [availableEmails, setvAilableEmails] = useState([
         { label: 'shiraz@indigo.com.pk', value: 'shiraz@indigo.com.pk' },
-        { label: 'shakaib@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
+        { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
         { label: 'sharjeel@indigo.com.pk', value: 'sharjeel@indigo.com.pk' },
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
+        { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' },
         { label: 'ali.arain@indigo.com.pk', value: 'ali.arain@indigo.com.pk' },
-        { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' }
+
+
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
     return (
@@ -301,7 +303,6 @@ export default function SendEmail({ navigation }) {
                             style={[SendEmailStyle.btn, { top: 0, width: wp(50) }]}
                             onPress={() => navigation.navigate("Testing")} />
                     </View>
-
                 </View>
             </ImageBackground>
         </SafeAreaView>

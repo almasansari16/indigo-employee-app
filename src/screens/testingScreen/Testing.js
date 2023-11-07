@@ -221,7 +221,7 @@ function Testing({ fetchMeetingsByUserId, navigation }) {
               onRefresh={handleRefresh}
             />
           }
-          style={{ marginBottom: 5 }}
+          style={{ marginBottom: hp(15)}}
         >
           {meetingData.length > 0 ? (
             <DataTable>

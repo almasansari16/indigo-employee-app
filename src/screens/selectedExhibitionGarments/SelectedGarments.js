@@ -1,13 +1,25 @@
-import { View, Text, SafeAreaView, ImageBackground } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppStyles } from '../../theme/AppStyles';
 import { hp, wp } from '../../../App';
 import Images from '../../theme/Images';
 import { DataTable } from 'react-native-paper';
+import { CustomModal } from '../../components';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { getCollections } from '../../store/actions/selectExhibitionGarmentAction';
 
-export default function SelectedGarments({ navigation }) {
-    const [garment, setGarmnet] = useState(null)
+ function SelectedGarments({ navigation }) {
+    const [garment, setGarmnet] = useState(null);
+    const [refresh , setRefresh] = useState(false);
+    const [items , setItems] = useState([]);
+    const [open , setOpen] = useState(false);
+    const dispatch = useDispatch()
+    const data = useSelector((state) => state.exhibitioCollection.collections)
+    console.log('data', data);
+    useEffect(() => {
+       setOpen(true)
+    }, [])
     useEffect(() => {
         const fetchData = async () => {
             await AsyncStorage.getItem('SelectedGarmentforExhibition')
@@ -26,13 +38,32 @@ export default function SelectedGarments({ navigation }) {
 
         }
         fetchData()
-    }, [])
+    }, []);
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            await dispatch(getCollections());
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        if (data.length === 0 || refresh) {
+          fetchData();
+          setRefresh(false)
+        } else {
+          setItems(data);
+        //   setFilteredItems(brands)
+        }
+      }, [dispatch, data, refresh]);
     const garmentDetail = (item) => {
         navigation.navigate('singleGarmentDetail', {
             item
         })
     }
+    console.log("items" , items)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -41,39 +72,41 @@ export default function SelectedGarments({ navigation }) {
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-                            Article name
+                            Collection Name
                         </DataTable.Title>
                         <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-                            IDS
+                            Date
                         </DataTable.Title>
-                        <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-                            Color
-                        </DataTable.Title>
-                        {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-              Finish Type
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ color: '#EEEEEE', marginLeft: 5 }} >
-              Weave
-            </DataTable.Title> */}
-                        {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }} >
-              Image
-            </DataTable.Title> */}
+                  
                     </DataTable.Header>
-                    {garment && garment.map(item => (
+                    {items && items.map(item => (
                         <DataTable.Row
                             key={item.key}
                             onPress={() =>
                                 garmentDetail(item)}
                         >
-                            <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
-                            <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
-                            <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
+                            <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.collectionName}</DataTable.Cell>
+                            <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{new Date(item.date).toLocaleDateString()}</DataTable.Cell>
+                            
                             {/* <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
               <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell> */}
                         </DataTable.Row>
                     ))}
                 </DataTable>
+                <View>
+                    <CustomModal >
+
+                    </CustomModal>
+                </View>
             </ImageBackground>
         </SafeAreaView>
     )
 }
+
+const mapStateToProps = (state) => ({
+    collections: state.exhibitioCollection.collections, // Assuming your reducer updates the "brands" property
+    loading: state.exhibitioCollection.loading, // Assuming your reducer updates the "loading" property
+    error: state.exhibitioCollection.error,
+  });
+
+export default connect(mapStateToProps)(SelectedGarments);

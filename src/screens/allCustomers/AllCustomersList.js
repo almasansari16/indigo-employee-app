@@ -24,6 +24,7 @@ import { hp, wp } from '../../../App';
 function AllCustomersList({ navigation, route }) {
   const [page, setPage] = useState(0);
   const [numberOfItemsPerPageList] = useState([5]);
+  const [refresh, setRefresh] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
   const dispatch = useDispatch();
@@ -56,13 +57,14 @@ function AllCustomersList({ navigation, route }) {
       }
     };
 
-    if (brands.length === 0) {
+    if (brands.length === 0 || refresh) {
       fetchData();
+      setRefresh(false)
     } else {
       setItems(brands);
       setFilteredItems(brands)
     }
-  }, [dispatch, brands]);
+  }, [dispatch, brands, refresh]);
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -147,8 +149,8 @@ function AllCustomersList({ navigation, route }) {
             onPress={addNewBrandName}
           />
         </View>
-        <ScrollView 
-           refreshControl={
+        <ScrollView
+          refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={handleRefresh}

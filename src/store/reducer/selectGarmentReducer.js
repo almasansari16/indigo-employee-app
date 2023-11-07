@@ -1,49 +1,92 @@
-// garmentReducer.js
 import {
-    SELECT_EXHIBITION_GARMENT_SUCCESS,
-    SELECT_EXHIBITION_GARMENT_FAILURE,
-    GET_SELECT_EXHIBITION_GARMENT_SUCCESS,
-    GET_SELECT_EXHIBITION_GARMENT_FAILURE,
-} from '../actions/actionTypes';
+    CREATE_COLLECTION_FAILURE,
+    CREATE_COLLECTION_SUCCESS,
+    DELETE_COLLECTION_FAILURE,
+    DELETE_COLLECTION_SUCCESS,
+    GET_COLLECTIONS_FAILURE,
+    GET_COLLECTIONS_SUCCESS,
+    GET_COLLECTION_FAILURE,
+    GET_COLLECTION_SUCCESS,
+    UPDATE_COLLECTION_FAILURE,
+    UPDATE_COLLECTION_SUCCESS
+} from "../actions/actionTypes";
 
+// brandReducer.js
 const initialState = {
-    selectedGarment: null,
-    errorSelect: null,
-    selectedExhibitionGarments: [],
-    errorGet: null,
+    collections : [],
+    collection : null,
+    loading: false,
+    error: null,
 };
 
-const selectGarmentReducer = (state = initialState, action) => {
+const exhibitionCollectionReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SELECT_EXHIBITION_GARMENT_SUCCESS:
+        case CREATE_COLLECTION_SUCCESS:
+            // console.log(action.payload , "reducer console")
             return {
                 ...state,
-                selectedExhibitionGarments: [...state.selectedExhibitionGarments, action.payload], // Add the selected garment to the array
-                errorSelect: null,
+                collections: [...state.collections, action.payload],
+                loading: false,
             };
-
-        case SELECT_EXHIBITION_GARMENT_FAILURE:
+        case CREATE_COLLECTION_FAILURE:
+            // console.log(action.payload , "failuer console in reducer")
             return {
                 ...state,
-                errorSelect: action.payload,
+                error: action.payload,
+                loading: false,
             };
-
-        case GET_SELECT_EXHIBITION_GARMENT_SUCCESS:
+        case GET_COLLECTIONS_SUCCESS:
+            console.log(action.payload , "reducer console")
             return {
                 ...state,
-                selectedExhibitionGarments: action.payload,
-                errorGet: null,
+                collections: action.payload,
+                loading: false,
             };
-
-        case GET_SELECT_EXHIBITION_GARMENT_FAILURE:
+        case GET_COLLECTIONS_FAILURE:
             return {
                 ...state,
-                errorGet: action.payload,
+                error: action.payload,
+                loading: false,
             };
-
+        case GET_COLLECTION_SUCCESS:
+            return {
+                ...state,
+                collection: action.payload,
+                loading: false,
+            };
+        case GET_COLLECTION_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            };
+        case UPDATE_COLLECTION_SUCCESS:
+            return {
+                ...state,
+                collection: action.payload,
+                loading: false,
+            };
+        case UPDATE_COLLECTION_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            };
+        case DELETE_COLLECTION_SUCCESS:
+            return {
+                ...state,
+                collections: state.collections.filter(collection => collection._id !== action.payload),
+                loading: false,
+            };
+        case DELETE_COLLECTION_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            };
         default:
             return state;
     }
 };
 
-export default selectGarmentReducer;
+export default exhibitionCollectionReducer;
