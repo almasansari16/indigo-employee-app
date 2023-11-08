@@ -16,10 +16,8 @@ import { getCollections } from '../../store/actions/selectExhibitionGarmentActio
     const [open , setOpen] = useState(false);
     const dispatch = useDispatch()
     const data = useSelector((state) => state.exhibitioCollection.collections)
-    console.log('data', data);
-    useEffect(() => {
-       setOpen(true)
-    }, [])
+    // console.log('data', data);
+   
     useEffect(() => {
         const fetchData = async () => {
             await AsyncStorage.getItem('SelectedGarmentforExhibition')
@@ -63,7 +61,7 @@ import { getCollections } from '../../store/actions/selectExhibitionGarmentActio
             item
         })
     }
-    console.log("items" , items)
+    // console.log("items" , items)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground

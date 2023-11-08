@@ -49,6 +49,7 @@ const exhibitionCollectionReducer = (state = initialState, action) => {
                 loading: false,
             };
         case GET_COLLECTION_SUCCESS:
+            console.log(action.payload , "reducer console.....")
             return {
                 ...state,
                 collection: action.payload,
