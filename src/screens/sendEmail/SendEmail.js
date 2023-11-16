@@ -136,6 +136,7 @@ import { hp, wp } from '../../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../../config/config';
 import axios from 'axios';
+import { CustomModal, InputField } from '../../components';
 
 
 export default function SendEmail({ navigation }) {
@@ -146,11 +147,15 @@ export default function SendEmail({ navigation }) {
     const [subject, setSubject] = useState('INDIGO PVT LTD');
     const [data, setData] = useState([])
     const [text, setText] = useState('testing email from application');
+    const [manuallyEnteredEmails, setManuallyEnteredEmails] = useState([]);
+    const [manualEmailInput, setManualEmailInput] = useState('');
+
 
     const sendEmailMarketing = async () => {
+        const allEmails = [...selectedEmail, ...manuallyEnteredEmails];
         const requestData = {
             //   data: data,
-            to: selectedEmail,
+            to: allEmails,
             subject,
             extraNote: extraNote,
         };
@@ -233,7 +238,7 @@ export default function SendEmail({ navigation }) {
     const [customerEmails, setCustomerEmails] = useState([
     ]);
     const [selectedCustomerEmails, setSelectedCustomerEmails] = useState([]);
-
+    const [modalVisible, setModalVisible] = useState(false);
     const [emailOpen, setEmailOpen] = useState(false);
     const [availableEmails, setvAilableEmails] = useState([
         { label: 'shiraz@indigo.com.pk', value: 'shiraz@indigo.com.pk' },
@@ -246,10 +251,29 @@ export default function SendEmail({ navigation }) {
 
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
+
+
+    const opneModal = () => {
+
+        setModalVisible(true)
+
+    }
+    const closeModal = async () => {
+        if (manualEmailInput && !manuallyEnteredEmails.includes(manualEmailInput)) {
+            setManuallyEnteredEmails([...manuallyEnteredEmails, manualEmailInput]);
+            setManualEmailInput('');
+        }
+        setModalVisible(false)
+    }
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
                 <View style={[AppStyles.center]}>
+                    <Button
+                        title={"Add Email Manually"}
+                        style={[SendEmailStyle.btn, { width: wp(50), marginTop: 10 }]}
+                        onPress={opneModal}
+                    />
                     <View style={SendEmailStyle.view}>
                         <View
                             style={{ zIndex: 2000 }}>
@@ -302,6 +326,24 @@ export default function SendEmail({ navigation }) {
                             title={"check your order"}
                             style={[SendEmailStyle.btn, { top: 0, width: wp(50) }]}
                             onPress={() => navigation.navigate("Testing")} />
+
+                    </View>
+                    <View>
+                        <CustomModal visible={modalVisible} hideModal={closeModal}>
+                            {/* <InputField placeholder={'Enter Concern Person Email'}
+                                style={SendEmailStyle.input}
+                            // onChangeText={text => setPrice(text)}
+                            // value={price}
+                            /> */}
+                            <InputField placeholder={'Enter Marketing Person Email'}
+                                style={SendEmailStyle.input}
+                                placeholderTextColor={'#282561'}
+                                onChangeText={(text) => setManualEmailInput(text)}
+                                value={manualEmailInput}
+                            />
+                            <Button title={'Add Email'}
+                                onPress={closeModal} />
+                        </CustomModal>
                     </View>
                 </View>
             </ImageBackground>

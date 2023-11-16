@@ -44,17 +44,6 @@ export const getCollections = () => async (dispatch) => {
     }
 };
 
-// export const getCollection = (collectionId) => async (dispatch) => {
-//     try {
-//         const response = await axios.get(`${BASE_URL}/exhibition-collection/${collectionId}`);
-//         dispatch({ type: GET_COLLECTION_SUCCESS, payload: response.data });
-//         console.log(response.data , "action console......")
-//     } catch (error) {
-//         console.error(error);
-//         dispatch({ type: GET_COLLECTION_FAILURE, payload: error.message });
-//     }
-// };
-
 
 export const getCollection = (id) => {
     return async (dispatch) => {

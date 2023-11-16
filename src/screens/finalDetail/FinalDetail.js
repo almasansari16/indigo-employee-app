@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, ScrollView, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, ScrollView, TextInput, Alert, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Images from '../../theme/Images'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,12 +9,16 @@ import { IconInput, Table } from '../../components';
 import Button from '../../components/Button';
 import { hp, wp } from '../../../App';
 import { createMeeting } from '../../store/actions/meetingAction';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../../config/config';
 
 function FinalDetail({ navigation, createMeeting }) {
-    const [barcodesValue, setBarcodeValues] = useState([])
+    const { user } = useSelector((state) => state.auth.user);
+    // console.log(user._id, "////////////")
+    const [userId, setUserId] = useState('');
+    const [concernPersonId , setConcernPersonId] = useState('');
+    const [barcodesValue, setBarcodeValues] = useState([]);
     const [customer, setCustomer] = useState(null)
     const [extraDetail, setExtraDetail] = useState("")
     const [meetingData, setMeetingData] = useState({
@@ -24,7 +28,7 @@ function FinalDetail({ navigation, createMeeting }) {
         userId: "",
         extraNote: ""
     })
-    console.log(extraDetail , "extra detail....")
+    console.log(extraDetail, "extra detail....")
     const retrieveStoredValues = async () => {
         try {
             const storedValues = await AsyncStorage.getItem('barcodeValues');
@@ -39,7 +43,10 @@ function FinalDetail({ navigation, createMeeting }) {
 
     const [selectedPersons, setSelectedPersons] = useState([]);
 
-
+    useEffect(() => {
+        setUserId(user._id)
+        console.log("state", userId)
+    }, [])
 
     const fetchSelectedPersons = async () => {
         try {
@@ -96,6 +103,7 @@ function FinalDetail({ navigation, createMeeting }) {
                     const ids = parsedPersons.map(person => person._id);
                     const personsName = parsedPersons.map(personName => personName.name);
                     console.log("Person IDs:", ids, personsName);
+                    setConcernPersonId(ids);
                     setMeetingData((meetingData) => ({
                         ...meetingData,
                         concernPersonId: ids,
@@ -129,19 +137,56 @@ function FinalDetail({ navigation, createMeeting }) {
     }, []);
 
     console.log(barcodesValue, "barcodes value selection.....")
+  
+      
+      try {
+        const parsedArray = barcodesValue.map(jsonString => JSON.parse(jsonString));
+        console.log(parsedArray);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      
+
     const handleSave = async () => {
-        try {
-            await AsyncStorage.setItem("Extra Detail", extraDetail)
-        } catch (error) {
-            console.log(error)
-        }
-        const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
-        console.log(updatedMeetingData, "meeting data before sending in api")
-        createMeeting(updatedMeetingData)
-        navigation.navigate('SendEmail', { customer });
+        // try {
+        //     await AsyncStorage.setItem("Extra Detail", extraDetail)
+        // } catch (error) {
+        //     console.log(error)
+        // }
+        // const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
+        // console.log(updatedMeetingData, "meeting data before sending in api")
+        // createMeeting(updatedMeetingData)
+        // navigation.navigate('SendEmail', { customer });
+        handleSaveScanCodes()
     };
 
-
+    const handleSaveScanCodes = async () => {
+        const codes = barcodesValue.map((jsonString) => JSON.parse(jsonString))
+            .filter((data, index, self) => {
+                // Use JSON.stringify to compare objects as strings
+                const jsonString = JSON.stringify(data);
+                return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
+            })
+        const data = {
+            codes : codes ,
+            userId: userId,
+            concernPersonId : concernPersonId
+        }
+        console.log(data, "sdvnsdovc")
+        try {
+            const response = await axios.post(`${BASE_URL}/scan-code`, data)
+            console.log(response.data.message);
+            ToastAndroid.showWithGravityAndOffset(
+                'Barcode Scanned Saved Successfully!',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+                25,
+                50
+            );
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -179,6 +224,7 @@ function FinalDetail({ navigation, createMeeting }) {
                                             return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
                                         })
                                         .map((data, index) => (
+
                                             <View key={index}>
                                                 <Text style={FinalDetailStyle.detailText}>Article Name: {data.ArticleName}</Text>
                                                 <Text style={FinalDetailStyle.detailText}>IDS: {data.IDS}</Text>
@@ -191,6 +237,7 @@ function FinalDetail({ navigation, createMeeting }) {
                                                         marginVertical: 10,
                                                     }}
                                                 />
+                                                {/* {console.log(data , "jfvncifsvncifsvnc")} */}
                                             </View>
                                         ))}
                                 </View>

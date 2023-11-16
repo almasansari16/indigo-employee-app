@@ -53,7 +53,7 @@ export default function SingleCustomer({ route, navigation }) {
       setSelectedPersons(selectedPersons => [...selectedPersons, person]);
     }
   };
-console.log(selectedPersons , "selected persons array ")  
+  console.log(selectedPersons, "selected persons array ")
 
 
   const handleSave = async () => {
@@ -69,7 +69,7 @@ console.log(selectedPersons , "selected persons array ")
       await AsyncStorage.setItem("ConcernPerson Emails", JSON.stringify(emails))
       await AsyncStorage.setItem("SelectedConcernPersons", JSON.stringify(selectedConcernPersons));
 
-      navigation.navigate("NewQrCode")
+      navigation.navigate("SelectedGarments")
 
     } catch (error) {
       console.log(error.message)
@@ -137,66 +137,10 @@ console.log(selectedPersons , "selected persons array ")
           <View style={SingleCustomerStyle.btnView}>
             <Button title={"Add New Person"}
               onPress={() => navigation.navigate("AddConcernPerson")} style={SingleCustomerStyle.btn} />
-            <Button title={"Scan Code"}
+            <Button title={"Select Collection"}
               onPress={handleSave} style={SingleCustomerStyle.btn} />
           </View>
-          {/* <CustomModal visible={modalVisible} hideModal={closeModal}>
-            <View>
-              <Text style={SingleCustomerStyle.subHeading}>Add New Concern Person Detail</Text>
-              <IconInput
-                icon={
-                  <Icon
-                    type={IconType.Ionicons}
-                    name={'location-outline'}
-                    color="#282561"
-                    style={{ margin: 15 }}
-                  />
-                }
-                placeholder={'Name'}
-                placeholderTextColor={'#282561'}
-                onChangeText={name => setConcernPerson({ ...concernPerson, name })}
-                value={concernPerson.name}
-                style={SingleCustomerStyle.input}
-              // error={validation.address}
-              />
-              <IconInput
-                icon={
-                  <Icon
-                    type={IconType.Ionicons}
-                    name={'location-outline'}
-                    color="#282561"
-                    style={{ margin: 15 }}
-                  />
-                }
-                placeholder={'Email'}
-                placeholderTextColor={'#282561'}
-                onChangeText={email => setConcernPerson({ ...concernPerson, email })}
-                value={concernPerson.email}
-                style={SingleCustomerStyle.input}
-              // error={validation.address}
-              />
-              <IconInput
-                icon={
-                  <Icon
-                    type={IconType.Ionicons}
-                    name={'location-outline'}
-                    color="#282561"
-                    style={{ margin: 15 }}
-                  />
-                }
-                placeholder={'Designation'}
-                placeholderTextColor={'#282561'}
-                onChangeText={designation => setConcernPerson({ ...concernPerson, designation })}
-                value={concernPerson.designation}
-                style={SingleCustomerStyle.input}
-              // error={validation.address}
-              />
-              <Button title={'Save'}
-                style={[SingleCustomerStyle.modalbtn]}
-                textStyle={{ color: '#EEEEEE' }}
-                onPress={ handleCreateConcernPerson} />
-            </View>
-          </CustomModal> */}
+
         </View>
       </ImageBackground>
     </SafeAreaView>

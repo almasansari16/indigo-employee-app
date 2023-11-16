@@ -12,8 +12,11 @@ import { dashboardStyles } from './styles';
 import Images from '../../theme/Images';
 import { hp, wp } from '../../../App';
 import { Appbar } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 export default function Dashboard({ navigation }) {
+  const { user } = useSelector((state) => state.auth.user)
+  console.log(user.role, "user..........")
   return (
     <SafeAreaView style={[AppStyles.container]}>
       <ImageBackground
@@ -47,40 +50,88 @@ export default function Dashboard({ navigation }) {
             titleStyle={AppStyles.headerText}
           />
         </Appbar.Header>
-        <View style={[dashboardStyles.div]}>
-          <ScrollView>
-            <TouchableOpacity
-              style={dashboardStyles.links}
-              onPress={() => navigation.navigate('QrCode')}>
-              <Text style={[dashboardStyles.linksText]}>Scan QR Code</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={dashboardStyles.links}
-              onPress={() => navigation.navigate('Testing')}>
-              <Text style={[dashboardStyles.linksText]}>My Orders</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={dashboardStyles.links}
-              onPress={() => navigation.navigate('AddCustomer')}>
-              <Text style={[dashboardStyles.linksText]}>Add Customer</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={dashboardStyles.links}
-              onPress={() => navigation.navigate('AddCollection')}>
-              <Text style={[dashboardStyles.linksText]}>Add Collection</Text>
-            </TouchableOpacity>
+        {/* {user === "employee" ?
+          <TouchableOpacity
+            style={dashboardStyles.links}
+            onPress={() => navigation.navigate('Customer Orders')}>
+            <Text style={[dashboardStyles.linksText]}>Customer Orders</Text>
+          </TouchableOpacity>
+          : <View style={[dashboardStyles.div]}>
+            <ScrollView>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('QrCode')}>
+                <Text style={[dashboardStyles.linksText]}>Scan QR Code</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={dashboardStyles.links}
+                onPress={() => navigation.navigate('Testing')}>
+                <Text style={[dashboardStyles.linksText]}>My Orders</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AddCustomer')}>
+                <Text style={[dashboardStyles.linksText]}>Add Customer</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AddCollection')}>
+                <Text style={[dashboardStyles.linksText]}>Add Collection</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={dashboardStyles.links}
-              onPress={() => navigation.navigate('AllCustomersList')}>
-              <Text style={[dashboardStyles.linksText]}>All Customers</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AllCustomersList')}>
+                <Text style={[dashboardStyles.linksText]}>All Customers</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={dashboardStyles.links}
-              onPress={() => navigation.navigate('AllCollectionList')}>
-              <Text style={[dashboardStyles.linksText]}>All Collections</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
+              <TouchableOpacity style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AllCollectionList')}>
+                <Text style={[dashboardStyles.linksText]}>All Collections</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>} */}
+        {user.role === "employee" ? (
+          <View style={[dashboardStyles.div]}>
+            <ScrollView>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('QrCode')}>
+                <Text style={[dashboardStyles.linksText]}>Scan QR Code</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={dashboardStyles.links}
+                onPress={() => navigation.navigate('Testing')}>
+                <Text style={[dashboardStyles.linksText]}>My Orders</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AddCustomer')}>
+                <Text style={[dashboardStyles.linksText]}>Add Customer</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AddCollection')}>
+                <Text style={[dashboardStyles.linksText]}>Add Collection</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AllCustomersList')}>
+                <Text style={[dashboardStyles.linksText]}>All Customers</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={dashboardStyles.links}
+                onPress={() => navigation.navigate('AllCollectionList')}>
+                <Text style={[dashboardStyles.linksText]}>All Collections</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={dashboardStyles.links}
+            onPress={() => navigation.navigate('CustomerPortal')}>
+            <Text style={[dashboardStyles.linksText]}>Customer Orders</Text>
+          </TouchableOpacity>
+        )}
       </ImageBackground>
     </SafeAreaView>
   );

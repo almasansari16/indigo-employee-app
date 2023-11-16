@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Dimensions, Image } from 'react-native'
+import { View, Text, SafeAreaView, Dimensions, Image, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles';
 import { SingleCollectionStyle } from './styles';
@@ -59,18 +59,21 @@ export default function SingleCollection({ route, navigation }) {
         {/* <View style={{marginTop:hp(5)}}>
                 <Image source={customer.img} style={{width:wp(80), height:hp(22)}}/>
             </View> */}
-        <View style={[AppStyles.center, SingleCollectionStyle.collectionDetail]}>
-          <Text style={SingleCollectionStyle.detailText}>Article Name : {collection.ArticleName}</Text>
-          <Text style={SingleCollectionStyle.detailText}>IDS : {collection.IDS}</Text>
-          <Text style={SingleCollectionStyle.detailText}>Color : {collection.Colour}</Text>
-          <Text style={SingleCollectionStyle.detailText}>Finish Type : {collection.FinishType}</Text>
-          <Text style={SingleCollectionStyle.detailText}>Weave : {collection.Weave}</Text>
-        </View>
-        <View style={SingleCollectionStyle.btnView}>
-          <Button title={'Create Barcode'}
-          style={SingleCollectionStyle.btn}
-          onPress={() => createBarcode()}/>
-        </View>
+        <ScrollView>
+          <View style={[AppStyles.center, SingleCollectionStyle.collectionDetail]}>
+            <Text style={SingleCollectionStyle.detailText}>Article Name : {collection.ArticleName}</Text>
+            <Text style={SingleCollectionStyle.detailText}>IDS : {collection.IDS}</Text>
+            <Text style={SingleCollectionStyle.detailText}>Color : {collection.Colour}</Text>
+            <Text style={SingleCollectionStyle.detailText}>Finish Type : {collection.FinishType}</Text>
+            <Text style={SingleCollectionStyle.detailText}>Weave : {collection.Weave}</Text>
+            <Image source={collection.Image} style={{ width: 300, height: 400, alignSelf: 'center', marginTop: 5, borderRadius: 10 }} />
+          </View>
+          <View style={SingleCollectionStyle.btnView}>
+            <Button title={'Create Barcode..........'}
+              style={SingleCollectionStyle.btn}
+              onPress={() => createBarcode()} />
+          </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
 

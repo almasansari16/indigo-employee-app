@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { hp, wp } from "../../../App";
 
-export const SingleGarmentStyle = StyleSheet.create({
+export const meetingCollectionStyle = StyleSheet.create({
     detailText :{
         color:'#282561',
         fontSize: wp(5),
@@ -25,17 +25,7 @@ export const SingleGarmentStyle = StyleSheet.create({
     },
     btn : {
         backgroundColor:"#282561",
-        paddingVertical: hp(1),
+        paddingVertical: hp(2),
         
-    },
-    input: {
-        width:wp(80),
-        borderColor:"#282561",
-        borderWidth:1,
-        borderRadius:wp(5),
-        marginBottom:hp(2),
-        fontFamily:'Lato-Regular',
-        color: "#282561"
-        // marginVertical:10
-      },
+    }
 })

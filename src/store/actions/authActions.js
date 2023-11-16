@@ -24,8 +24,8 @@ const login = (email, password) => async (dispatch) => {
         // navigateToDashboard(navigation)
         
     } catch (error) {
-        Alert.alert(error.response.data.message)
-        console.log(error.response.data.message, "error..........")
+        // Alert.alert(error.response.data.message)
+        console.log(error.message, "error..........")
         // Dispatch action to handle login failure
         dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }

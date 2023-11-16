@@ -38,6 +38,8 @@ import GenerateQRcode from '../screens/generateQRcode/GenerateQRcode';
 import SelectedGarments from '../screens/selectedExhibitionGarments/SelectedGarments';
 import SingleGarmentDetail from '../screens/singleGarmentDetail/SingleGarmentDetail';
 import OrderDetail from '../screens/orderDetail/OrderDetail';
+import SelectedMeetingCollection from '../screens/selectedCollectionForMeeting/SelectedMeetingCollection';
+import CustomerPortal from '../screens/customerPortal/CustomerPortal';
 // import { AuthContext } from '../context/authContext';
 
 
@@ -412,7 +414,7 @@ function StackNavigation() {
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Selected Garments',
+            title: 'Selected Exhibition Garments',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
@@ -431,6 +433,24 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'Order Detail',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={SelectedMeetingCollection}
+          name='SelectedMeetingCollection'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Selected Meeting Collection',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={CustomerPortal}
+          name='CustomerPortal'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Customer Portal',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

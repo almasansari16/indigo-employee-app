@@ -11,7 +11,7 @@ import {
     KeyboardAvoidingView,
     ScrollView
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AppStyles } from '../../theme/AppStyles';
 import { LoginStyle } from './styles';
@@ -48,18 +48,42 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
-
+    
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false)
+    // useEffect(async() => {
+    //     const user = await AsyncStorage.getItem('userData');
+    //     console.log(user , "ksfvnskvn")
+    //          if (user.role === "user") {
+    //         Alert.alert("this is a user")
+    //         // navigation.navigate("CustomerPortal")
+    //        }
+    //         if (user.role === "employee") {
+    //         Alert.alert("This is employee")
+    //     //    navigation.navigate('TabNavigation')
+
+    //        }
+    // },[login])
+    // const {user} = useSelector((state) => state.auth.user )
+    // console.log(user.role , "user..........")
     const handleSignin = async () => {
-        await login( email, password);
         if(email == "" && password ==""){
             Alert.alert("Please enter your Email or Password")
         }
+        await login( email, password);
         if (!error) {
            setSuccess(true)
+        //    if (user.role === "user") {
+        //     // Alert.alert("this is a user")
+        //     navigation.navigate("CustomerPortal")
+        //    }
+        //     if (user.role === "employee") {
+        //     // Alert.alert("This is employee")
+
+        //    }
            navigation.navigate('TabNavigation')
+
         }
     }
 

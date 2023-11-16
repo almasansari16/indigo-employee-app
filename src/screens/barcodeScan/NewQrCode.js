@@ -93,7 +93,7 @@ export default function NewQrCode({ navigation }) {
                     ))}
                 </ScrollView> */}
                 <View style={[BarcodeStyle.btnView]}>
-                    {/* <Button title={'Scan Again'} style={BarcodeStyle.btn} onPress={handleScanAgain} /> */}
+                    <Button title={'See Collection'} style={BarcodeStyle.btn} onPress={() => navigation.navigate('SelectedMeetingCollection')} />
                     <Button title={'Final Detail'} style={[BarcodeStyle.btn2]} onPress={() => navigation.navigate('FinalDetail')} />
                 </View>
             </SafeAreaView>
