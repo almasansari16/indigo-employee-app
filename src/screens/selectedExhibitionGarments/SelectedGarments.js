@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, Alert, ToastAndroid, Platform } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Alert, ToastAndroid, Platform, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppStyles } from '../../theme/AppStyles';
@@ -17,36 +17,36 @@ function SelectedGarments({ navigation }) {
     const [items, setItems] = useState([]);
     const [open, setOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
-
+    const [isRefreshing , setIsRefreshing] = useState(false)
     const dispatch = useDispatch()
     const data = useSelector((state) => state.exhibitioCollection.collections)
     // console.log('data', data);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await AsyncStorage.getItem('SelectedGarmentforExhibition')
-                .then(value => {
-                    if (value) {
-                        const retrievedArray = JSON.parse(value);
-                        console.log('Retrieved array from AsyncStorage:', retrievedArray);
-                        setGarmnet(retrievedArray)
-                    } else {
-                        console.log('No array found in AsyncStorage');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error retrieving array from AsyncStorage:', error);
-                });
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await AsyncStorage.getItem('SelectedGarmentforExhibition')
+    //             .then(value => {
+    //                 if (value) {
+    //                     const retrievedArray = JSON.parse(value);
+    //                     console.log('Retrieved array from AsyncStorage:', retrievedArray);
+    //                     setGarmnet(retrievedArray)
+    //                 } else {
+    //                     console.log('No array found in AsyncStorage');
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error retrieving array from AsyncStorage:', error);
+    //             });
 
-        }
-        fetchData()
-    }, []);
+    //     }
+    //     fetchData()
+    // }, []);
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await dispatch(getCollections());
+              const response = await dispatch(getCollections());
             } catch (error) {
                 console.error(error);
             }
@@ -60,12 +60,24 @@ function SelectedGarments({ navigation }) {
             //   setFilteredItems(brands)
         }
     }, [dispatch, data, refresh]);
+
+
     const garmentDetail = (item) => {
         navigation.navigate('singleGarmentDetail', {
             item
         })
     }
-
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+    
+        try {
+          await getCollections();
+        } catch (error) {
+          console.log(error.message);
+        } finally {
+          setIsRefreshing(false);
+        }
+      };
 
     const handleLongPress = (item) => {
         setSelectedItems((prevSelectedItems) => {
@@ -116,13 +128,20 @@ function SelectedGarments({ navigation }) {
             return prevSelectedItems;
         });
     };
+    console.log(items, "items")
     console.log("selected items", selectedItems)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
                 source={Images.purple_background}
                 style={{ width: wp(100), height: hp(100) }}>
-                <ScrollView style={{height:hp(80)}}>
+                <ScrollView style={{ height: hp(80) }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefreshing}
+                            onRefresh={handleRefresh}
+                        />
+                    }>
                     <DataTable>
                         <DataTable.Header>
                             <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
@@ -140,19 +159,20 @@ function SelectedGarments({ navigation }) {
                                     garmentDetail(item)}
                                 onLongPress={() => handleLongPress(item)}
                             >
+                               
                                 <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.collectionName}</DataTable.Cell>
                                 <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{new Date(item.date).toLocaleDateString()}</DataTable.Cell>
                             </DataTable.Row>
                         ))}
                     </DataTable>
                     <View>
-                    <Button
-                        title={'Next'}
-                        onPress={() => navigation.navigate('NewQrCode')}
-                        style={{ backgroundColor: '#EEEEEE', width:wp(30), marginTop:20, alignSelf:'flex-end', }} />
-                </View>
+                        <Button
+                            title={'Next'}
+                            onPress={() => navigation.navigate('NewQrCode')}
+                            style={{ backgroundColor: '#EEEEEE', width: wp(30), marginTop: 20, alignSelf: 'flex-end', }} />
+                    </View>
                 </ScrollView>
-               
+
             </ImageBackground>
         </SafeAreaView>
     )

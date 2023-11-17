@@ -7,6 +7,7 @@ import meetingReducer from './meetingReducer';
 import fetchMeetingReducer from './fetchMeetingsByUserReducer';
 import sheetReducer from './sheetReducer';
 import exhibitionCollectionReducer from './selectGarmentReducer';
+import scanCodeReducer from './scanCodeReducer';
 
 
 const rootReducer = combineReducers({
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   meeting: meetingReducer,
   fetchMeeting: fetchMeetingReducer,
   sheet: sheetReducer,
-  exhibitioCollection : exhibitionCollectionReducer
+  exhibitioCollection : exhibitionCollectionReducer,
+  scanCode : scanCodeReducer
   // Add other reducers here if needed
 });
 

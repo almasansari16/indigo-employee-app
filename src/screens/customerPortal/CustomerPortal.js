@@ -55,9 +55,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../../components/Button';
 import { CustomModal, Icon, IconType, InputField } from '../../components';
 import AllCollectionStyle from './styles';
-import { createCollection } from '../../store/actions/selectExhibitionGarmentAction';
+import { fetchScanCodeByUserId } from '../../store/actions/scanCodesAction';
 
-function CustomerPortal({ navigation, createCollection }) {
+
+function CustomerPortal({ navigation,  }) {
   const [page, setPage] = React.useState(0);
   const [refresh, setRefresh] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -72,8 +73,10 @@ function CustomerPortal({ navigation, createCollection }) {
     numberOfItemsPerPageList[0],
   );
   const dispatch = useDispatch();
-  const sheetData = useSelector((state) => state.sheet.allData);
-  // console.log(sheetData, "sheetdata")
+  const sheetData = useSelector((state) => state.scanCode.scanCode.codes);
+  const userId = useSelector((state) => state.auth.user.user._id);
+
+  console.log(sheetData,   "sheetdata")
 
   const [items, setItems] = React.useState([]);
 
@@ -91,9 +94,9 @@ function CustomerPortal({ navigation, createCollection }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(getSheetData());
+        await dispatch(fetchScanCodeByUserId(userId));
       } catch (error) {
-        console.error(error);
+        console.error(error,"errorr");
       }
     };
 
@@ -119,10 +122,11 @@ function CustomerPortal({ navigation, createCollection }) {
           Image: images[index]
         }
       ))
-      // console.log(updateItems, "updateitems.............")
+      console.log(updateItems, "updateitems.............")
       setItems(updateItems);
       setFilteredItems(updateItems)
     }
+    // fetchData()
   }, [dispatch, sheetData]);
 
   const handleSearch = (text) => {
@@ -149,7 +153,7 @@ function CustomerPortal({ navigation, createCollection }) {
     setIsRefreshing(true);
 
     try {
-      await getSheetData();
+      await fetchScanCodeByUserId();
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -379,15 +383,11 @@ function CustomerPortal({ navigation, createCollection }) {
 
 
 const mapStateToProps = (state) => ({
-  allData: state.sheet.allData,
-  loading: state.sheet.loading,
-  error: state.sheet.error,
-  collections: state.exhibitioCollection.collections, // Assuming your reducer updates the "brands" property
-  loading: state.exhibitioCollection.loading, // Assuming your reducer updates the "loading" property
-  error: state.exhibitioCollection.error,
+  scanCodes: state.scanCode.scanCodes,
+  loading: state.scanCode.loading,
+  error: state.scanCode.error,
 });
-const mapDispatchToProps = {
-  createCollection, // This makes the createBrand action available as a prop
-};
+
 // Connect your component to the Redux store
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerPortal);
+export default connect(mapStateToProps)(CustomerPortal);
+

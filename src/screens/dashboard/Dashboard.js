@@ -129,7 +129,7 @@ export default function Dashboard({ navigation }) {
           <TouchableOpacity
             style={dashboardStyles.links}
             onPress={() => navigation.navigate('CustomerPortal')}>
-            <Text style={[dashboardStyles.linksText]}>Customer Orders</Text>
+            <Text style={[dashboardStyles.linksText]}>My Orders</Text>
           </TouchableOpacity>
         )}
       </ImageBackground>

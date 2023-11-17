@@ -14,7 +14,7 @@ export const fetchMeetingsByUserId = (userId) => {
         dispatch({ type: FETCH_MEETINGS_REQUEST });
         try {
             const response = await axios.get(`${BASE_URL}/meetings/user/${userId}`);
-            console.log('Axios Response:', response); // Log the response for debugging
+            console.log('Axios Response:', response.data); // Log the response for debugging
             if (response.status === 200) {
                 dispatch({ type: FETCH_MEETINGS_SUCCESS, payload: response.data });
             } else {

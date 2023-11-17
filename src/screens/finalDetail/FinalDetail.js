@@ -17,7 +17,7 @@ function FinalDetail({ navigation, createMeeting }) {
     const { user } = useSelector((state) => state.auth.user);
     // console.log(user._id, "////////////")
     const [userId, setUserId] = useState('');
-    const [concernPersonId , setConcernPersonId] = useState('');
+    const [concernPersonId, setConcernPersonId] = useState('');
     const [barcodesValue, setBarcodeValues] = useState([]);
     const [customer, setCustomer] = useState(null)
     const [extraDetail, setExtraDetail] = useState("")
@@ -26,7 +26,8 @@ function FinalDetail({ navigation, createMeeting }) {
         concernPersonId: [],
         emailRecipient: [],
         userId: "",
-        extraNote: ""
+        extraNote: "",
+        codes: []
     })
     console.log(extraDetail, "extra detail....")
     const retrieveStoredValues = async () => {
@@ -127,6 +128,20 @@ function FinalDetail({ navigation, createMeeting }) {
                     }));
                 } catch (error) {
                     console.log("Error parsing the data:", error);
+                };
+                try {
+                    const codes = barcodesValue.map((jsonString) => JSON.parse(jsonString))
+                        .filter((data, index, self) => {
+                            // Use JSON.stringify to compare objects as strings
+                            const jsonString = JSON.stringify(data);
+                            return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
+                        })
+                    setMeetingData((meetingData) => ({
+                        ...meetingData,
+                        codes: codes
+                    }));
+                } catch (error) {
+                    console.log("Error parsing the data:", error);
                 }
             })
             .catch((error) => {
@@ -137,56 +152,29 @@ function FinalDetail({ navigation, createMeeting }) {
     }, []);
 
     console.log(barcodesValue, "barcodes value selection.....")
-  
-      
-      try {
-        const parsedArray = barcodesValue.map(jsonString => JSON.parse(jsonString));
-        console.log(parsedArray);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-      
+
+
+    //   try {
+    //     const parsedArray = barcodesValue.map(jsonString => JSON.parse(jsonString));
+    //     console.log(parsedArray);
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //   }
+
 
     const handleSave = async () => {
-        // try {
-        //     await AsyncStorage.setItem("Extra Detail", extraDetail)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-        // const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
-        // console.log(updatedMeetingData, "meeting data before sending in api")
-        // createMeeting(updatedMeetingData)
-        // navigation.navigate('SendEmail', { customer });
-        handleSaveScanCodes()
-    };
 
-    const handleSaveScanCodes = async () => {
-        const codes = barcodesValue.map((jsonString) => JSON.parse(jsonString))
-            .filter((data, index, self) => {
-                // Use JSON.stringify to compare objects as strings
-                const jsonString = JSON.stringify(data);
-                return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
-            })
-        const data = {
-            codes : codes ,
-            userId: userId,
-            concernPersonId : concernPersonId
-        }
-        console.log(data, "sdvnsdovc")
         try {
-            const response = await axios.post(`${BASE_URL}/scan-code`, data)
-            console.log(response.data.message);
-            ToastAndroid.showWithGravityAndOffset(
-                'Barcode Scanned Saved Successfully!',
-                ToastAndroid.SHORT,
-                ToastAndroid.CENTER,
-                25,
-                50
-            );
+            await AsyncStorage.setItem("Extra Detail", extraDetail)
         } catch (error) {
-            console.error('Error:', error);
+            console.log(error)
         }
-    }
+        const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
+        console.log(updatedMeetingData, "meeting data before sending in api")
+        createMeeting(updatedMeetingData)
+        navigation.navigate('SendEmail', { customer });
+        // handleSaveScanCodes()
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
