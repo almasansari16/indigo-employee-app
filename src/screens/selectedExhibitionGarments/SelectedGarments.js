@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, Alert, ToastAndroid, Platform, RefreshControl } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Alert, ToastAndroid, Platform, RefreshControl, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppStyles } from '../../theme/AppStyles';
@@ -7,78 +7,75 @@ import Images from '../../theme/Images';
 import { DataTable } from 'react-native-paper';
 import { CustomModal } from '../../components';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getCollections } from '../../store/actions/selectExhibitionGarmentAction';
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from '../../components/Button';
+import axios from 'axios';
+import { BASE_URL } from '../../config/config';
+import { fetchExhibitionCollectionByUserId } from '../../store/actions/fetchExhibitionCollectionByUserAction';
 
-function SelectedGarments({ navigation }) {
-    const [garment, setGarmnet] = useState(null);
+function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loading, error }) {
     const [refresh, setRefresh] = useState(false);
     const [items, setItems] = useState([]);
+    const [userId, setUserId] = useState("");
     const [open, setOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [isRefreshing , setIsRefreshing] = useState(false)
+    const [isRefreshing, setIsRefreshing] = useState(false)
     const dispatch = useDispatch()
-    const data = useSelector((state) => state.exhibitioCollection.collections)
-    // console.log('data', data);
+    const data = useSelector((state) => state.exhibitioCollectionByUser.collections)
+    console.log('data', data);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         await AsyncStorage.getItem('SelectedGarmentforExhibition')
-    //             .then(value => {
-    //                 if (value) {
-    //                     const retrievedArray = JSON.parse(value);
-    //                     console.log('Retrieved array from AsyncStorage:', retrievedArray);
-    //                     setGarmnet(retrievedArray)
-    //                 } else {
-    //                     console.log('No array found in AsyncStorage');
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error retrieving array from AsyncStorage:', error);
-    //             });
-
-    //     }
-    //     fetchData()
-    // }, []);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userData = await AsyncStorage.getItem("userData");
+                const parsedData = JSON.parse(userData);
+                const { _id } = parsedData;
+                setUserId(_id);
+            } catch (error) {
+                console.log("Error parsing the data:", error);
+            }
+        }
+        fetchData();
+    }, []);
 
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchMeetingsByUser = async () => {
             try {
-              const response = await dispatch(getCollections());
+                const response = await fetchExhibitionCollectionByUserId(userId);
+                console.log(response, "response.........")
             } catch (error) {
-                console.error(error);
+                console.log(error.message);
             }
         };
 
         if (data.length === 0 || refresh) {
-            fetchData();
-            setRefresh(false)
+            fetchMeetingsByUser();
+            setRefresh(false); // Reset refresh flag
         } else {
             setItems(data);
-            //   setFilteredItems(brands)
         }
-    }, [dispatch, data, refresh]);
+    }, [dispatch, data, userId, refresh]);
 
+
+
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+
+        try {
+            await fetchExhibitionCollectionByUserId(userId);
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setIsRefreshing(false);
+        }
+    };
 
     const garmentDetail = (item) => {
         navigation.navigate('singleGarmentDetail', {
             item
         })
     }
-    const handleRefresh = async () => {
-        setIsRefreshing(true);
-    
-        try {
-          await getCollections();
-        } catch (error) {
-          console.log(error.message);
-        } finally {
-          setIsRefreshing(false);
-        }
-      };
-
     const handleLongPress = (item) => {
         setSelectedItems((prevSelectedItems) => {
             // setCollection((prevCollection) => ({
@@ -129,7 +126,7 @@ function SelectedGarments({ navigation }) {
         });
     };
     console.log(items, "items")
-    console.log("selected items", selectedItems)
+    // console.log("selected items", selectedItems)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -141,30 +138,42 @@ function SelectedGarments({ navigation }) {
                             refreshing={isRefreshing}
                             onRefresh={handleRefresh}
                         />
-                    }>
-                    <DataTable>
-                        <DataTable.Header>
-                            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-                                Collection Name
-                            </DataTable.Title>
-                            <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
-                                Date
-                            </DataTable.Title>
+                    }
+                >
+                    {items.length > 0 ? (
+                        <DataTable>
+                            <DataTable.Header>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    Collection Name
+                                </DataTable.Title>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    Date
+                                </DataTable.Title>
 
-                        </DataTable.Header>
-                        {items && items.map(item => (
-                            <DataTable.Row
-                                key={item.key}
-                                onPress={() =>
-                                    garmentDetail(item)}
-                                onLongPress={() => handleLongPress(item)}
-                            >
-                               
-                                <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.collectionName}</DataTable.Cell>
-                                <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{new Date(item.date).toLocaleDateString()}</DataTable.Cell>
-                            </DataTable.Row>
-                        ))}
-                    </DataTable>
+                            </DataTable.Header>
+
+
+                            {items && items.map(item => (
+                                // console.log(item.exhibitionCollection.collectionName)
+                                <DataTable.Row
+                                    key={item.key}
+                                    onPress={() =>
+                                        garmentDetail(item)}
+                                    onLongPress={() => handleLongPress(item)}
+                                >
+
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >
+                                        {item.collectionName}
+                                    </DataTable.Cell>
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >
+                                        {new Date(item.date).toLocaleDateString()}
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+                            ))}
+                        </DataTable>
+                    ) : (
+                        <ActivityIndicator color='#EEEEEE' size="large" />
+                    )}
                     <View>
                         <Button
                             title={'Next'}
@@ -179,9 +188,9 @@ function SelectedGarments({ navigation }) {
 }
 
 const mapStateToProps = (state) => ({
-    collections: state.exhibitioCollection.collections, // Assuming your reducer updates the "brands" property
-    loading: state.exhibitioCollection.loading, // Assuming your reducer updates the "loading" property
-    error: state.exhibitioCollection.error,
+    collections: state.exhibitioCollectionByUser.collections, // Assuming your reducer updates the "brands" property
+    loading: state.exhibitioCollectionByUser.loading, // Assuming your reducer updates the "loading" property
+    error: state.exhibitioCollectionByUser.error,
 });
 
-export default connect(mapStateToProps)(SelectedGarments);
+export default connect(mapStateToProps, { fetchExhibitionCollectionByUserId })(SelectedGarments);

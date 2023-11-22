@@ -28,11 +28,13 @@ import { createCollection } from '../../store/actions/selectExhibitionGarmentAct
 function AllCollectionList({ navigation, createCollection }) {
   const [page, setPage] = React.useState(0);
   const [refresh, setRefresh] = useState(false);
+  // const [userId, setUserId] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [collection, setCollection] = useState({
     collectionName: '',
-    selectedGarments: []
+    selectedGarments: [],
+    userId: ''
   });
   const [numberOfItemsPerPageList] = React.useState([7]);
   const [selectedItems, setSelectedItems] = React.useState([]);
@@ -49,6 +51,22 @@ function AllCollectionList({ navigation, createCollection }) {
   // const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
   const to = from + itemsPerPage;
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        const parsedData = JSON.parse(userData);
+        const { _id } = parsedData;
+        setCollection((collection) => ({
+          ...collection,
+          userId: _id,
+        }));
+      } catch (error) {
+        console.log("Error parsing the data:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setPage(0);
@@ -174,17 +192,18 @@ function AllCollectionList({ navigation, createCollection }) {
     });
   };
 
-  console.log(collection, "collection...............")
   const handleCreateCollection = async () => {
+    console.log(collection, "collection...............")
 
-    await createCollection(collection)
-      .then(res => {
-        setCollection({ collectionName: "" })
-        closeModal()
-      }).catch((err) => {
+    await
+      createCollection(collection)
+        .then(res => {
+          setCollection({ collectionName: "" })
+          closeModal()
+        }).catch((err) => {
 
-        Alert.alert(err)
-      })
+          Alert.alert(err)
+        })
   }
 
   const closeModal = () => {

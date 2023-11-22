@@ -23,13 +23,13 @@ import { hp, wp } from '../../../App';
 
 function AllCustomersList({ navigation, route }) {
   const [page, setPage] = useState(0);
-  const [numberOfItemsPerPageList] = useState([5]);
+  const [numberOfItemsPerPageList] = useState([6]);
   const [refresh, setRefresh] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brand.brands);
-
+console.log(brands , 'brands.......')
   const [items, setItems] = useState([]);
   useEffect(async () => {
     try {

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { hp, wp } from '../../../App';
 
-export const dashboardStyles = StyleSheet.create({
+export const AdminPortalStyles = StyleSheet.create({
   div: {
     display: 'flex',
     flexDirection: 'row',

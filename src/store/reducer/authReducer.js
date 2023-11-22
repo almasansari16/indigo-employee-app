@@ -7,11 +7,13 @@ import {
     SIGNUP_FAILURE,
     SIGNUP_REQUEST,
     SIGNUP_SUCCESS,
-    LOGOUT
+    LOGOUT,
+    GET_ALL_USERS_SUCCESS,
+    GET_ALL_USERS_FAILURE
 } from '../actions/actionTypes';
 
 const initialState = {
-    users:[],
+    users: [],
     user: null,           // User data when logged in
     isAuthenticated: false,
     loading: false,       // Loading state while making API requests
@@ -28,11 +30,11 @@ const authReducer = (state = initialState, action) => {
             };
 
         case SIGNUP_SUCCESS:
-            console.log(action.payload , "payload data ")
+            console.log(action.payload, "payload data ")
             return {
                 ...state,
                 // users:[...user , action.payload],
-                user: action.payload, 
+                user: action.payload,
                 isAuthenticated: true,
                 loading: false,
                 error: null,
@@ -77,7 +79,19 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 error: null,
             };
-
+        case GET_ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                users: action.payload,
+                loading: false,
+                error: null
+            };
+        case GET_ALL_USERS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
         default:
             return state;
     }

@@ -151,18 +151,9 @@ function FinalDetail({ navigation, createMeeting }) {
 
     }, []);
 
-    console.log(barcodesValue, "barcodes value selection.....")
+    // console.log(barcodesValue, "barcodes value selection.....")
 
-
-    //   try {
-    //     const parsedArray = barcodesValue.map(jsonString => JSON.parse(jsonString));
-    //     console.log(parsedArray);
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //   }
-
-
-    const handleSave = async () => {
+    const handleSaveMeeting = async () => {
 
         try {
             await AsyncStorage.setItem("Extra Detail", extraDetail)
@@ -173,7 +164,6 @@ function FinalDetail({ navigation, createMeeting }) {
         console.log(updatedMeetingData, "meeting data before sending in api")
         createMeeting(updatedMeetingData)
         navigation.navigate('SendEmail', { customer });
-        // handleSaveScanCodes()
     };
 
     return (
@@ -251,7 +241,7 @@ function FinalDetail({ navigation, createMeeting }) {
                                 />
                             </ScrollView>
                         </View>
-                        <Button title={'Save'} style={FinalDetailStyle.btn} onPress={handleSave} />
+                        <Button title={'Save'} style={FinalDetailStyle.btn} onPress={handleSaveMeeting} />
                     </View>
                 </ScrollView>
             </ImageBackground>

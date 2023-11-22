@@ -8,13 +8,13 @@ import {
     GET_COLLECTION_FAILURE,
     GET_COLLECTION_SUCCESS,
     UPDATE_COLLECTION_FAILURE,
-    UPDATE_COLLECTION_SUCCESS
+    UPDATE_COLLECTION_SUCCESS,
 } from "../actions/actionTypes";
 
 // brandReducer.js
 const initialState = {
-    collections : [],
-    collection : null,
+    collections: [],
+    collection: null,
     loading: false,
     error: null,
 };
@@ -36,7 +36,7 @@ const exhibitionCollectionReducer = (state = initialState, action) => {
                 loading: false,
             };
         case GET_COLLECTIONS_SUCCESS:
-            console.log(action.payload , "reducer console")
+            console.log(action.payload, "reducer console")
             return {
                 ...state,
                 collections: action.payload,
@@ -49,7 +49,7 @@ const exhibitionCollectionReducer = (state = initialState, action) => {
                 loading: false,
             };
         case GET_COLLECTION_SUCCESS:
-            console.log(action.payload , "reducer console.....")
+            console.log(action.payload, "reducer console.....")
             return {
                 ...state,
                 collection: action.payload,
@@ -85,6 +85,7 @@ const exhibitionCollectionReducer = (state = initialState, action) => {
                 error: action.payload,
                 loading: false,
             };
+        
         default:
             return state;
     }

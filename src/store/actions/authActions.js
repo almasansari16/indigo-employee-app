@@ -1,7 +1,7 @@
 // authActions.js
 import axios from 'axios';
 import { BASE_URL } from '../../config/config';
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './actionTypes';
+import { GET_ALL_USERS_FAILURE, GET_ALL_USERS_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './actionTypes';
 import { Alert } from 'react-native';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,4 +49,17 @@ const signup = (name, email, password, contact) => async (dispatch) => {
     }
 };
 
-export { login, signup };
+
+ const getAllUsers = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/all-users`);
+        dispatch({ type: GET_ALL_USERS_SUCCESS, payload: response.data });
+        console.log(response.data , "action console")
+    } catch (error) {
+        console.error(error);
+        dispatch({ type: GET_ALL_USERS_FAILURE, payload: error.message });
+    }
+};
+
+
+export { login, signup , getAllUsers };

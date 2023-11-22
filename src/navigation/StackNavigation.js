@@ -40,6 +40,9 @@ import SingleGarmentDetail from '../screens/singleGarmentDetail/SingleGarmentDet
 import OrderDetail from '../screens/orderDetail/OrderDetail';
 import SelectedMeetingCollection from '../screens/selectedCollectionForMeeting/SelectedMeetingCollection';
 import CustomerPortal from '../screens/customerPortal/CustomerPortal';
+import AdminPortal from '../screens/adminPortal/AdminPortal';
+import AllEmployeeData from '../screens/allEmployeesData/AllEmployeeData';
+import AllOrderData from '../screens/allOrdersData/AllOrderData';
 // import { AuthContext } from '../context/authContext';
 
 
@@ -451,6 +454,33 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'Customer Portal',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={AdminPortal}
+          name='AdminPortal'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Admin Portal',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={AllEmployeeData}
+          name='AllEmployeeData'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'All Employee Data',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={AllOrderData}
+          name='AllOrderData'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'All Order Data',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

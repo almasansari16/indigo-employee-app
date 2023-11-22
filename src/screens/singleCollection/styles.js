@@ -7,14 +7,14 @@ export const SingleCollectionStyle = StyleSheet.create({
         fontSize: wp(5),
         fontWeight: '500',
         fontFamily: 'Lato-Regular',
-        lineHeight: hp(5)
+        lineHeight: hp(4)
     },
     collectionDetail:{
         backgroundColor : "#EEEEEE", 
         borderRadius: 12,
         paddingHorizontal:wp(5),
         paddingVertical: hp(2),
-        marginTop: hp(5),
+        marginTop: hp(2),
         minWidth:wp(80)
     },
     btnView:{
@@ -23,6 +23,9 @@ export const SingleCollectionStyle = StyleSheet.create({
     },
     btn : {
         backgroundColor:"#EEEEEE",
-        paddingVertical: hp(2)
+        paddingVertical: hp(2),
+        width: wp(60),
+        alignSelf:'center',
+        marginTop:10
     }
 })

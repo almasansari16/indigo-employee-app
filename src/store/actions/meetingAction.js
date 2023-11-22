@@ -29,16 +29,16 @@ export const createMeeting = (meeting) => async (dispatch) => {
     }
 };
 
-// export const getMeetings = () => async (dispatch) => {
-//     try {
-//         const response = await axios.get(`${BASE_URL}/get-brands`);
-//         dispatch({ type: GET_BRANDS_SUCCESS, payload: response.data });
-//         // console.log(response.data , "action console")
-//     } catch (error) {
-//         console.error(error);
-//         dispatch({ type: GET_BRANDS_FAILURE, payload: error.message });
-//     }
-// };
+export const getMeetings = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/meetings`);
+        dispatch({ type: GET_MEETINGS_SUCCESS, payload: response.data });
+        // console.log(response.data , "action console")
+    } catch (error) {
+        console.error(error);
+        dispatch({ type: GET_MEETINGS_FAILURE, payload: error.message });
+    }
+};
 
 export const getMeeting = (meetingId) => async (dispatch) => {
     try {

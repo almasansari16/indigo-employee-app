@@ -25,7 +25,7 @@ export default function SelectedMeetingCollection({navigation}) {
         }
         fetchData();
     }, []);
-    console.log("meeting collection", meetingCollection)
+    console.log("meeting collection.........", meetingCollection)
 
     const garmentDetail = (item) => {
         navigation.navigate('singleGarmentDetail', {
@@ -36,24 +36,6 @@ export default function SelectedMeetingCollection({navigation}) {
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
                 <ScrollView>
-                    {/* {meetingCollection && meetingCollection.map((item, index) => (
-                        <View key={index} style={[meetingCollectionStyle.collectionDetail, AppStyles.center]}>
-                            <Text style={meetingCollectionStyle.detailText}>{item.collectionName}</Text>
-                            {item.selectedGarments.map((garment, index) => (
-                                <View key={index}>
-                                    <Text style={meetingCollectionStyle.detailText}> Article Name :{garment.ArticleName}</Text>
-                                    <Text style={meetingCollectionStyle.detailText}> Price : ${garment.price}</Text>
-                                    <View
-                                        style={{
-                                            borderBottomWidth: 1,
-                                            borderBottomColor: '#2f2260',
-                                            marginVertical: 10,
-                                        }}
-                                    />
-                                </View>
-                            ))}
-                        </View>
-                    ))} */}
                      <DataTable>
                         <DataTable.Header>
                             <DataTable.Title textStyle={{ color: '#EEEEEE' }}>

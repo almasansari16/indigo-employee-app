@@ -22,7 +22,7 @@ export default function OrderDetail({ route }) {
             </SafeAreaView>
         );
     }
-    const { brandId, concernPersonId, meetingDate, userId , extraNote , codes} = collection;
+    const { brandId, concernPersonId, meetingDate, userId, extraNote, codes } = collection;
 
     return (
         <SafeAreaView style={[AppStyles.container]}>
@@ -33,11 +33,11 @@ export default function OrderDetail({ route }) {
                     <Text style={SingleCollectionStyle.detailText}>Brand Name : {brandId.brandName}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Concern persons : {concernPersonId.map(person => person.name).join(', ')}</Text>
 
-                    <Text style={SingleCollectionStyle.detailText}>Meeting Date : { new Date(meetingDate).toLocaleDateString()}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(meetingDate).toLocaleDateString()}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Employee name : {userId.name}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Extra Note : {extraNote}</Text>
                     {codes.map((item) => (
-                    <Text style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
+                        <Text style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
                     ))}
 
                 </View>

@@ -10,7 +10,8 @@ import {
     GET_COLLECTION_FAILURE,
     GET_COLLECTION_SUCCESS,
     UPDATE_COLLECTION_FAILURE,
-    UPDATE_COLLECTION_SUCCESS
+    UPDATE_COLLECTION_SUCCESS,
+    
 } from "./actionTypes";
 import { BASE_URL } from '../../config/config';
 import { Alert } from 'react-native';
@@ -45,24 +46,40 @@ export const getCollections = () => async (dispatch) => {
 };
 
 
-export const getCollection = (id) => {
-    return async (dispatch) => {
-        dispatch({ type: GET_COLLECTION_SUCCESS });
-        try {
-            const response = await axios.get(`${BASE_URL}/exhibition-collection/${id}`);
-            console.log('Axios Response:', response); // Log the response for debugging
-            if (response.status === 200) {
-                dispatch({ type: GET_COLLECTION_SUCCESS, payload: response.data });
-                return response.data; // Return the data
-            } else {
-                dispatch({ type: GET_COLLECTION_FAILURE, error: response.data.message });
-            }
-        } catch (error) {
-            console.log('Axios Error:', error); // Log the error for debugging
-            dispatch({ type: GET_COLLECTION_FAILURE, error: 'Error fetching meetings data' });
-        }
-    };
+// export const getCollection = (id) => {
+//     return async (dispatch) => {
+//         dispatch({ type: GET_COLLECTION_SUCCESS });
+//         try {
+//             const response = await axios.get(`${BASE_URL}/exhibition-collection/${id}`);
+//             console.log('Axios Response:', response); // Log the response for debugging
+//             if (response.status === 200) {
+//                 dispatch({ type: GET_COLLECTION_SUCCESS, payload: response.data });
+//                 return response.data; // Return the data
+//             } else {
+//                 dispatch({ type: GET_COLLECTION_FAILURE, error: response.data.message });
+//             }
+//         } catch (error) {
+//             console.log('Axios Error:', error); // Log the error for debugging
+//             dispatch({ type: GET_COLLECTION_FAILURE, error: 'Error fetching meetings data' });
+//         }
+//     };
+// };
+
+
+export const getCollection = (id) => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/exhibition-collection/${id}`);
+        dispatch({ type: GET_COLLECTION_SUCCESS, payload: response.data });
+        console.log('Axios Response:', response.data)
+    } catch (error) {
+        console.error(error, "action error");
+        dispatch({ type: GET_COLLECTION_FAILURE, payload: error.message });
+    }
 };
+
+
+
+
 
 // export const updateBrand = (brandId, updatedBrandData) => async (dispatch) => {
 //     try {

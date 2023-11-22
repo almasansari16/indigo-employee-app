@@ -60,6 +60,9 @@ export default function SingleCollection({ route, navigation }) {
                 <Image source={customer.img} style={{width:wp(80), height:hp(22)}}/>
             </View> */}
         <ScrollView>
+        <Button title={'Create Barcode'}
+              style={SingleCollectionStyle.btn}
+              onPress={() => createBarcode()} />
           <View style={[AppStyles.center, SingleCollectionStyle.collectionDetail]}>
             <Text style={SingleCollectionStyle.detailText}>Article Name : {collection.ArticleName}</Text>
             <Text style={SingleCollectionStyle.detailText}>IDS : {collection.IDS}</Text>
@@ -69,9 +72,7 @@ export default function SingleCollection({ route, navigation }) {
             <Image source={collection.Image} style={{ width: 300, height: 400, alignSelf: 'center', marginTop: 5, borderRadius: 10 }} />
           </View>
           <View style={SingleCollectionStyle.btnView}>
-            <Button title={'Create Barcode..........'}
-              style={SingleCollectionStyle.btn}
-              onPress={() => createBarcode()} />
+           
           </View>
         </ScrollView>
       </View>
