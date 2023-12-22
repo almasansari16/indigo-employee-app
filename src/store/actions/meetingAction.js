@@ -43,6 +43,7 @@ export const getMeetings = () => async (dispatch) => {
 export const getMeeting = (meetingId) => async (dispatch) => {
     try {
         const response = await axios.get(`${BASE_URL}/meeting/${meetingId}`);
+        console.log(response , "response.....")
         dispatch({ type: GET_MEETING_SUCCESS, payload: response.data });
     } catch (error) {
         console.error(error);

@@ -43,19 +43,23 @@ const meetingReducer = (state = initialState, action) => {
                 loading: false
             };
         case GET_MEETING_SUCCESS:
+            console.log(action.payload, "reducer console")
+
             return {
                 ...state,
                 meeting: action.payload,
                 loading: false
             };
         case GET_MEETING_FAILURE:
+            console.log(action.payload, "failuer console in reducer")
+
             return {
                 ...state,
                 error: action.payload,
                 loading: false
             };
         default:
-          return state;
+            return state;
     };
 };
 

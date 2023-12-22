@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
@@ -36,19 +36,64 @@ import Testing from '../screens/testingScreen/Testing';
 import AddConcernPerson from '../screens/addNewConcernPerson/AddConcernPerson';
 import GenerateQRcode from '../screens/generateQRcode/GenerateQRcode';
 import SelectedGarments from '../screens/selectedExhibitionGarments/SelectedGarments';
-import SingleGarmentDetail from '../screens/singleGarmentDetail/SingleGarmentDetail';
+import SingleGarmentColection from '../screens/singleGarmentDetail/SingleGarmentCollection';
 import OrderDetail from '../screens/orderDetail/OrderDetail';
 import SelectedMeetingCollection from '../screens/selectedCollectionForMeeting/SelectedMeetingCollection';
 import CustomerPortal from '../screens/customerPortal/CustomerPortal';
 import AdminPortal from '../screens/adminPortal/AdminPortal';
 import AllEmployeeData from '../screens/allEmployeesData/AllEmployeeData';
 import AllOrderData from '../screens/allOrdersData/AllOrderData';
+import OrderDetailAdmin from '../screens/orderDetailforAdmin/OrderDetailAdmin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../config/config';
 // import { AuthContext } from '../context/authContext';
+import { useNavigation } from '@react-navigation/native';
+import SwipeGesture from '../screens/swipable/Swipable';
+import SingleCollectionDetail from '../screens/singleGarmentDetail/SingleCollectionDetail';
+import UploadImage from '../components/UploadImage';
+import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCustomer';
 
+
+const handleLogout = async (navigation) => {
+
+  const token = await AsyncStorage.getItem('accessToken');
+  console.log(token, 'token in stack');
+
+  // const navigation = useNavigation();
+  try {
+    // Fetch the token from wherever it is stored on the client side
+
+    const response = await fetch(`${BASE_URL}/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+      },
+    });
+    console.log(response, "response")
+    if (response.ok) {
+      // Logout successful
+      Alert.alert('Logout successful');
+      navigation.navigate('Login')
+      // Add any additional logic you want to perform after logout
+
+    } else {
+      // Handle logout error
+      console.error('Logout failed');
+
+      // Add any error handling logic here
+    }
+  } catch (error) {
+    console.error('An error occurred during logout:', error);
+    // Handle any network or other errors during logout
+  }
+};
 
 const Stack = createNativeStackNavigator();
 const CustomHeader2 = props => {
   console.log(props.options.title);
+  const navigation = useNavigation()
+
   return (
     <Appbar.Header
       style={{
@@ -77,6 +122,7 @@ const CustomHeader2 = props => {
         color="black"
         titleStyle={styles.headerText}
       />
+      <Appbar.Action icon="logout" color="#000" onPress={() => handleLogout(props.navigation)} />
     </Appbar.Header>
   );
 };
@@ -103,27 +149,38 @@ const animationConfig = {
 };
 
 function StackNavigation() {
-  // const [isSignedIn, setIsSignedIn] = React.useState(null);
+  const [isSignedIn, setIsSignedIn] = React.useState(null);
 
-  // React.useEffect(() => {
-  //   checkIsSignedIn();
-  // }, []);
+  React.useEffect(() => {
+    checkIsSignedIn();
+  }, []);
+  // React.useEffect(async() => {
+  //   const token = await AsyncStorage.getItem('accessToken');
+  //   console.log(token , 'token in stack')
+  // } , [])
 
-  // const checkIsSignedIn = async () => {
-  //   try {
-  //     const signedInValue = await AsyncStorage.getItem('isSignedIn');
-  //     setIsSignedIn(!!signedInValue); // Convert the value to a boolean
-  //   } catch (error) {
-  //     console.error('Error retrieving signed-in status:', error);
-  //   }
-  // };
+  const checkIsSignedIn = async () => {
+    try {
+      const signedInValue = await AsyncStorage.getItem('token');
+      setIsSignedIn(!!signedInValue); // Convert the value to a boolean
+    } catch (error) {
+      console.error('Error retrieving signed-in status:', error);
+    }
+  };
+  console.log(isSignedIn, "isSignedIn")
   // const {userInfo, splashLoading} = React.useContext(AuthContext);
+  if (isSignedIn === null) {
+    // You can render a loading screen or return null
+    return null;
+  }
+
 
   return (
     <NavigationContainer>
 
       <Stack.Navigator
-        initialRouteName="Login"
+        //  initialRouteName={isSignedIn ? 'TabNavigation' : 'Login'}
+        initialRouteName='Login'
         screenOptions={({ navigation, route }) => {
           const options = route?.params?.headerOptions || {};
           const backgroundColor = options.headerBackgroundColor || '#EEEEEE';
@@ -151,7 +208,6 @@ function StackNavigation() {
             headerShown: false,
           }}
         />
-
         <Stack.Screen
           name="Signup"
           component={Signup}
@@ -421,12 +477,21 @@ function StackNavigation() {
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
-          component={SingleGarmentDetail}
-          name='singleGarmentDetail'
+          component={SingleGarmentColection}
+          name='SingleGarmentColection'
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Selected Garment Detail',
+            title: 'Selected Garment Collections',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={SingleCollectionDetail}
+          name='SingleCollectionDetail'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Single Collection Detail',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
@@ -481,6 +546,42 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'All Order Data',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={OrderDetailAdmin}
+          name='OrderDetailAdmin'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: ' Order Data Admin',
+            headerTitleAlign: 'center',
+          }} />
+            <Stack.Screen
+          component={OrderDetailForCustomer}
+          name='OrderDetailForCustomer'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: ' Order Detail For Customer',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={SwipeGesture}
+          name='SwipeGesture'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'swipable',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={UploadImage}
+          name='UploadImage'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'UploadImage',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

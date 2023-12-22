@@ -11,7 +11,7 @@ import axios from 'axios'
 import { BASE_URL } from '../../config/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function AddConcernPerson({ createConcernPerson }) {
+function AddConcernPerson({ createConcernPerson, navigation }) {
     const [brandID, setBrandID] = useState("");
     const [concernPerson, setConcernPerson] = useState({
         name: '',
@@ -42,6 +42,8 @@ function AddConcernPerson({ createConcernPerson }) {
     const handleCreateConcernPerson = async () => {
         console.log(concernPerson, "function");
         createConcernPerson(concernPerson);
+        navigation.navigate('SingleCustomer')
+        
     };
 
 

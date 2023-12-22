@@ -154,16 +154,16 @@ export default function SendEmail({ navigation }) {
     const sendEmailMarketing = async () => {
         const allEmails = [...selectedEmail, ...manuallyEnteredEmails];
         const requestData = {
-            //   data: data,
+            data: data,
             to: allEmails,
             subject,
             extraNote: extraNote,
         };
 
-        console.log('Request data:', requestData);
+        console.log('Request data:>>>>>>>', data);
 
         try {
-            const response = await axios.post(`${BASE_URL}/send-email`, requestData);
+            const response = await axios.post(`${BASE_URL}/marketing-email`, requestData);
 
             console.log('Response:', response.data);
             Alert.alert(response.data.message);
@@ -224,6 +224,22 @@ export default function SendEmail({ navigation }) {
         fetchData()
     }, [])
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const codesData = await AsyncStorage.getItem('ScanCodes');
+                if (codesData !== null) {
+                  // We have data!!
+                   const newArr = JSON.parse(codesData) ;
+                  setData(newArr)
+                }
+              } catch (error) {
+                // Error retrieving data
+                console.log(error , 'error')
+              }
+        }
+        fetchData()
+    }, [])
+    useEffect(() => {
         if (email) {
             const emailObjects = email.map(emailValue => ({
                 label: emailValue,
@@ -247,7 +263,6 @@ export default function SendEmail({ navigation }) {
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
         { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' },
         { label: 'ali.arain@indigo.com.pk', value: 'ali.arain@indigo.com.pk' },
-
 
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
@@ -308,7 +323,6 @@ export default function SendEmail({ navigation }) {
                                 setOpen={setEmailOpen}
                                 setValue={setSelectedEmails}
                                 onChangeValue={(itemValue) => setSelectedEmail(itemValue)}
-
                                 setItems={setvAilableEmails}
                                 theme="LIGHT"
                                 zIndex={1000}

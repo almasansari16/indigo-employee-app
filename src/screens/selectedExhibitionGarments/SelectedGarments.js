@@ -72,7 +72,7 @@ function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loadi
     };
 
     const garmentDetail = (item) => {
-        navigation.navigate('singleGarmentDetail', {
+        navigation.navigate('SingleGarmentColection', {
             item
         })
     }

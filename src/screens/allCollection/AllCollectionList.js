@@ -11,7 +11,8 @@ import {
   Platform,
   Text,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
+  TouchableOpacity
 } from 'react-native';
 import { Appbar, DataTable, Searchbar } from 'react-native-paper';
 import { AppStyles } from '../../theme/AppStyles';
@@ -24,6 +25,7 @@ import Button from '../../components/Button';
 import { CustomModal, Icon, IconType, InputField } from '../../components';
 import AllCollectionStyle from './styles';
 import { createCollection } from '../../store/actions/selectExhibitionGarmentAction';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 function AllCollectionList({ navigation, createCollection }) {
   const [page, setPage] = React.useState(0);
@@ -209,6 +211,52 @@ function AllCollectionList({ navigation, createCollection }) {
   const closeModal = () => {
     setModalVisible(false)
   }
+
+  const LeftSwipeActions = () => {
+    return (
+      <View
+        style={{ flex: 1, backgroundColor: '#ccffbd', justifyContent: 'center' }}
+      >
+        <Text
+          style={{
+            color: '#40394a',
+            paddingHorizontal: 10,
+            fontWeight: '600',
+            paddingHorizontal: 30,
+            paddingVertical: 20,
+          }}
+        >
+          Bookmark
+        </Text>
+      </View>
+    );
+  };
+  const rightSwipeActions = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: '#ff8303',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+        }}
+      >
+        <TouchableOpacity onPress={handleLongPress}>
+          <Text
+            style={{
+              color: '#1b1a17',
+              paddingHorizontal: 10,
+              fontWeight: '600',
+              paddingHorizontal: 30,
+              paddingVertical: 20,
+            }}
+          >
+            select
+          </Text>
+        </TouchableOpacity>
+
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={[AppStyles.container]}>
       <ImageBackground
@@ -296,21 +344,27 @@ function AllCollectionList({ navigation, createCollection }) {
                 </DataTable.Title>
               </DataTable.Header>
               {filteredItems.slice(from, to).map(item => (
-                <DataTable.Row
-                  key={item.key}
-                  onPress={() =>
-                    collectionDetail(item)}
-                  onLongPress={() => handleLongPress(item)}
+                <Swipeable
+                  renderLeftActions={LeftSwipeActions}
+                // renderRightActions={() => rightSwipeActions(item)}
                 >
-                  <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
-                  <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
-                  <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
-                  <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
-                  <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
-                  <DataTable.Cell>
-                    <Image source={item.Image} style={{ width: 50, height: 50 }} />
-                  </DataTable.Cell>
-                </DataTable.Row>
+                  <DataTable.Row
+                    style={{ height: hp(8) }}
+                    key={item.key}
+                    onPress={() =>
+                      collectionDetail(item)}
+                    onLongPress={() => handleLongPress(item)}
+                  >
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
+                    <DataTable.Cell >
+                      <Image source={item.Image} style={{ width: 50, height: 50 }} />
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                </Swipeable>
               ))}
             </DataTable>
           ) : (
@@ -375,7 +429,8 @@ const mapStateToProps = (state) => ({
   error: state.exhibitioCollection.error,
 });
 const mapDispatchToProps = {
-  createCollection, // This makes the createBrand action available as a prop
+  createCollection,
+  getSheetData// This makes the createBrand action available as a prop
 };
 // Connect your component to the Redux store
 export default connect(mapStateToProps, mapDispatchToProps)(AllCollectionList);

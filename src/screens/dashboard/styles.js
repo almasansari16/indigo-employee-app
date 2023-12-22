@@ -7,7 +7,7 @@ export const dashboardStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 100
+    marginBottom: hp(20)
   },
   links: {
     display: 'flex',
@@ -15,7 +15,7 @@ export const dashboardStyles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: hp(5),
     width: wp(80),
-    height: hp(20),
+    height: hp(15),
     borderColor: "#EEEEEE",
     borderWidth: 1,
     borderRadius: wp(5),

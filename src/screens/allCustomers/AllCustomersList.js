@@ -8,6 +8,7 @@ import {
   Text,
   RefreshControl,
   TouchableOpacity,
+  Alert,
 
 } from 'react-native';
 import { ActivityIndicator, Appbar, DataTable, Searchbar } from 'react-native-paper';
@@ -29,15 +30,15 @@ function AllCustomersList({ navigation, route }) {
   const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brand.brands);
-console.log(brands , 'brands.......')
+  console.log(brands, 'brands.......')
   const [items, setItems] = useState([]);
-  useEffect(async () => {
-    try {
-      await AsyncStorage.setItem('AllCustomer', JSON.stringify(items));
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
+  // useEffect(async () => {
+  //   try {
+  //     await AsyncStorage.setItem('AllCustomer', JSON.stringify(items));
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }, []);
 
   const from = page * itemsPerPage;
   const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
@@ -65,6 +66,8 @@ console.log(brands , 'brands.......')
       setFilteredItems(brands)
     }
   }, [dispatch, brands, refresh]);
+
+  console.log(brands, "brands")
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -101,6 +104,10 @@ console.log(brands , 'brands.......')
       setIsRefreshing(false);
     }
   };
+
+
+
+
   return (
     <SafeAreaView style={AppStyles.container}>
       <ImageBackground
@@ -164,10 +171,12 @@ console.log(brands , 'brands.......')
               </DataTable.Header>
               <TouchableOpacity>
                 {filteredItems.slice(from, to).map((item) => (
-                  <DataTable.Row key={item.key} onPress={() => customerDetail(item)}>
-                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
-                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
-                  </DataTable.Row>
+           
+                    <DataTable.Row key={item.key} onPress={() => customerDetail(item)} style={{ height: hp(8) }}>
+                      <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
+                      <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
+                    </DataTable.Row>
+         
                 ))}
               </TouchableOpacity>
             </DataTable>
@@ -202,8 +211,3 @@ const mapStateToProps = (state) => ({
 
 // Connect your component to the Redux store
 export default connect(mapStateToProps, { getBrands })(AllCustomersList);
-
-
-
-
-

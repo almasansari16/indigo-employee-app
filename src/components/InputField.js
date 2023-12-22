@@ -11,6 +11,7 @@ const InputField = ({
   label,
   keyboardType,
   style,
+  autoCapitalize
 }) => {
   return (
     <View style={{marginVertical:10}}>
@@ -23,6 +24,7 @@ const InputField = ({
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         placeholderTextColor={placeholderTextColor}
+        autoCapitalize={autoCapitalize}
       />
     </View>
   );

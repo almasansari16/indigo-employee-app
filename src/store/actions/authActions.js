@@ -18,16 +18,23 @@ const login = (email, password) => async (dispatch) => {
 
         // Dispatch action to set user data and authentication status
         dispatch({ type: LOGIN_SUCCESS, payload: response.data });
-        console.log(response.data.user, "user data")
+        console.log(response.data.msg, "user data");
+
+
+        // Save token in local storage for future requests
+        const token = response.data.accessToken;
+        await AsyncStorage.setItem('accessToken', token);
+        
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
+        await AsyncStorage.setItem('token', JSON.stringify(response.data.user.refreshToken));
         Alert.alert(response.data.msg)
         // navigateToDashboard(navigation)
         
     } catch (error) {
         // Alert.alert(error.response.data.message)
-        console.log(error.message, "error..........")
+        console.log(error.response.data.message, "error.........in action")
         // Dispatch action to handle login failure
-        dispatch({ type: LOGIN_FAILURE, payload: error.message });
+        dispatch({ type: LOGIN_FAILURE, payload: error.response.data.message });
     }
 };
 
@@ -44,8 +51,8 @@ const signup = (name, email, password, contact) => async (dispatch) => {
         dispatch({ type: SIGNUP_SUCCESS, payload: response.data });
     } catch (error) {
         // Dispatch action to handle login failure
-        console.log(error, "error")
-        dispatch({ type: SIGNUP_FAILURE, payload: error.message });
+        console.log(error.response.data.message, "error")
+        dispatch({ type: SIGNUP_FAILURE, payload: error.response.data.message });
     }
 };
 

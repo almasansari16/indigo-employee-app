@@ -11,10 +11,11 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { getCollection } from '../../store/actions/selectExhibitionGarmentAction';
 import { BASE_URL } from '../../config/config';
 import axios from 'axios';
+import { ActivityIndicator, DataTable } from 'react-native-paper';
 
 
 
-function SingleGarmentDetail({ route, getCollection }) {
+function SingleGarmentColection({ route, getCollection , navigation }) {
     const [garment, setGarment] = useState({
         selectedGarments: [{ imageData: null }], // Initialize as an object with selectedGarments property
     });
@@ -31,7 +32,7 @@ function SingleGarmentDetail({ route, getCollection }) {
     const dispatch = useDispatch();
 
     const collection = useSelector((state) => state.exhibitioCollection.collection);
-    console.log(collection, "collection.....")
+    // console.log(collection, "collection.....")
 
     useEffect(() => {
         const { item } = route.params;
@@ -39,28 +40,12 @@ function SingleGarmentDetail({ route, getCollection }) {
         setId(item._id)
     }, [route.params]);
 
-    // useEffect(() => {
-    //     const fetchMeetingsByUser = async () => {
-    //         try {
-    //             const response = await getCollection(id);
-
-    //             // setGarment(collection)
-
-    //         } catch (error) {
-    //             console.log(error.message);
-    //         }
-    //     };
-
-    //     fetchMeetingsByUser()
-
-    // }, [dispatch, id, refresh]);
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${BASE_URL}/exhibition-collection/${id}`)
-                console.log( 'response ..........',response.data)
+                // console.log( 'response ..........',response.data)
                 setGarment(response.data)
             } catch (error) {
                 console.log(error)
@@ -69,7 +54,7 @@ function SingleGarmentDetail({ route, getCollection }) {
         fetchData()
     }, [ garment, id])
 
-    console.log("garment by id....... ", garment)
+    // console.log("garment by id....... ", garment)
     // console.log(id, "collection id")
     if (!garment) {
         return (
@@ -109,11 +94,13 @@ function SingleGarmentDetail({ route, getCollection }) {
         setGarmentId(item._id)
         setModalVisible(true)
 
-    }
+    };
+
     const closeModal = () => {
         setModalVisible(false);
         setModalVisible2(false)
-    }
+    };
+
     const handleAddPrice = async () => {
         try {
             // Make a POST request to your server's /add-price endpoint using axios
@@ -131,12 +118,18 @@ function SingleGarmentDetail({ route, getCollection }) {
             console.error('Error:', error);
         }
         setModalVisible(false)
-    }
+    };
 
     const addYard = () => {
         setModalVisible2(true)
-    }
+    };
 
+    const garmentDetail = (item) => {
+        console.log(item , "item")
+        navigation.navigate('SingleCollectionDetail', {
+            item
+        })
+    }
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -153,7 +146,7 @@ function SingleGarmentDetail({ route, getCollection }) {
                     }]}
                     textStyle={{ color: '#EEEEEE' }} />
                 <ScrollView style={{ marginBottom: hp(10) }}>
-                    {/* {garment.length > 0 && garment[0].selectedGarments && garment[0].selectedGarments.map((item, index) => (
+                    {/* {garment.selectedGarments.map((item, index) => (
                         <View key={index} style={[AppStyles.center, SingleGarmentStyle.collectionDetail]}>
                             <Text style={SingleGarmentStyle.detailText}>Article Name : {item.ArticleName}</Text>
                             <Text style={SingleGarmentStyle.detailText}>IDS : {item.IDS}</Text>
@@ -187,50 +180,51 @@ function SingleGarmentDetail({ route, getCollection }) {
                             </View>
                         </View>
                     ))} */}
-                    {garment.selectedGarments.map((item, index) => (
-                        <View key={index} style={[AppStyles.center, SingleGarmentStyle.collectionDetail]}>
-                            <Text style={SingleGarmentStyle.detailText}>Article Name : {item.ArticleName}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>IDS : {item.IDS}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>Color : {item.Colour}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>Finish Type : {item.FinishType}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>Weave : {item.Weave}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>Price : ${item.price}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>Full Width : {item.fullWidth}</Text>
-                            <Text style={SingleGarmentStyle.detailText}>yards : {yard}</Text>
+                     {garment.selectedGarments.length > 0 ? (
+                        <DataTable>
+                            <DataTable.Header>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    Article Name
+                                </DataTable.Title>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    IDS
+                                </DataTable.Title>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    Color
+                                </DataTable.Title>
+                            </DataTable.Header>
 
-                            {imageData && (
-                                <Image
-                                    source={{ uri: imageData }}
-                                    style={{
-                                        width: 250,
-                                        height: 250,
-                                        alignSelf: 'center',
-                                        marginTop: 10,
-                                        marginBottom: 10,
-                                        borderRadius: 10,
-                                    }}
-                                />
-                            )}
-                            <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
-                                <Button
-                                    title={'Add Price & Full Width'}
-                                    onPress={() => addPrice(item)}
-                                    style={[SingleGarmentStyle.btn]}
-                                    textStyle={{ color: '#EEEEEE' }} />
 
-                            </View>
-                        </View>
-                    ))}
+                            {garment.selectedGarments && garment.selectedGarments.map(item => (
+                                // console.log(item.exhibitionCollection.collectionName)
+                                <DataTable.Row
+                                    key={item.key}
+                                    onPress={() =>
+                                        garmentDetail(item)}
+                                    // onLongPress={() => handleLongPress(item)}
+                                >
+
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >
+                                        {item.ArticleName}
+                                    </DataTable.Cell>
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >
+                                        {item.IDS}
+                                    </DataTable.Cell>
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >
+                                        {item.Colour}
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+                            ))}
+                        </DataTable>
+                    ) : (
+                        <ActivityIndicator color='#EEEEEE' size="large" />
+                    )}
                 </ScrollView>
-                {/* <Button
-                     title={'Upload Image'}
-                     onPress={uploadImage}
-                     style={[SingleGarmentStyle.btn]}
-                     textStyle={{ color: '#EEEEEE' }} /> */}
+
                 {/* <View style={SingleGarmentStyle.btnView}>
                     <Button title={'Upload Image........'}
                         style={SingleGarmentStyle.btn}
-                        onPress={() => uplaodImage()}
+                        onPress={() => uploadImage()}
                     />
                 </View> */}
                 <View>
@@ -272,4 +266,4 @@ const mapStateToProps = (state) => ({
     error: state.exhibitioCollection.error,
 });
 
-export default connect(mapStateToProps, { getCollection })(SingleGarmentDetail);
+export default connect(mapStateToProps, { getCollection })(SingleGarmentColection);

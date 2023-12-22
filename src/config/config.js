@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://indigo-backend.vercel.app/api';
+export const BASE_URL = ' http://203.170.79.58:8080/api';

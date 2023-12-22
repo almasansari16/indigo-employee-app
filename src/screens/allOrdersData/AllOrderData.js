@@ -6,12 +6,12 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { DataTable } from 'react-native-paper';
 import { getMeetings } from '../../store/actions/meetingAction';
 
-function AllOrderData({ }) {
+function AllOrderData({navigation }) {
     const [meetingData, setMeetingData] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const dispatch = useDispatch();
     const meetings = useSelector((state) => state.meeting.meetings);
-    console.log(meetings)
+    // console.log(meetings)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,13 +33,15 @@ function AllOrderData({ }) {
 
     //   const data =  meetingData.map((item)=> item.brandId)
     //   console.log( data.map((item)=> item) , "oevjovovfo")
-    console.log(meetingData, "meeting data")
+    // console.log(meetingData, "meeting data")
 
-    
+
     const handleDetail = (meeting) => {
-        navigation.navigate("orderDetail", {
+        console.log(meeting)
+        navigation.navigate("OrderDetailAdmin", {
             meeting
         })
+        // console.log(meeting , "detail of meeting...")
     }
 
 
@@ -61,8 +63,9 @@ function AllOrderData({ }) {
                                     Meeting Date
                                 </DataTable.Title>
                             </DataTable.Header>
-                            {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId }) => (
-                                <DataTable.Row key={_id} >
+                            {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId , codes, extraNote}) => (
+                                <DataTable.Row key={_id}
+                                    onPress={() => handleDetail({ _id})}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
                                         {brandId && brandId.brandName}
                                     </DataTable.Cell >

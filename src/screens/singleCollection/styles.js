@@ -15,7 +15,8 @@ export const SingleCollectionStyle = StyleSheet.create({
         paddingHorizontal:wp(5),
         paddingVertical: hp(2),
         marginTop: hp(2),
-        minWidth:wp(80)
+        maxWidth:wp(80),
+        marginBottom:hp(10)
     },
     btnView:{
         position:'absolute',

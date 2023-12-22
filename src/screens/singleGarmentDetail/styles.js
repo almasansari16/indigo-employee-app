@@ -15,7 +15,8 @@ export const SingleGarmentStyle = StyleSheet.create({
         paddingHorizontal:wp(5),
         paddingVertical: hp(2),
         marginTop: hp(5),
-        width:wp(80)
+        width:wp(80),
+        marginBottom:hp(10)
     },
     btnView:{
        display :'flex',

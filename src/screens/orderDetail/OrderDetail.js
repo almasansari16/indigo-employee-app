@@ -23,7 +23,7 @@ export default function OrderDetail({ route }) {
         );
     }
     const { brandId, concernPersonId, meetingDate, userId, extraNote, codes } = collection;
-
+console.log(brandId)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -36,7 +36,7 @@ export default function OrderDetail({ route }) {
                     <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(meetingDate).toLocaleDateString()}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Employee name : {userId.name}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Extra Note : {extraNote}</Text>
-                    {codes.map((item) => (
+                    {codes && codes.map((item) => (
                         <Text style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
                     ))}
 

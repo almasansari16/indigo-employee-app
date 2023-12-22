@@ -22,6 +22,7 @@ export default function DisplayBarcodeVlaue() {
         }
         fetchData()
     }, [])
+    console.log(barcodeValue , 'ogjwrgjwr')
     return (
         <SafeAreaView>
             <View

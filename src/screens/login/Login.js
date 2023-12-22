@@ -43,49 +43,73 @@ const verifySignatureWithServer = async ({ signature, payload }) => {
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
- function Login({ navigation, login, loading, error }) {
+function Login({ navigation, login }) {
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
-    
+
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false)
-    // useEffect(async() => {
-    //     const user = await AsyncStorage.getItem('userData');
-    //     console.log(user , "ksfvnskvn")
-    //          if (user.role === "user") {
-    //         Alert.alert("this is a user")
-    //         // navigation.navigate("CustomerPortal")
-    //        }
-    //         if (user.role === "employee") {
-    //         Alert.alert("This is employee")
-    //     //    navigation.navigate('TabNavigation')
+    const { loading, user, error } = useSelector((state) => state.auth);
+    console.log(error, "error")
+    console.log(loading, "loading")
 
-    //        }
-    // },[login])
-    // const {user} = useSelector((state) => state.auth.user )
-    // console.log(user.role , "user..........")
+    // const handleSignin = async () => {
+    //     // if(email == "" && password ==""){
+    //     //     Alert.alert("Please enter your Email or Password")
+    //     // }
+    //     await login(email, password);
+    //     if (error === null) {
+    //         setSuccess(true)
+    //         Alert.alert("login successfully")
+    //         navigation.navigate('TabNavigation')
+
+    //     }
+    //     else if (email === "" || password === "") {
+    //         Alert.alert("Both fields are required.")
+    //     }
+    //     else {
+    //         Alert.alert(error)
+
+    //     }
+    // }
+
+    const [errors, setError] = useState(null);
+
     const handleSignin = async () => {
-        if(email == "" && password ==""){
-            Alert.alert("Please enter your Email or Password")
-        }
-        await login( email, password);
-        if (!error) {
-           setSuccess(true)
-        //    if (user.role === "user") {
-        //     // Alert.alert("this is a user")
-        //     navigation.navigate("CustomerPortal")
-        //    }
-        //     if (user.role === "employee") {
-        //     // Alert.alert("This is employee")
+        try {
+            console.log("Before login: ", email, password , errors);
 
-        //    }
-           navigation.navigate('TabNavigation')
+            // Check if email or password is empty
+            if (email === "" || password === "") {
+                Alert.alert("Fields can't be empty");
+                return; // Exit the function early
+            }
 
+            // Wait for the login operation to complete
+            await login(email, password);
+
+            // Now that the login operation is complete, update the error state
+            setError(error);
+
+            console.log("After login: ", email, password, errors);
+
+            if (error === null) {
+                Alert.alert('Successful');
+                navigation.navigate('TabNavigation')
+                // Rest of your code...
+            } else {
+                Alert.alert(error);
+            }
+        } catch (caughtError) {
+            console.error("Error during login:", caughtError);
         }
     }
+    
+    
+
 
     return (
         // <KeyboardAvoidingView>
@@ -129,6 +153,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
                                 onChangeText={text => setEmail(text)}
                                 value={email}
                                 style={LoginStyle.input}
+                                autoCapitalize={'none'}
                             />
                             <InputField
                                 label={'Password'}
@@ -142,7 +167,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
                             />
                         </View>
                         <TouchableOpacity
-                            onPress={handleSignin }
+                            onPress={handleSignin}
                             style={[LoginStyle.loginBtn, LoginStyle.center]}>
                             <Text style={[LoginStyle.btnText]}>Login</Text>
                         </TouchableOpacity>
@@ -250,7 +275,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const mapStateToProps = (state) => ({
     loading: state.auth.loading,
     error: state.auth.error,
-  });
+});
 
 const mapDispatchToProps = {
     login,

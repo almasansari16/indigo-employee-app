@@ -20,7 +20,10 @@ function FinalDetail({ navigation, createMeeting }) {
     const [concernPersonId, setConcernPersonId] = useState('');
     const [barcodesValue, setBarcodeValues] = useState([]);
     const [customer, setCustomer] = useState(null)
-    const [extraDetail, setExtraDetail] = useState("")
+    const [extraDetail, setExtraDetail] = useState("");
+    const [brandName, setBrandName] = useState('');
+    const [filteredCodeData, setFilteredCodeData] = useState([]);
+    const [selectedPersons, setSelectedPersons] = useState([]);
     const [meetingData, setMeetingData] = useState({
         brandId: "",
         concernPersonId: [],
@@ -28,7 +31,8 @@ function FinalDetail({ navigation, createMeeting }) {
         userId: "",
         extraNote: "",
         codes: []
-    })
+    });
+
     console.log(extraDetail, "extra detail....")
     const retrieveStoredValues = async () => {
         try {
@@ -40,9 +44,7 @@ function FinalDetail({ navigation, createMeeting }) {
             console.log(error.message);
         }
     };
-    const [brandName, setBrandName] = useState('');
 
-    const [selectedPersons, setSelectedPersons] = useState([]);
 
     useEffect(() => {
         setUserId(user._id)
@@ -83,6 +85,7 @@ function FinalDetail({ navigation, createMeeting }) {
     useEffect(() => {
         retrieveStoredValues();
     }, []);
+
     useEffect(async () => {
         await AsyncStorage.getItem("brandID")
             .then((id) => {
@@ -129,20 +132,7 @@ function FinalDetail({ navigation, createMeeting }) {
                 } catch (error) {
                     console.log("Error parsing the data:", error);
                 };
-                try {
-                    const codes = barcodesValue.map((jsonString) => JSON.parse(jsonString))
-                        .filter((data, index, self) => {
-                            // Use JSON.stringify to compare objects as strings
-                            const jsonString = JSON.stringify(data);
-                            return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
-                        })
-                    setMeetingData((meetingData) => ({
-                        ...meetingData,
-                        codes: codes
-                    }));
-                } catch (error) {
-                    console.log("Error parsing the data:", error);
-                }
+
             })
             .catch((error) => {
                 // Handle errors here
@@ -151,20 +141,34 @@ function FinalDetail({ navigation, createMeeting }) {
 
     }, []);
 
-    // console.log(barcodesValue, "barcodes value selection.....")
+    console.log(barcodesValue, "barcodes value selection.....")
 
     const handleSaveMeeting = async () => {
-
+        const codesData = barcodesValue.map((jsonString) => JSON.parse(jsonString))
+            .filter((data, index, self) => {
+                // Use JSON.stringify to compare objects as strings
+                const jsonString = JSON.stringify(data);
+                return index === self.findIndex((d) => JSON.stringify(d) === jsonString);
+            })
+        console.log(codesData, "codes data.....")
+        setFilteredCodeData(codesData)
+       
         try {
             await AsyncStorage.setItem("Extra Detail", extraDetail)
         } catch (error) {
             console.log(error)
         }
-        const updatedMeetingData = { ...meetingData, extraNote: extraDetail };
+        try {
+            await AsyncStorage.setItem("ScanCodes", JSON.stringify(codesData))
+        } catch (error) {
+            console.log(error)
+        }
+        const updatedMeetingData = { ...meetingData, extraNote: extraDetail, codes: codesData };
         console.log(updatedMeetingData, "meeting data before sending in api")
-        createMeeting(updatedMeetingData)
+        // createMeeting(updatedMeetingData)
         navigation.navigate('SendEmail', { customer });
     };
+    console.log('filterd code data', filteredCodeData)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -192,7 +196,7 @@ function FinalDetail({ navigation, createMeeting }) {
                         </View>
                         <Text style={FinalDetailStyle.heading}>Garment Selections</Text>
                         <View style={FinalDetailStyle.detailView}>
-                            {barcodesValue && (
+                        {barcodesValue && (
                                 <View>
                                     {barcodesValue
                                         .map((jsonString) => JSON.parse(jsonString))
@@ -221,7 +225,36 @@ function FinalDetail({ navigation, createMeeting }) {
                                 </View>
                             )}
 
+                            {/* {barcodesValue && (
+                                <View>
+                                    {barcodesValue
+                                        .map((data, index) => ({ data, index }))
+                                        .filter((item) => item !== null)
+                                        .filter((item, index, self) => {
+                                            const jsonString = JSON.stringify(item.data);
+                                            return index === self.findIndex((d) => JSON.stringify(d.data) === jsonString);
+                                        })
+                                        .map((item) => (
+                                            <View key={item.index}>
+                                                {item.data && (
+                                                    <>
+                                                        {console.log('item data', item.data)}
+                                                        <Text style={FinalDetailStyle.detailText}>{JSON.stringify(item.data, null, 2)}</Text>
+                                                        <View
+                                                            style={{
+                                                                borderBottomWidth: 1,
+                                                                borderBottomColor: '#2f2260',
+                                                                marginVertical: 10,
+                                                            }}
+                                                        />
+                                                    </>
+                                                )}
+                                            </View>
+                                        ))}
+                                </View>
+                            )} */}
 
+                           
                         </View>
                         <View>
                             {/* <Table data={data}/> */}
