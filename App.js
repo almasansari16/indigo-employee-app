@@ -43,6 +43,10 @@ import { Provider } from 'react-redux';
 import store from './src/store/store';
 import { ToastProvider } from 'react-native-paper-toast';
 import { AuthProvider } from './src/context/authContext';
+import { NetworkInfo } from 'react-native-network-info';
+import NetInfo from "@react-native-community/netinfo";
+
+
 // function Section({children, title}){
 //   const isDarkMode = useColorScheme() === 'dark';
 //   return (
@@ -86,6 +90,68 @@ function App() {
       rol();
     };
   }, []);
+  useEffect(() => {
+
+    // Get Local IP
+    NetworkInfo.getIPAddress().then(ipAddress => {
+      console.log(ipAddress, 'ipAddress');
+    });
+
+    // Get IPv4 IP (priority: WiFi first, cellular second)
+    NetworkInfo.getIPV4Address().then(ipv4Address => {
+      console.log(ipv4Address, 'ipv4Address');
+    });
+
+    // Get Broadcast
+    NetworkInfo.getBroadcast().then(broadcast => {
+      console.log(broadcast, 'broadcast');
+    });
+
+    // Get SSID
+    NetworkInfo.getSSID().then(ssid => {
+      console.log(ssid, 'ssid');
+    });
+
+    // Get BSSID
+    NetworkInfo.getBSSID().then(bssid => {
+      console.log(bssid, 'bssid');
+    });
+
+    // Get Subnet
+    NetworkInfo.getSubnet().then(subnet => {
+      console.log(subnet, 'subnet');
+    });
+
+    // Get Default Gateway IP
+    NetworkInfo.getGatewayIPAddress().then(defaultGateway => {
+      console.log(defaultGateway, 'defaultGateway');
+    });
+
+    // Get frequency (supported only for Android)
+    NetworkInfo.getFrequency().then(frequency => {
+      console.log(frequency, 'frequency');
+    });
+
+
+    NetInfo.fetch().then((connectionInfo) => {
+      // Check the type of connection
+      if (connectionInfo.isConnected) {
+        if (connectionInfo.type === 'wifi') {
+          // Connected to WiFi, use local IP
+          // return localIp;
+          console.log('wifi')
+        } else if (connectionInfo.type === 'cellular') {
+          // Connected via mobile data, use live IP
+          // return liveIp;
+          console.log('data')
+        }
+      }
+  
+      // Default to a fallback URL (e.g., for offline scenarios)
+      return 'fallback_url';
+    });
+  
+  }, [])
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#000" />

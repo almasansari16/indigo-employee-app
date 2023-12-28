@@ -228,14 +228,14 @@ export default function SendEmail({ navigation }) {
             try {
                 const codesData = await AsyncStorage.getItem('ScanCodes');
                 if (codesData !== null) {
-                  // We have data!!
-                   const newArr = JSON.parse(codesData) ;
-                  setData(newArr)
+                    // We have data!!
+                    const newArr = JSON.parse(codesData);
+                    setData(newArr)
                 }
-              } catch (error) {
+            } catch (error) {
                 // Error retrieving data
-                console.log(error , 'error')
-              }
+                console.log(error, 'error')
+            }
         }
         fetchData()
     }, [])
@@ -263,6 +263,8 @@ export default function SendEmail({ navigation }) {
         { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
         { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' },
         { label: 'ali.arain@indigo.com.pk', value: 'ali.arain@indigo.com.pk' },
+      
+
 
     ]);
     const [selectedEmails, setSelectedEmails] = useState([]);
@@ -302,11 +304,17 @@ export default function SendEmail({ navigation }) {
                                 setValue={setSelectedCustomerEmails}
                                 setItems={setCustomerEmails}
                                 theme="LIGHT"
+                                listMode='SCROLLVIEW'
                                 zIndex={1000}
                                 zIndexInverse={3000}
                                 style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
                                 containerStyle={{ width: wp(80), alignSelf: 'center' }}
                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
+                                dropDownContainerStyle={{
+                                    borderColor: '#2f2260',
+                                    position: 'relative',
+                                    top: 0,
+                                }}
                             />
                         </View>
                         <Button title={'Send Email Concern Persons'}
@@ -326,11 +334,16 @@ export default function SendEmail({ navigation }) {
                                 setItems={setvAilableEmails}
                                 theme="LIGHT"
                                 zIndex={1000}
+                                listMode='SCROLLVIEW'
                                 zIndexInverse={3000}
                                 style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
                                 containerStyle={{ width: wp(80), alignSelf: 'center' }}
                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
-
+                                dropDownContainerStyle={{
+                                    borderColor: '#2f2260',
+                                    position: 'relative',
+                                    top: 0,
+                                }}
                             />
                         </View>
                         <Button title={'Send Email Marketing Team'}

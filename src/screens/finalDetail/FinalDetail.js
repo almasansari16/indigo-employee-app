@@ -165,7 +165,7 @@ function FinalDetail({ navigation, createMeeting }) {
         }
         const updatedMeetingData = { ...meetingData, extraNote: extraDetail, codes: codesData };
         console.log(updatedMeetingData, "meeting data before sending in api")
-        // createMeeting(updatedMeetingData)
+        createMeeting(updatedMeetingData)
         navigation.navigate('SendEmail', { customer });
     };
     console.log('filterd code data', filteredCodeData)

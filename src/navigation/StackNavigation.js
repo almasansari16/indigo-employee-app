@@ -52,6 +52,7 @@ import SwipeGesture from '../screens/swipable/Swipable';
 import SingleCollectionDetail from '../screens/singleGarmentDetail/SingleCollectionDetail';
 import UploadImage from '../components/UploadImage';
 import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCustomer';
+import SendEmail2 from '../screens/sendEmail/SendEmail2';
 
 
 const handleLogout = async (navigation) => {
@@ -401,6 +402,15 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'Send Email',
+            headerTitleAlign: 'center',
+          }} />
+             <Stack.Screen
+          name='SendEmail2'
+          component={SendEmail2}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Send Email 2',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
