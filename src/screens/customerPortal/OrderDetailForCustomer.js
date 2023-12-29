@@ -65,33 +65,15 @@ function OrderDetailForCustomer({ navigation, route }) {
                         <Text style={SingleCollectionStyle.detailText}>Employee name : {orderDetail && orderDetail.userId.name || 'N/A'}</Text>
                         <Text style={SingleCollectionStyle.detailText}>Extra Note : {orderDetail.extraNote}</Text>
                         {orderDetail && orderDetail.codes.map((item, index) => (
-                            // console.log(item , "item")
                             <>
+                           { console.log(item.images[0] , "item")}
+
                                 <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
                                 <Image
-                                    source={item.Image}
+                                    source={{uri : item.images[0]}}
                                     style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }} />
                             </>
                         ))}
-
-                        {/* <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, rowGap:5, borderRadius: 10 }}>
-                            <Image
-                                source={Images.image2}
-                                style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }}
-                            />
-                            <Image
-                                source={Images.image4}
-                                style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }}
-                            />
-                          <Image
-                                source={Images.image7}
-                                style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }}
-                            />
-                             <Image
-                                source={Images.image5}
-                                style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }}
-                            />
-                        </View> */}
                     </ScrollView>
 
                 </View>

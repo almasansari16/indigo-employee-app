@@ -355,13 +355,15 @@ function AllCollectionList({ navigation, createCollection }) {
                       collectionDetail(item)}
                     onLongPress={() => handleLongPress(item)}
                   >
+                    {console.log(item.images[0] , "map item.........")}
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
                     <DataTable.Cell >
-                      <Image source={item.Image} style={{ width: 50, height: 50 }} />
+                      <Image source={{ uri: item.images[0] }}style={{ width: 50, height: 50 }} />
+                      {/* <Image source={item.Image} style={{ width: 50, height: 50 }} /> */}
                     </DataTable.Cell>
                   </DataTable.Row>
                 </Swipeable>

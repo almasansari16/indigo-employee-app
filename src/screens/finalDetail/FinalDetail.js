@@ -219,7 +219,8 @@ function FinalDetail({ navigation, createMeeting }) {
                                                         marginVertical: 10,
                                                     }}
                                                 />
-                                                {/* {console.log(data , "jfvncifsvncifsvnc")} */}
+                                                {console.log(data , "code data.....")}
+                                              
                                             </View>
                                         ))}
                                 </View>

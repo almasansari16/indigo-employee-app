@@ -61,7 +61,6 @@ export default function SingleCollectionDetail({ route, navigation }) {
   };
 
 
-  // console.log(photo.uri , "photo")
   const handleUploadPhoto = () => {
     fetch(`http://172.16.200.253:8080/api/add-image`, {
       method: 'POST',
