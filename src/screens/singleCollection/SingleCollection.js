@@ -6,6 +6,7 @@ import { hp, wp } from '../../../App';
 import Button from '../../components/Button';
 import Images from '../../theme/Images';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { BASE_URL } from '../../../App';
 
 
 
@@ -58,14 +59,14 @@ export default function SingleCollection({ route, navigation }) {
 
 
   const handleUploadPhoto = () => {
-    fetch(`http://203.170.79.58:8080/api/add-image`, {
+    fetch(`${BASE_URL}/add-image`, {
       method: 'POST',
       body: createFormData(photo, { garmentId: collection._id }),
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('Upload successful:', response);
-        Alert.alert(response)
+        console.log('Upload successful:', response.message);
+        Alert.alert(response.message)
       })
       .catch((error) => {
         console.log('Upload failed:', error);
@@ -102,10 +103,14 @@ export default function SingleCollection({ route, navigation }) {
             <Text style={SingleCollectionStyle.detailText}>Weave : {collection.Weave}</Text>
 
             <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, borderRadius: 10 }}>
-              <Image
-                source={{ uri: collection.images[0] }}
-                style={{ resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }}
-              />
+            <Image
+  source={{ uri: collection.images[0] }}
+  style={
+    collection.images[0]
+      ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
+      : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
+  }
+/>
             </View>
             {photo && (
               <>

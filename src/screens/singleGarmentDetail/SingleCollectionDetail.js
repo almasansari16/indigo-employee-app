@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { CustomModal, InputField } from '../../components';
 import axios from 'axios';
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 import UploadImage from '../../components/UploadImage';
 
 
@@ -62,7 +62,7 @@ export default function SingleCollectionDetail({ route, navigation }) {
 
 
   const handleUploadPhoto = () => {
-    fetch(`http://172.16.200.253:8080/api/add-image`, {
+    fetch(`${BASE_URL}/add-image`, {
       method: 'POST',
       body: createFormData(photo, { garmentId: data._id }),
     })

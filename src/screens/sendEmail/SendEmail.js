@@ -134,7 +134,7 @@ import Button from '../../components/Button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { hp, wp } from '../../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 import axios from 'axios';
 import { CustomModal, InputField } from '../../components';
 
@@ -223,6 +223,24 @@ export default function SendEmail({ navigation }) {
         }
         fetchData()
     }, [])
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const codesData = await AsyncStorage.getItem('ScanCodes');
+    //             if (codesData !== null) {
+    //                 // We have data!!
+    //                 const newArr = JSON.parse(codesData);
+    //                 setData(newArr)
+    //                 console.log(newArr , 'codes.........')
+    //             }
+    //         } catch (error) {
+    //             // Error retrieving data
+    //             console.log(error, 'error')
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -230,15 +248,26 @@ export default function SendEmail({ navigation }) {
                 if (codesData !== null) {
                     // We have data!!
                     const newArr = JSON.parse(codesData);
-                    setData(newArr)
+                    
+                    // Remove the 'images' array from each item in newArr
+                    const newArrWithoutImages = newArr.map(item => {
+                        const {_id , images , date , Image , ...itemWithoutImages } = item;
+                        return itemWithoutImages;
+                    });
+    
+                    setData(newArrWithoutImages);
+                    console.log(newArrWithoutImages, 'codes.........');
                 }
             } catch (error) {
                 // Error retrieving data
-                console.log(error, 'error')
+                console.log(error, 'error');
             }
-        }
-        fetchData()
-    }, [])
+        };
+    
+        fetchData();
+    }, []);
+    
+
     useEffect(() => {
         if (email) {
             const emailObjects = email.map(emailValue => ({

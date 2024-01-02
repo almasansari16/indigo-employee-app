@@ -17,7 +17,9 @@ import {
   Text,
   useColorScheme,
   View,
-  LogBox
+  LogBox,
+  Alert,
+  ToastAndroid
 } from 'react-native';
 
 import {
@@ -45,7 +47,8 @@ import { ToastProvider } from 'react-native-paper-toast';
 import { AuthProvider } from './src/context/authContext';
 import { NetworkInfo } from 'react-native-network-info';
 import NetInfo from "@react-native-community/netinfo";
-
+import publicIP from 'react-native-public-ip';
+import { BASE_URL } from './src/config/config';
 
 // function Section({children, title}){
 //   const isDarkMode = useColorScheme() === 'dark';
@@ -76,6 +79,7 @@ import NetInfo from "@react-native-community/netinfo";
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const [orientation, setOrientation] = React.useState('portrait');
+  const [ip, setIp] = React.useState(null);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -90,68 +94,83 @@ function App() {
       rol();
     };
   }, []);
-  useEffect(() => {
-
-    // Get Local IP
-    NetworkInfo.getIPAddress().then(ipAddress => {
-      console.log(ipAddress, 'ipAddress');
-    });
-
-    // Get IPv4 IP (priority: WiFi first, cellular second)
-    NetworkInfo.getIPV4Address().then(ipv4Address => {
-      console.log(ipv4Address, 'ipv4Address');
-    });
-
-    // Get Broadcast
-    NetworkInfo.getBroadcast().then(broadcast => {
-      console.log(broadcast, 'broadcast');
-    });
-
-    // Get SSID
-    NetworkInfo.getSSID().then(ssid => {
-      console.log(ssid, 'ssid');
-    });
-
-    // Get BSSID
-    NetworkInfo.getBSSID().then(bssid => {
-      console.log(bssid, 'bssid');
-    });
-
-    // Get Subnet
-    NetworkInfo.getSubnet().then(subnet => {
-      console.log(subnet, 'subnet');
-    });
-
-    // Get Default Gateway IP
-    NetworkInfo.getGatewayIPAddress().then(defaultGateway => {
-      console.log(defaultGateway, 'defaultGateway');
-    });
-
-    // Get frequency (supported only for Android)
-    NetworkInfo.getFrequency().then(frequency => {
-      console.log(frequency, 'frequency');
-    });
 
 
-    NetInfo.fetch().then((connectionInfo) => {
-      // Check the type of connection
-      if (connectionInfo.isConnected) {
-        if (connectionInfo.type === 'wifi') {
-          // Connected to WiFi, use local IP
-          // return localIp;
-          console.log('wifi')
-        } else if (connectionInfo.type === 'cellular') {
-          // Connected via mobile data, use live IP
-          // return liveIp;
-          console.log('data')
-        }
+  const handleConnectivityChange = (newState) => {
+    if (newState.isConnected) {
+      if (newState.type === 'wifi') {
+        console.log('WiFi connected');
+        // Alert.alert('WiFi connected');
+        ToastAndroid.showWithGravityAndOffset(
+          'WiFi connected!',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+        // Do something with WiFi connection
+      } else if (newState.type === 'cellular') {
+        console.log('Cellular data connected');
+        // Alert.alert('Cellular data connected');
+        ToastAndroid.showWithGravityAndOffset(
+          'Cellular data connected!',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+        // Do something with cellular data connection
       }
-  
-      // Default to a fallback URL (e.g., for offline scenarios)
-      return 'fallback_url';
-    });
-  
-  }, [])
+    } else {
+      console.log('Disconnected');
+      // Alert.alert('Disconnected');
+      // Alert.alert('Cellular data connected');
+      ToastAndroid.showWithGravityAndOffset(
+        'Disconnected!',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+      // Handle disconnection or fallback to a default URL
+    }
+  };
+
+  useEffect(() => {
+    publicIP()
+      .then(newIp => {
+        console.log(newIp, 'ip.................');
+        setIp(newIp);  // Set the new IP in the state
+      })
+      .catch(error => {
+        console.log(error);
+        // Handle error when unable to get IP address
+      });
+  }, []);
+
+  useEffect(() => {
+    const PUBLIC_URL = 'http://203.170.79.58:8080/api';
+    const LOCAL_URL = 'http://172.16.200.253:8080/api';
+    const publicIp = '103.249.154.92';
+
+    // Check if the live IP is the same as the public IP
+    const BASE_URL = ip === publicIp ? LOCAL_URL : PUBLIC_URL;
+
+    console.log(BASE_URL, 'BASE-URL........');
+  }, [ip]);  // Add 'ip' as a dependency
+
+
+  useEffect(() => {
+    // Subscribe to network state changes
+    const unsubscribe = NetInfo.addEventListener(handleConnectivityChange);
+
+    // Initial check when the component mounts
+    NetInfo.fetch().then(handleConnectivityChange);
+
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#000" />
@@ -184,5 +203,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-export { hp, wp };
+export { hp, wp, BASE_URL };
 export default App;

@@ -12,7 +12,7 @@ import {
     UPDATE_CONCERNPERSON_FAILURE,
     UPDATE_CONCERNPERSON_SUCCESS
 } from "./actionTypes";
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 import { Alert } from 'react-native';
 
 

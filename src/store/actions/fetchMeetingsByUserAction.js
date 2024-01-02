@@ -6,7 +6,7 @@ import {
     FETCH_MEETINGS_REQUEST,
     FETCH_MEETINGS_SUCCESS
 } from './actionTypes';
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 
 
 export const fetchMeetingsByUserId = (userId) => {

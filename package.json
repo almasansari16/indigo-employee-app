@@ -49,6 +49,7 @@
     "react-native-paper": "^5.8.0",
     "react-native-paper-toast": "^1.2.3",
     "react-native-phone-number-input": "^2.1.0",
+    "react-native-public-ip": "^1.0.2",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-reanimated": "^2.3.1",
     "react-native-reanimated-table": "^0.0.2",

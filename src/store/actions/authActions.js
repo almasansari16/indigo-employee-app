@@ -1,6 +1,6 @@
 // authActions.js
 import axios from 'axios';
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 import { GET_ALL_USERS_FAILURE, GET_ALL_USERS_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './actionTypes';
 import { Alert } from 'react-native';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ const login = (email, password) => async (dispatch) => {
         
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         await AsyncStorage.setItem('token', JSON.stringify(response.data.user.refreshToken));
-        Alert.alert(response.data.msg)
+        // Alert.alert(response.data.msg)
         // navigateToDashboard(navigation)
         
     } catch (error) {

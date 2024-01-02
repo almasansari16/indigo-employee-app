@@ -12,7 +12,7 @@ import {
     UPDATE_BRAND_FAILURE,
     UPDATE_BRAND_SUCCESS
 } from "./actionTypes";
-import { BASE_URL } from '../../config/config';
+import { BASE_URL } from '../../../App';
 import { Alert } from 'react-native';
 
 
@@ -37,7 +37,7 @@ export const getBrands = () => async (dispatch) => {
     try {
         const response = await axios.get(`${BASE_URL}/get-brands`);
         dispatch({ type: GET_BRANDS_SUCCESS, payload: response.data });
-        // console.log(response.data , "action console")
+        console.log(response.data , "action console")
     } catch (error) {
         console.error(error);
         dispatch({ type: GET_BRANDS_FAILURE, payload: error.message });
