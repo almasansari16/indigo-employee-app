@@ -9,7 +9,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import { CustomModal, Icon, IconType, InputField } from '../../components';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getCollection } from '../../store/actions/selectExhibitionGarmentAction';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import axios from 'axios';
 import { ActivityIndicator, DataTable } from 'react-native-paper';
 

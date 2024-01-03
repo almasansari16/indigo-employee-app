@@ -7,7 +7,7 @@ import {
     GET_MEETING_FAILURE
 } from "./actionTypes";
 
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { Alert } from 'react-native';
 import axios from "axios";
 

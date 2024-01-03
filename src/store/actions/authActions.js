@@ -1,6 +1,6 @@
 // authActions.js
 import axios from 'axios';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { GET_ALL_USERS_FAILURE, GET_ALL_USERS_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './actionTypes';
 import { Alert } from 'react-native';
 import { useState } from 'react';

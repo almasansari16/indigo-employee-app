@@ -6,7 +6,7 @@ import { hp, wp } from '../../../App';
 import Button from '../../components/Button';
 import Images from '../../theme/Images';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 
 
 

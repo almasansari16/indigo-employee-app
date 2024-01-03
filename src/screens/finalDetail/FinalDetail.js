@@ -11,7 +11,7 @@ import { hp, wp } from '../../../App';
 import { createMeeting } from '../../store/actions/meetingAction';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 
 function FinalDetail({ navigation, createMeeting }) {
     const { user } = useSelector((state) => state.auth.user);

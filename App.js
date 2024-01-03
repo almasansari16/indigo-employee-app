@@ -48,7 +48,8 @@ import { AuthProvider } from './src/context/authContext';
 import { NetworkInfo } from 'react-native-network-info';
 import NetInfo from "@react-native-community/netinfo";
 import publicIP from 'react-native-public-ip';
-import { BASE_URL } from './src/config/config';
+import { configureBaseUrl } from './src/config/apiConfig';
+// import { BASE_URL } from './src/config/config';
 
 // function Section({children, title}){
 //   const isDarkMode = useColorScheme() === 'dark';
@@ -75,7 +76,7 @@ import { BASE_URL } from './src/config/config';
 //     </View>
 //   );
 // }
-
+// const BASE_URL = 'http://203.170.79.58:8080/api'
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const [orientation, setOrientation] = React.useState('portrait');
@@ -149,15 +150,21 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const PUBLIC_URL = 'http://203.170.79.58:8080/api';
-    const LOCAL_URL = 'http://172.16.200.253:8080/api';
-    const publicIp = '103.249.154.92';
+    const handleConnectivityChange = (newState) => {
+      if (newState.isConnected) {
+        configureBaseUrl();  // Call the function to configure the BASE_URL when connected
+      }
+    };
 
-    // Check if the live IP is the same as the public IP
-    const BASE_URL = ip === publicIp ? LOCAL_URL : PUBLIC_URL;
+    // Subscribe to network state changes
+    const unsubscribe = NetInfo.addEventListener(handleConnectivityChange);
 
-    console.log(BASE_URL, 'BASE-URL........');
-  }, [ip]);  // Add 'ip' as a dependency
+    // Initial check when the component mounts
+    NetInfo.fetch().then(handleConnectivityChange);
+
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
+  }, []);
 
 
   useEffect(() => {
@@ -173,7 +180,7 @@ function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar backgroundColor="#000" />
+      <StatusBar backgroundColor="#171133" />
       <Provider store={store}>
         <AuthProvider>
           <ToastProvider>
@@ -203,5 +210,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-export { hp, wp, BASE_URL };
+export { hp, wp};
 export default App;

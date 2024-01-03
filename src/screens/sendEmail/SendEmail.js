@@ -134,7 +134,7 @@ import Button from '../../components/Button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { hp, wp } from '../../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import axios from 'axios';
 import { CustomModal, InputField } from '../../components';
 

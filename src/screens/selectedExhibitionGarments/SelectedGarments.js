@@ -10,7 +10,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import axios from 'axios';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { fetchExhibitionCollectionByUserId } from '../../store/actions/fetchExhibitionCollectionByUserAction';
 
 function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loading, error }) {

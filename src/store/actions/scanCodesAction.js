@@ -8,7 +8,7 @@ import {
     GET_SCAN_CODE_REQUEST
 } from "./actionTypes";
 
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { Alert } from 'react-native';
 import axios from "axios";
 

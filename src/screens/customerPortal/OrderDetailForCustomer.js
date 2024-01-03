@@ -7,7 +7,7 @@ import { hp, wp } from '../../../App'
 import { SingleCollectionStyle } from '../singleCollection/styles'
 import { getMeeting } from '../../store/actions/meetingAction'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { BASE_URL } from '../../config/config'
+import { BASE_URL } from '../../config/apiConfig'
 import axios from 'axios'
 import { ActivityIndicator } from 'react-native-paper';
 

@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { CustomModal, InputField } from '../../components';
 import axios from 'axios';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import UploadImage from '../../components/UploadImage';
 
 
@@ -162,11 +162,11 @@ export default function SingleCollectionDetail({ route, navigation }) {
                 textStyle={{ color: '#EEEEEE' }} />
 
 
-              <Button
+              {/* <Button
                 title={'Upload Image'}
                 onPress={handleChoosePhoto}
                 style={[SingleGarmentStyle.btn]}
-                textStyle={{ color: '#EEEEEE' }} />
+                textStyle={{ color: '#EEEEEE' }} /> */}
             </View>
           </ScrollView>
         </View>

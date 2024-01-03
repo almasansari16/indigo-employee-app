@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Button, Platform } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { BASE_URL } from '../config/config';
+import { BASE_URL } from '../config/apiConfig';
 
 const SERVER_URL = BASE_URL;
 

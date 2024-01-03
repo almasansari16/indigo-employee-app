@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { FETCH_SHEET_DATA_FAILURE, FETCH_SHEET_DATA_SUCCESS } from './actionTypes';
 
 

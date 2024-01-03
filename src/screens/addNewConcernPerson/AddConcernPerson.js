@@ -8,7 +8,7 @@ import Button from '../../components/Button'
 import { createConcernPerson } from '../../store/actions/concernPersonAction'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { BASE_URL } from '../../config/config'
+import { BASE_URL } from '../../config/apiConfig'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function AddConcernPerson({ createConcernPerson, navigation }) {

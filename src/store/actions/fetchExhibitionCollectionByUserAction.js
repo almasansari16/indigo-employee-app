@@ -4,7 +4,7 @@ import {
     GET_COLLECTION_BY_USER_REQUEST,
     GET_COLLECTION_BY_USER_FAILURE
 } from './actionTypes';
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 
 
 export const fetchExhibitionCollectionByUserId = (userId) => {

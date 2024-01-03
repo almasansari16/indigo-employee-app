@@ -18,7 +18,7 @@ import Button from '../../components/Button';
 import { Icon, IconType } from '../../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from "jwt-decode";
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 
 
 export default function Dashboard({ navigation }) {

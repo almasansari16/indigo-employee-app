@@ -13,7 +13,7 @@ import {
     UPDATE_COLLECTION_SUCCESS,
     
 } from "./actionTypes";
-import { BASE_URL } from '../../../App';
+import { BASE_URL } from '../../config/apiConfig';
 import { Alert } from 'react-native';
 
 
