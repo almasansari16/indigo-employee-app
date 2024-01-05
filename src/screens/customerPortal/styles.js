@@ -13,6 +13,11 @@ const AllCollectionStyle = StyleSheet.create({
         color: "#282561"
         // marginVertical:10
       },
+      garmentDetail:{
+        flexDirection:"row",
+        justifyContent:"center",
+        
+      },
       addBtn : {
        
      },

@@ -57,26 +57,29 @@ function OrderDetailForCustomer({ navigation, route }) {
                 source={Images.purple_background}
                 style={{ width: wp(100), height: hp(100) }}>
                 <View style={[AppStyles.center, SingleCollectionStyle.collectionDetail]}>
-                    <ScrollView>
-                        <Text style={SingleCollectionStyle.detailText}>Brand Name : {orderDetail && orderDetail.brandId.brandName || 'N/A'}</Text>
-                        <Text style={SingleCollectionStyle.detailText}>Concern persons : {orderDetail && orderDetail.emailRecipient.map(person => person).join(', ')}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Brand Name : {orderDetail && orderDetail.brandId.brandName || 'N/A'}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Concern persons : {orderDetail && orderDetail.emailRecipient.map(person => person).join(', ')}</Text>
 
-                        <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(orderDetail.meetingDate).toLocaleDateString() || 'N/A'}</Text>
-                        <Text style={SingleCollectionStyle.detailText}>Employee name : {orderDetail && orderDetail.userId.name || 'N/A'}</Text>
-                        <Text style={SingleCollectionStyle.detailText}>Extra Note : {orderDetail.extraNote}</Text>
-                        {orderDetail && orderDetail.codes.map((item, index) => (
-                            <>
-                           { console.log(item.images[0] , "item")}
+                    <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(orderDetail.meetingDate).toLocaleDateString() || 'N/A'}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Employee name : {orderDetail && orderDetail.userId.name || 'N/A'}</Text>
+                    <Text style={SingleCollectionStyle.detailText}>Extra Note : {orderDetail.extraNote}</Text>
+                </View>
 
+                <ScrollView>
+
+                    {orderDetail && orderDetail.codes.map((item, index) => (
+                        <>
+                            {console.log(item.images[0], "item")}
+                            <View style={[AppStyles.center, SingleCollectionStyle.garmentDetail]}>
                                 <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
                                 <Image
-                                    source={{uri : item.images[0]}}
-                                    style={{ resizeMode: 'contain', width: wp(80), height: hp(40), borderRadius: 10 }} />
-                            </>
-                        ))}
-                    </ScrollView>
+                                    source={{ uri: item.images[0] }}
+                                    style={{ resizeMode: 'contain', width: wp(70), height: hp(40), borderRadius: 10 }} />
+                            </View>
+                        </>
+                    ))}
+                </ScrollView>
 
-                </View>
             </ImageBackground>
         </SafeAreaView>
     )
