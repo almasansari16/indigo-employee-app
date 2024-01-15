@@ -56,25 +56,6 @@ function Login({ navigation, login }) {
     console.log(error, "error")
     console.log(loading, "loading")
 
-    // const handleSignin = async () => {
-    //     // if(email == "" && password ==""){
-    //     //     Alert.alert("Please enter your Email or Password")
-    //     // }
-    //     await login(email, password);
-    //     if (error === null) {
-    //         setSuccess(true)
-    //         Alert.alert("login successfully")
-    //         navigation.navigate('TabNavigation')
-
-    //     }
-    //     else if (email === "" || password === "") {
-    //         Alert.alert("Both fields are required.")
-    //     }
-    //     else {
-    //         Alert.alert(error)
-
-    //     }
-    // }
 
     const [errors, setError] = useState(null);
 
@@ -150,10 +131,10 @@ function Login({ navigation, login }) {
                                 placeholder={'Enter your email'}
                                 placeholderTextColor={'#EEEEEE'}
                                 keyboardType={'email-address'}
+                                autoCapitalize={'none'}
                                 onChangeText={text => setEmail(text)}
                                 value={email}
                                 style={LoginStyle.input}
-                                autoCapitalize={'none'}
                             />
                             <InputField
                                 label={'Password'}

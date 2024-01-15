@@ -24,21 +24,14 @@ import { hp, wp } from '../../../App';
 
 function AllCustomersList({ navigation, route }) {
   const [page, setPage] = useState(0);
-  const [numberOfItemsPerPageList] = useState([6]);
   const [refresh, setRefresh] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [numberOfItemsPerPageList] = useState([6]);
   const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brand.brands);
   console.log(brands, 'brands.......')
   const [items, setItems] = useState([]);
-  // useEffect(async () => {
-  //   try {
-  //     await AsyncStorage.setItem('AllCustomer', JSON.stringify(items));
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // }, []);
 
   const from = page * itemsPerPage;
   const to = items.length > 0 ? Math.min((page + 1) * itemsPerPage, items.length) : 0;
@@ -171,18 +164,19 @@ function AllCustomersList({ navigation, route }) {
               </DataTable.Header>
               <TouchableOpacity>
                 {filteredItems.slice(from, to).map((item) => (
-           
-                    <DataTable.Row key={item.key} onPress={() => customerDetail(item)} style={{ height: hp(8) }}>
-                      <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
-                      <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
-                    </DataTable.Row>
-         
+
+                  <DataTable.Row key={item.key} onPress={() => customerDetail(item)} style={{ height: hp(8) }}>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
+                  </DataTable.Row>
+
                 ))}
               </TouchableOpacity>
             </DataTable>
           ) : (
             <ActivityIndicator color='#EEEEEE' size="large" />
           )}
+
         </ScrollView>
         <DataTable.Pagination
           page={page}
@@ -195,6 +189,7 @@ function AllCustomersList({ navigation, route }) {
           onItemsPerPageChange={onItemsPerPageChange}
           showFastPaginationControls
           selectPageDropdownLabel={'Rows per page'}
+
         />
       </ImageBackground>
     </SafeAreaView>

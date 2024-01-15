@@ -53,6 +53,7 @@ import SingleCollectionDetail from '../screens/singleGarmentDetail/SingleCollect
 import UploadImage from '../components/UploadImage';
 import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCustomer';
 import SendEmail2 from '../screens/sendEmail/SendEmail2';
+import AllLoginCustomer from '../screens/allLoginCustomer/AllLoginCustomer';
 
 
 const handleLogout = async (navigation) => {
@@ -547,6 +548,15 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'All Employee Data',
+            headerTitleAlign: 'center',
+          }} />
+          <Stack.Screen
+          component={AllLoginCustomer}
+          name='AllLoginCustomer'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'All Customers',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen

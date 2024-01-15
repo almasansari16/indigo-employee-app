@@ -76,7 +76,7 @@ const exhibitionCollectionReducer = (state = initialState, action) => {
         case DELETE_COLLECTION_SUCCESS:
             return {
                 ...state,
-                collections: state.collections.filter(collection => collection._id !== action.payload),
+                collections: [], // Clearing the collections array
                 loading: false,
             };
         case DELETE_COLLECTION_FAILURE:

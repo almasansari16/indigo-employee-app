@@ -11,9 +11,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import axios from 'axios';
 import { BASE_URL } from '../../config/apiConfig';
-import { fetchExhibitionCollectionByUserId } from '../../store/actions/fetchExhibitionCollectionByUserAction';
+import { deleteExhibitionCollections, fetchExhibitionCollectionByUserId } from '../../store/actions/fetchExhibitionCollectionByUserAction';
 
-function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loading, error }) {
+function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, deleteExhibitionCollections, loading, error }) {
     const [refresh, setRefresh] = useState(false);
     const [items, setItems] = useState([]);
     const [userId, setUserId] = useState("");
@@ -127,6 +127,11 @@ function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loadi
     };
     console.log(items, "items")
     // console.log("selected items", selectedItems)
+
+    const deleteCollections = () => {
+        // console.log('kfsvnksfvnkvn')
+        deleteExhibitionCollections()
+    }
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -174,7 +179,11 @@ function SelectedGarments({ navigation, fetchExhibitionCollectionByUserId, loadi
                     ) : (
                         <ActivityIndicator color='#EEEEEE' size="large" />
                     )}
-                    <View>
+                    <View >
+                        {/* <Button
+                            title={'Delete All'}
+                            onPress={deleteCollections}
+                            style={{ backgroundColor: '#EEEEEE', width: wp(30), marginTop: 20, alignSelf: 'flex-end', }} /> */}
                         <Button
                             title={'Next'}
                             onPress={() => navigation.navigate('NewQrCode')}
@@ -193,4 +202,4 @@ const mapStateToProps = (state) => ({
     error: state.exhibitioCollectionByUser.error,
 });
 
-export default connect(mapStateToProps, { fetchExhibitionCollectionByUserId })(SelectedGarments);
+export default connect(mapStateToProps, { fetchExhibitionCollectionByUserId, deleteExhibitionCollections })(SelectedGarments);

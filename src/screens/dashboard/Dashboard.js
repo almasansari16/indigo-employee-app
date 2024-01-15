@@ -138,8 +138,8 @@ export default function Dashboard({ navigation }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={dashboardStyles.links}
-                    onPress={() => navigation.navigate('AddCustomer')}>
-                    <Text style={[dashboardStyles.linksText]}>Add Customer</Text>
+                    onPress={() => navigation.navigate('AddBrand')}>
+                    <Text style={[dashboardStyles.linksText]}>Add New Brand</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={dashboardStyles.links}

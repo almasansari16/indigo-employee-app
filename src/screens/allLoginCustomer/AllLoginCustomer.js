@@ -6,7 +6,7 @@ import { getAllUsers } from '../../store/actions/authActions'
 import { connect, useDispatch, useSelector } from 'react-redux'
 import { DataTable } from 'react-native-paper'
 
-function AllEmployeeData({ getAllUsers }) {
+function AllLoginCustomer({ getAllUsers }) {
     const [userData, setUserData] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const dispatch = useDispatch();
@@ -53,29 +53,20 @@ function AllEmployeeData({ getAllUsers }) {
                             <DataTable.Header>
                                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Name</DataTable.Title>
                                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Email</DataTable.Title>
-                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Role</DataTable.Title>
+                                {/* <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Role</DataTable.Title> */}
                             </DataTable.Header>
                             {/* Loop through the filtered items and display them */}
-                            {employees.map((item, index) => (
+                       
+                            {users.map((item, index) => (
                                 <DataTable.Row key={index}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
                                         numberOfLines={2}>{item.name}</DataTable.Cell>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
                                         numberOfLines={2}>{item.email}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.role}</DataTable.Cell>
+                                    {/* <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
+                                        numberOfLines={2}>{item.role}</DataTable.Cell> */}
                                 </DataTable.Row>
                             ))}
-                            {/* {users.map((item, index) => (
-                                <DataTable.Row key={index}>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.name}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.email}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.role}</DataTable.Cell>
-                                </DataTable.Row>
-                            ))} */}
                         </DataTable>
                     </ScrollView>
 
@@ -92,7 +83,7 @@ const mapStateToProps = (state) => ({
 });
 
 // Connect your component to the Redux store
-export default connect(mapStateToProps, { getAllUsers })(AllEmployeeData);
+export default connect(mapStateToProps, { getAllUsers })(AllLoginCustomer);
 
 
 

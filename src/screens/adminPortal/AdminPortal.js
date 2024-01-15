@@ -14,9 +14,14 @@ export default function AdminPortal({navigation}) {
                     onPress={() => navigation.navigate('AllEmployeeData')}>
                     <Text style={[AdminPortalStyles.linksText]}>All Employees</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity
+                    style={AdminPortalStyles.links}
+                    onPress={() => navigation.navigate('AllLoginCustomer')}>
+                    <Text style={[AdminPortalStyles.linksText]}>All Customers</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity style={AdminPortalStyles.links}
                     onPress={() => navigation.navigate('AllOrderData')}>
-                    <Text style={[AdminPortalStyles.linksText]}>Orders Data</Text>
+                    <Text style={[AdminPortalStyles.linksText]}>All Orders</Text>
                   </TouchableOpacity>
                  
             </ScrollView>

@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import Images from '../../theme/Images';
 import { AppStyles } from '../../theme/AppStyles';
 import { SignupStyles } from './styles';
-import { hp } from '../../../App';
+import { hp, wp } from '../../../App';
 import { InputField } from '../../components';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { signup } from '../../store/actions/authActions'
 import { connect } from 'react-redux';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 
 function Signup({ navigation, signup, loading, error }) {
     console.log(error, "error.........")
@@ -17,15 +17,26 @@ function Signup({ navigation, signup, loading, error }) {
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('')
     const [success, setSuccess] = useState(false)
- 
+    const [open, setOpen] = useState(false);
+    const [role, setRole] = useState('');
+    const [items, setItems] = useState([
+        { label: 'User', value: 'user' },
+        { label: 'Employee', value: 'employee' }
+    ]);
     const handleSignup = async () => {
-        await signup(name, email, password, contact);
+        // console.log(name , email , password , contact , role)
+        await signup(name, email, password, contact , role);
 
         if (!error) {
-           setSuccess(true)
+            setSuccess(true)
             navigation.navigate("Login")
         }
+
+        
     }
+
+ 
+    // console.log(role , "role")
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
@@ -50,7 +61,8 @@ function Signup({ navigation, signup, loading, error }) {
                                 label={'Email'}
                                 placeholder={'Enter your email'}
                                 placeholderTextColor={'#EEEEEE'}
-                                keyboardType={'email'}
+                                keyboardType={'email-address'}
+                                autoCapitalize={'none'}
                                 onChangeText={text => setEmail(text)}
                                 value={email}
                                 style={SignupStyles.input}
@@ -74,6 +86,28 @@ function Signup({ navigation, signup, loading, error }) {
                                 value={contact}
                                 style={SignupStyles.input}
                             />
+                            <DropDownPicker
+                                placeholder='Select Role'
+                                open={open}
+                                value={role}
+                                items={items}
+                                setOpen={setOpen}
+                                setValue={setRole}
+                                setItems={setItems}
+                                zIndex={1000}
+                                listMode='SCROLLVIEW'
+                                zIndexInverse={3000}
+                                style={{
+                                    width: wp(80),
+                                    justifyContent: 'center',
+                                    alignSelf: 'center',
+                                    marginHorizontal: wp(10),
+                                    borderRadius: wp(10)
+                                }}
+                                containerStyle={{ width: wp(80), alignSelf: 'center', borderRadius: wp(10) }}
+                                textStyle={{ fontSize: wp(4), color: '#2f2260' }}
+
+                            />
                         </View>
                         <TouchableOpacity
                             onPress={handleSignup}
@@ -82,7 +116,7 @@ function Signup({ navigation, signup, loading, error }) {
                                 Signup
                             </Text>
                         </TouchableOpacity>
-                        {/* {error && <Text>{error}</Text>} */}
+                       
                         <TouchableOpacity
                             onPress={() => navigation.navigate("Login")}
                             style={[SignupStyles.center]}>
@@ -100,7 +134,7 @@ function Signup({ navigation, signup, loading, error }) {
 const mapStateToProps = (state) => ({
     loading: state.auth.loading,
     error: state.auth.error,
-  });
+});
 
 const mapDispatchToProps = {
     signup,

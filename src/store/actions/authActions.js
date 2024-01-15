@@ -38,20 +38,20 @@ const login = (email, password) => async (dispatch) => {
     }
 };
 
-const signup = (name, email, password, contact) => async (dispatch) => {
+const signup = (name, email, password, contact, role) => async (dispatch) => {
     try {
         // Dispatch action to set loading state
         dispatch({ type: SIGNUP_REQUEST });
 
         // Make an API request to authenticate the user
-        const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact });
+        const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact , role });
         console.log(response.data, "response")
         Alert.alert(response.data.msg)
         // Dispatch action to set user data and authentication status
         dispatch({ type: SIGNUP_SUCCESS, payload: response.data });
     } catch (error) {
         // Dispatch action to handle login failure
-        console.log(error.response.data.message, "error")
+        console.log(error, "error")
         dispatch({ type: SIGNUP_FAILURE, payload: error.response.data.message });
     }
 };

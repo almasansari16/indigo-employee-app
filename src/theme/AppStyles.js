@@ -46,5 +46,13 @@ export const AppStyles = StyleSheet.create({
         justifyContent: 'space-evenly',
         display: 'flex',
         width: wp(100)
+      },
+      flexBetween: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        display: 'flex',
+        width: wp(100),
+        marginHorizontal: wp(10)
       }
 })

@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { AppStyles } from '../../theme/AppStyles';
 import Images from '../../theme/Images';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { DataTable } from 'react-native-paper';
+import { DataTable, Searchbar } from 'react-native-paper';
 import { getMeetings } from '../../store/actions/meetingAction';
 
-function AllOrderData({navigation }) {
+function AllOrderData({ navigation }) {
+    const [page, setPage] = useState(0);
     const [meetingData, setMeetingData] = useState([]);
     const [refresh, setRefresh] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [filteredItems, setFilteredItems] = useState(meetingData);
+    const [numberOfItemsPerPageList] = useState([6]);
+    const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
     const dispatch = useDispatch();
     const meetings = useSelector((state) => state.meeting.meetings);
     // console.log(meetings)
@@ -31,25 +36,42 @@ function AllOrderData({navigation }) {
         }
     }, [dispatch, meetings, refresh]);
 
-    //   const data =  meetingData.map((item)=> item.brandId)
-    //   console.log( data.map((item)=> item) , "oevjovovfo")
-    // console.log(meetingData, "meeting data")
-
 
     const handleDetail = (meeting) => {
         console.log(meeting)
         navigation.navigate("OrderDetailAdmin", {
             meeting
         })
-        // console.log(meeting , "detail of meeting...")
     }
+    const handleSearch = (text) => {
+        setSearchText(text);
+
+        const filteredData = meetingData.filter(
+            (item) =>
+                console.log(item, "fkvbfdobmfodm")
+            // item.brandName.toLowerCase().includes(text.toLowerCase()) ||
+            // item.address.toLowerCase().includes(text.toLowerCase())
+        );
+        console.log(filteredData, "filter data");
+        setFilteredItems(filteredData);
+        setPage(0);
+    };
 
 
+    console.log(meetingData, "detail of meeting...")
 
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
                 <View >
+                    <View style={{ marginTop: 0 }}>
+                        <Searchbar
+                            placeholder="Search..."
+                            mode="view"
+                            onChangeText={handleSearch}
+                            value={searchText}
+                        />
+                    </View>
                     <ScrollView>
                         <DataTable>
                             <DataTable.Header>
@@ -62,10 +84,13 @@ function AllOrderData({navigation }) {
                                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
                                     Meeting Date
                                 </DataTable.Title>
+                                <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
+                                    Employee
+                                </DataTable.Title>
                             </DataTable.Header>
-                            {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId , codes, extraNote}) => (
+                            {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId, codes, extraNote }) => (
                                 <DataTable.Row key={_id}
-                                    onPress={() => handleDetail({ _id})}>
+                                    onPress={() => handleDetail({ _id })}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
                                         {brandId && brandId.brandName}
                                     </DataTable.Cell >
@@ -74,6 +99,9 @@ function AllOrderData({navigation }) {
                                     </DataTable.Cell>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
                                         {new Date(meetingDate).toLocaleDateString()}
+                                    </DataTable.Cell>
+                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
+                                        {userId && userId.name}
                                     </DataTable.Cell>
                                 </DataTable.Row>
                             ))}
@@ -94,7 +122,5 @@ const mapStateToProps = (state) => ({
 
 // Connect your component to the Redux store
 export default connect(mapStateToProps, { getMeetings })(AllOrderData);
-
-
 
 
