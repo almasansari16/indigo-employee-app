@@ -59,35 +59,36 @@ function Login({ navigation, login }) {
 
     const [errors, setError] = useState(null);
 
-    const handleSignin = async () => {
-        try {
-            console.log("Before login: ", email, password , errors);
+  const handleSignin = async () => {
+    try {
+        console.log("Before login: ", email, password, errors);
 
-            // Check if email or password is empty
-            if (email === "" || password === "") {
-                Alert.alert("Fields can't be empty");
-                return; // Exit the function early
-            }
-
-            // Wait for the login operation to complete
-            await login(email, password);
-
-            // Now that the login operation is complete, update the error state
-            setError(error);
-
-            console.log("After login: ", email, password, errors);
-
-            if (error === null) {
-                Alert.alert('Successful');
-                navigation.navigate('TabNavigation')
-                // Rest of your code...
-            } else {
-                Alert.alert(error);
-            }
-        } catch (caughtError) {
-            console.error("Error during login:", caughtError);
+        // Check if email or password is empty
+        if (email === "" || password === "") {
+            Alert.alert("Fields can't be empty");
+            return; // Exit the function early
         }
+
+        // Wait for the login operation to complete
+        await login(email, password);
+
+        // Now that the login operation is complete, update the error state
+        setError(error);
+
+        console.log("After login: ", email, password, errors);
+
+        if (error === null) {
+            Alert.alert('Successful');
+            navigation.navigate('TabNavigation');
+            // Rest of your code...
+        } else {
+            Alert.alert(error);
+        }
+    } catch (caughtError) {
+        console.error("Error during login:", caughtError);
     }
+};
+
     
     
 

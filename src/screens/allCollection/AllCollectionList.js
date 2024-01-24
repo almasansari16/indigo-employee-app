@@ -345,7 +345,7 @@ function AllCollectionList({ navigation, createCollection }) {
               </DataTable.Header>
               {filteredItems.slice(from, to).map(item => (
                 <Swipeable
-                  renderLeftActions={LeftSwipeActions}
+                  // renderLeftActions={LeftSwipeActions}
                 // renderRightActions={() => rightSwipeActions(item)}
                 >
                   <DataTable.Row

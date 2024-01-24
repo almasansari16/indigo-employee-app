@@ -103,14 +103,14 @@ export default function SingleCollection({ route, navigation }) {
             <Text style={SingleCollectionStyle.detailText}>Weave : {collection.Weave}</Text>
 
             <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, borderRadius: 10 }}>
-            <Image
-  source={{ uri: collection.images[0] }}
-  style={
-    collection.images[0]
-      ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
-      : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
-  }
-/>
+              <Image
+                source={{ uri: collection.images[0] }}
+                style={
+                  collection.images[0]
+                    ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
+                    : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
+                }
+              />
             </View>
             {photo && (
               <>

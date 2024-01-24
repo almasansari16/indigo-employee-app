@@ -99,8 +99,6 @@ function AllCustomersList({ navigation, route }) {
   };
 
 
-
-
   return (
     <SafeAreaView style={AppStyles.container}>
       <ImageBackground

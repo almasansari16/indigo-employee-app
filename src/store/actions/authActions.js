@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigateToDashboard } from '../../utils/navigationUtils';
 
 const login = (email, password) => async (dispatch) => {
-
     try {
         // Dispatch action to set loading state
         dispatch({ type: LOGIN_REQUEST });
@@ -20,23 +19,20 @@ const login = (email, password) => async (dispatch) => {
         dispatch({ type: LOGIN_SUCCESS, payload: response.data });
         console.log(response.data.msg, "user data");
 
-
         // Save token in local storage for future requests
         const token = response.data.accessToken;
         await AsyncStorage.setItem('accessToken', token);
-        
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         await AsyncStorage.setItem('token', JSON.stringify(response.data.user.refreshToken));
-        // Alert.alert(response.data.msg)
-        // navigateToDashboard(navigation)
-        
+  
     } catch (error) {
-        // Alert.alert(error.response.data.message)
         console.log(error.response.data.message, "error.........in action")
+
         // Dispatch action to handle login failure
         dispatch({ type: LOGIN_FAILURE, payload: error.response.data.message });
     }
 };
+
 
 const signup = (name, email, password, contact, role) => async (dispatch) => {
     try {
@@ -46,12 +42,12 @@ const signup = (name, email, password, contact, role) => async (dispatch) => {
         // Make an API request to authenticate the user
         const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact , role });
         console.log(response.data, "response")
-        Alert.alert(response.data.msg)
+        // Alert.alert(response.data.msg)
         // Dispatch action to set user data and authentication status
         dispatch({ type: SIGNUP_SUCCESS, payload: response.data });
     } catch (error) {
         // Dispatch action to handle login failure
-        console.log(error, "error")
+        console.log(error.response.data.message, "error.........in action")
         dispatch({ type: SIGNUP_FAILURE, payload: error.response.data.message });
     }
 };
