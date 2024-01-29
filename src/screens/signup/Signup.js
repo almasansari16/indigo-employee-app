@@ -1,179 +1,41 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, useColorScheme, ScrollView, TouchableOpacity, Alert, TextInput } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react';
-import Images from '../../theme/Images';
+
+import {
+    View,
+    Text,
+    useColorScheme,
+    SafeAreaView,
+    ImageBackground,
+    Image,
+    TouchableOpacity,
+    Alert,
+    Dimensions,
+    KeyboardAvoidingView,
+    ScrollView
+} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AppStyles } from '../../theme/AppStyles';
-import { SignupStyles } from './styles';
-import { hp, wp } from '../../../App';
+import { LoginStyle } from '../login/styles';
+import Images from '../../theme/Images';
 import { InputField } from '../../components';
+import { hp, wp } from '../../../App';
+import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { signup } from '../../store/actions/authActions'
+import { login, signup } from '../../store/actions/authActions'
 import { connect, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-// function Signup({ navigation, signup }) {
-
-//     const { loading, user, error } = useSelector((state) => state.auth);
-
-//     const [name, setName] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [email, setEmail] = useState('');
-//     const [contact, setContact] = useState('')
-//     const [success, setSuccess] = useState(false)
-//     const [open, setOpen] = useState(false);
-//     const [role, setRole] = useState('');
-//     const [items, setItems] = useState([
-//         { label: 'User', value: 'user' },
-//         { label: 'Employee', value: 'employee' }
-//     ]);
-//     const [errors, setError] = useState(null);
-//     console.log(error, "error")
-//     console.log(loading, "loading")
-//     console.log(name , email , password , contact , role);
-
-
-//     const handleSignup = async () => {
-//         try {
-//             // Check if any field is empty
-//             if (email === "" || password === "" || name === "" || contact === "" || role === "") {
-//                 Alert.alert("Fields can't be empty");
-//                 return; // Exit the function early
-//             }
-
-//             // Wait for the signup operation to complete
-//             await signup(name, email, password, contact, role);
-
-//             // Now that the signup operation is complete, update the error state
-//             const currentError = error;  // Save the error before updating state
-//             console.log(currentError , "current error")
-//             setError(currentError);
-
-//             console.log("After signup: ", name, email, password, contact, role, currentError);
-
-//             if (currentError === null) {
-//                 Alert.alert('Successful');
-//                 navigation.navigate('Login');
-//             } else {
-//                 Alert.alert("Error", currentError);
-//             }
-//         } catch (caughtError) {
-//             console.error("Error during signup:", caughtError);
-//         }
-//     };
-
-
-
-
-//     console.log(errors, "error.........")
-
-//     // console.log(role , "role")
-//     return (
-//         <SafeAreaView style={[AppStyles.container]}>
-//             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
-//                 <Spinner visible={loading} />
-//                 <ScrollView showsVerticalScrollIndicator={false}>
-//                     <View>
-//                         <View style={[SignupStyles.center, { marginTop: hp(10) }]}>
-//                             <Image source={Images.Logo} />
-//                             <Text style={SignupStyles.text}>Signup</Text>
-//                             <View style={[SignupStyles.horizontalLine]} />
-//                         </View>
-//                         <View style={[SignupStyles.center, { marginTop: hp(5), marginBottom: hp(5) }]}>
-//                             <TextInput
-//                                 placeholder={'Enter your Name'}
-//                                 placeholderTextColor={'#EEEEEE'}
-//                                 onChangeText={text => setName(text)}
-//                                 value={name}
-//                                 style={SignupStyles.input}
-//                             />
-//                             <TextInput
-//                                 placeholder={'Enter your Email'}
-//                                 placeholderTextColor={'#EEEEEE'}
-//                                 autoCapitalize={'none'}
-//                                 keyboardType='email-address'
-//                                 onChangeText={text => setEmail(text)}
-//                                 value={email}
-//                                 style={SignupStyles.input}
-//                             />
-//                             <TextInput
-//                                 placeholder={'Enter your Password'}
-//                                 placeholderTextColor={'#EEEEEE'}
-//                                 onChangeText={text => setPassword(text)}
-//                                 value={password}
-//                                 secureTextEntry={true}
-//                                 style={SignupStyles.input}
-//                             />
-//                             <TextInput
-//                                 placeholder={'Enter your contact'}
-//                                 placeholderTextColor={'#EEEEEE'}
-//                                 keyboardType='number-pad'
-//                                 onChangeText={text => setContact(text)}
-//                                 value={contact}
-//                                 style={SignupStyles.input}
-//                             />
-//                             <DropDownPicker
-//                                 placeholder='Select Role'
-//                                 open={open}
-//                                 value={role}
-//                                 items={items}
-//                                 setOpen={setOpen}
-//                                 setValue={setRole}
-//                                 setItems={setItems}
-//                                 zIndex={1000}
-//                                 listMode='SCROLLVIEW'
-//                                 zIndexInverse={3000}
-//                                 style={{
-//                                     width: wp(80),
-//                                     justifyContent: 'center',
-//                                     alignSelf: 'center',
-//                                     marginHorizontal: wp(10),
-//                                     borderRadius: wp(10)
-//                                 }}
-//                                 containerStyle={{ width: wp(80), alignSelf: 'center', borderRadius: wp(10) }}
-//                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
-
-//                             />
-//                         </View>
-//                         <TouchableOpacity
-//                             onPress={handleSignup}
-//                             style={[SignupStyles.signupBtn, SignupStyles.center]}>
-//                             <Text style={[SignupStyles.btnText]}>
-//                                 Signup
-//                             </Text>
-//                         </TouchableOpacity>
-
-//                         <TouchableOpacity
-//                             onPress={() => navigation.navigate("Login")}
-//                             style={[SignupStyles.center]}>
-//                             <Text style={[SignupStyles.linkText]}>
-//                                 If you have already account <Text style={SignupStyles.boldText}>Login</Text>  here
-//                             </Text>
-//                         </TouchableOpacity>
-//                     </View>
-//                 </ScrollView>
-//             </ImageBackground>
-//         </SafeAreaView>
-
-//     )
-// }
-// const mapStateToProps = (state) => ({
-//     loading: state.auth.loading,
-//     error: state.auth.error,
-// });
-
-// const mapDispatchToProps = {
-//     signup,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Signup);
-
-
-
-const Signup = () => {
-
+function Signup({ navigation, signup }) {
+    const isDarkMode = useColorScheme() === 'dark';
+    const backgroundStyle = {
+        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    };
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [contact, setContact] = useState('')
+    const [contact, setContact] = useState('');
     const [success, setSuccess] = useState(false)
     const [open, setOpen] = useState(false);
     const [role, setRole] = useState('');
@@ -182,55 +44,122 @@ const Signup = () => {
         { label: 'Employee', value: 'employee' }
     ]);
     const [errors, setError] = useState(null);
-    // const { loading, user, error } = useSelector((state) => state.auth);
-    console.log(name , email , password , contact , role);
-    const handleSignup = () => {
-        Alert.alert("signup")
+    console.log(error, "error")
+    console.log(loading, "loading")
+    console.log(name, email, password, contact, role);
+
+    const { loading, user, error } = useSelector((state) => state.auth);
+    console.log(error, "error")
+    console.log(loading, "loading")
+
+
+const handleSignup = async () => {
+    try {
+        // Check if any field is empty
+        if (email === "" || password === "") {
+            Alert.alert("Fields can't be empty");
+            return;
+        }
+
+        // Wait for the signup operation to complete
+        const result = await signup(name, email, password, contact, role);
+
+        // Log the result to the console for debugging
+        console.log("Signup result:", result);
+
+        // Check if the result has a msg property indicating success
+        if (result.msg === "your account has been created") {
+            Alert.alert('your account has been created');
+            navigation.navigate('Login');
+        } else {
+            // Handle the error case
+            // Alert.alert("Error", result.msg);
+            Alert.alert('Error' , result.error)
+        }
+
+        console.log("After signup: ", email, password, result.msg);
+    } catch (caughtError) {
+        console.error("Error during signup:", caughtError);
     }
+};
+    
+    
+    
+    
+
+
+
 
     return (
-        <SafeAreaView style={[AppStyles.container]}>
+        // <KeyboardAvoidingView>
+        <SafeAreaView style={{ flex: 1 }}>
+            {/* <View
+                    style={{
+                        width: 0,
+                        height: 0,
+                        flex: 1,
+                        borderLeftWidth: SCREEN_WIDTH / 2.1,
+                        borderLeftColor: '#3D3658',
+                        borderBottomWidth: SCREEN_HEIGHT / 1,
+                        borderBottomColor: '#3D3658',
+                        borderRightWidth: SCREEN_WIDTH / 1.3,
+                        borderRightColor: '#584e7f',
+                        position: 'relative'
+                    }}
+                />
+
+                <View style={{
+                    position: "absolute", display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                }}> */}
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
-                {/* <Spinner visible={loading} /> */}
+                <Spinner visible={loading} />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
-                        <View style={[SignupStyles.center, { marginTop: hp(10) }]}>
+                        <View style={[LoginStyle.center, { marginTop: hp(10) }]}>
                             <Image source={Images.Logo} />
-                            <Text style={SignupStyles.text}>Signup</Text>
-                            <View style={[SignupStyles.horizontalLine]} />
+                            <Text style={LoginStyle.text}>Signup</Text>
+                            <View style={[LoginStyle.horizontalLine]} />
                         </View>
-                        <View style={[SignupStyles.center, { marginTop: hp(5), marginBottom: hp(5) }]}>
-                            <TextInput
-                                placeholder={'Enter your Name'}
+                        <View style={[LoginStyle.center, { marginTop: hp(5) }]}>
+                            <InputField
+                                label={'Full Name'}
+                                placeholder={'Enter your name'}
                                 placeholderTextColor={'#EEEEEE'}
                                 onChangeText={text => setName(text)}
                                 value={name}
-                                style={SignupStyles.input}
+                                style={LoginStyle.input}
                             />
-                            <TextInput
-                                placeholder={'Enter your Email'}
+                            <InputField
+                                label={'Email'}
+                                placeholder={'Enter your email'}
                                 placeholderTextColor={'#EEEEEE'}
+                                keyboardType={'email-address'}
                                 autoCapitalize={'none'}
-                                keyboardType='email-address'
-                                // onChangeText={text => setEmail(text)}
+                                onChangeText={text => setEmail(text)}
                                 value={email}
-                                style={SignupStyles.input}
+                                style={LoginStyle.input}
                             />
-                            <TextInput
-                                placeholder={'Enter your Password'}
+                            <InputField
+                                label={'Password'}
+                                placeholder={'Enter your password'}
                                 placeholderTextColor={'#EEEEEE'}
-                                // onChangeText={text => setPassword(text)}
+                                keyboardType={'password'}
+                                onChangeText={text => setPassword(text)}
                                 value={password}
                                 secureTextEntry={true}
-                                style={SignupStyles.input}
+                                style={LoginStyle.input}
                             />
-                            <TextInput
-                                placeholder={'Enter your contact'}
+                            <InputField
+                                label={'Contact'}
+                                placeholder={'Enter your phone number'}
                                 placeholderTextColor={'#EEEEEE'}
-                                keyboardType='number-pad'
-                                // onChangeText={text => setContact(text)}
+                                keyboardType={'number-pad'}
+                                onChangeText={text => setContact(text)}
                                 value={contact}
-                                style={SignupStyles.input}
+                                style={LoginStyle.input}
                             />
                             <DropDownPicker
                                 placeholder='Select Role'
@@ -257,27 +186,33 @@ const Signup = () => {
                         </View>
                         <TouchableOpacity
                             onPress={handleSignup}
-                            style={[SignupStyles.signupBtn, SignupStyles.center]}>
-                            <Text style={[SignupStyles.btnText]}>
-                                Signup
-                            </Text>
+                            style={[LoginStyle.loginBtn, LoginStyle.center]}>
+                            <Text style={[LoginStyle.btnText]}>Signup</Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("Login")}
-                            style={[SignupStyles.center]}>
-                            <Text style={[SignupStyles.linkText]}>
-                                If you have already account <Text style={SignupStyles.boldText}>Login</Text>  here
+                            style={[LoginStyle.center]}
+                            onPress={() => navigation.navigate('Login')}>
+                            <Text style={[LoginStyle.linkText]}>
+                                If you have already account <Text style={LoginStyle.boldText}>Login</Text>  here
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-
             </ImageBackground>
+            {/* </View> */}
         </SafeAreaView>
-
-    )
+        // </KeyboardAvoidingView>
+    );
 }
 
-export default Signup
+const mapStateToProps = (state) => ({
+    loading: state.auth.loading,
+    error: state.auth.error,
+});
+
+const mapDispatchToProps = {
+    signup,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 

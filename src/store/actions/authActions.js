@@ -24,12 +24,17 @@ const login = (email, password) => async (dispatch) => {
         await AsyncStorage.setItem('accessToken', token);
         await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         await AsyncStorage.setItem('token', JSON.stringify(response.data.user.refreshToken));
-  
-    } catch (error) {
-        console.log(error.response.data.message, "error.........in action")
 
-        // Dispatch action to handle login failure
-        dispatch({ type: LOGIN_FAILURE, payload: error.response.data.message });
+        return response.data;
+    } catch (error) {
+         // Extract the error message from the response or use a default message
+         const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+
+         // Dispatch action to handle signup failure
+         dispatch({ type: SIGNUP_FAILURE, payload: errorMessage });
+ 
+         // Return an object with the error property
+         return { error: errorMessage };
     }
 };
 
@@ -40,24 +45,35 @@ const signup = (name, email, password, contact, role) => async (dispatch) => {
         dispatch({ type: SIGNUP_REQUEST });
 
         // Make an API request to authenticate the user
-        const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact , role });
-        console.log(response.data, "response")
-        // Alert.alert(response.data.msg)
+        const response = await axios.post(`${BASE_URL}/signup`, { name, email, password, contact, role });
+
         // Dispatch action to set user data and authentication status
         dispatch({ type: SIGNUP_SUCCESS, payload: response.data });
+
+        // Return the response data (including any additional information you might need in the component)
+        console.log(response.data , "response in action")
+        return response.data;
     } catch (error) {
-        // Dispatch action to handle login failure
-        console.log(error.response.data.message, "error.........in action")
-        dispatch({ type: SIGNUP_FAILURE, payload: error.response.data.message });
+        // Extract the error message from the response or use a default message
+        const errorMessage = error.response?.data?.message || "Signup failed. Please try again.";
+
+        // Dispatch action to handle signup failure
+        dispatch({ type: SIGNUP_FAILURE, payload: errorMessage });
+
+        // Return an object with the error property
+        return { error: errorMessage };
     }
 };
 
+export default signup;
 
- const getAllUsers = () => async (dispatch) => {
+
+
+const getAllUsers = () => async (dispatch) => {
     try {
         const response = await axios.get(`${BASE_URL}/all-users`);
         dispatch({ type: GET_ALL_USERS_SUCCESS, payload: response.data });
-        console.log(response.data , "action console")
+        console.log(response.data, "action console")
     } catch (error) {
         console.error(error);
         dispatch({ type: GET_ALL_USERS_FAILURE, payload: error.message });
@@ -65,4 +81,4 @@ const signup = (name, email, password, contact, role) => async (dispatch) => {
 };
 
 
-export { login, signup , getAllUsers };
+export { login, signup, getAllUsers };

@@ -59,36 +59,35 @@ function Login({ navigation, login }) {
 
     const [errors, setError] = useState(null);
 
-  const handleSignin = async () => {
-    try {
-        console.log("Before login: ", email, password, errors);
-
-        // Check if email or password is empty
-        if (email === "" || password === "") {
-            Alert.alert("Fields can't be empty");
-            return; // Exit the function early
+    const handleSignin = async () => {
+        try {
+            // Check if any field is empty
+            if (email === "" || password === "") {
+                Alert.alert("Fields can't be empty");
+                return;
+            }
+    
+            // Wait for the signup operation to complete
+            const result = await login( email, password);
+    
+            // Log the result to the console for debugging
+            console.log("login result:", result);
+    
+            // Check if the result has a msg property indicating success
+            if (result.msg === "login sucessfully") {
+                Alert.alert('login sucessfully');
+                navigation.navigate('TabNavigation');
+            } else {
+                // Handle the error case
+                // Alert.alert("Error", result.msg);
+                Alert.alert('Error' , result.error)
+            }
+    
+            console.log("After login: ", email, password, result.msg);
+        } catch (caughtError) {
+            console.error("Error during login:", caughtError);
         }
-
-        // Wait for the login operation to complete
-        await login(email, password);
-
-        // Now that the login operation is complete, update the error state
-        setError(error);
-
-        console.log("After login: ", email, password, errors);
-
-        if (error === null) {
-            Alert.alert('Successful');
-            navigation.navigate('TabNavigation');
-            // Rest of your code...
-        } else {
-            Alert.alert(error);
-        }
-    } catch (caughtError) {
-        console.error("Error during login:", caughtError);
-    }
-};
-
+    };
     
     
 
