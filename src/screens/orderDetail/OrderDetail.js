@@ -1,11 +1,12 @@
-import { View, Text, SafeAreaView, ImageBackground } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles'
 import Images from '../../theme/Images'
 import { hp, wp } from '../../../App'
 import { SingleCollectionStyle } from '../singleCollection/styles'
+import FastImage from 'react-native-fast-image'
 
-export default function OrderDetail({ route }) {
+export default function OrderDetail({ route , navigation}) {
     const [collection, setCollection] = useState(null); // Initialize customer as null
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export default function OrderDetail({ route }) {
         );
     }
     const { brandId, concernPersonId, meetingDate, userId, extraNote, codes } = collection;
-console.log(brandId)
+    console.log(brandId)
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <ImageBackground
@@ -36,11 +37,23 @@ console.log(brandId)
                     <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(meetingDate).toLocaleDateString()}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Employee name : {userId.name}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Extra Note : {extraNote}</Text>
-                    {codes && codes.map((item) => (
-                        <Text style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
-                    ))}
-
                 </View>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {codes && codes.map((item) => (
+                        <View style={[AppStyles.center, SingleCollectionStyle.garmentDetail]}>
+                        <Text style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('ShowFullImage', { url: item.images[0] })}>
+                                <FastImage
+                                    source={{
+                                        uri: item.images[0],
+                                        priority: FastImage.priority.high,
+                                    }}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                    style={{ width: wp(70), height: hp(40), borderRadius: 10 }} />
+                            </TouchableOpacity>
+                            </View>
+                    ))}
+                </ScrollView>
             </ImageBackground>
         </SafeAreaView>
     )

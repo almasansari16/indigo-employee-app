@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles'
 import Images from '../../theme/Images'
@@ -9,6 +9,7 @@ import { connect, useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../config/apiConfig'
 import axios from 'axios'
 import { ActivityIndicator } from 'react-native-paper'
+import FastImage from 'react-native-fast-image'
 
 function OrderDetailAdmin({ navigation, route }) {
     const [meetingId, setmeetingId] = useState(null); // Initialize customer as null
@@ -61,12 +62,27 @@ function OrderDetailAdmin({ navigation, route }) {
                     <Text style={SingleCollectionStyle.detailText}>Meeting Date : {new Date(orderDetail.meetingDate).toLocaleDateString()}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Employee name : {orderDetail && orderDetail.userId.name}</Text>
                     <Text style={SingleCollectionStyle.detailText}>Extra Note : {orderDetail.extraNote}</Text>
-                    {orderDetail && orderDetail.codes.map((item, index) => (
-                        // console.log(item , "item")
-                        <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
-                    ))}
-
                 </View>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {orderDetail && orderDetail.codes.map((item, index) => (
+                        <>
+                            {console.log(item.images[0], "item")}
+                            <View style={[AppStyles.center, SingleCollectionStyle.garmentDetail]}>
+                                <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('ShowFullImage', { url: item.images[0] })}>
+                                    <FastImage
+                                        source={{
+                                            uri: item.images[0],
+                                            priority: FastImage.priority.high,
+                                        }}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{ width: wp(70), height: hp(40), borderRadius: 10 }} />
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    ))}
+                </ScrollView>
+
             </ImageBackground>
         </SafeAreaView>
     )

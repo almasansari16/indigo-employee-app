@@ -41,14 +41,14 @@ function AddBrand({ navigation, createBrand }) {
     if (Object.keys(errors).length === 0) {
       // Proceed with form submission
       handleCreateBrand()
-      saveData()
-      setBrand({ brandName: " ", address: " "})
+      // saveData()
+      setBrand({ brandName: " ", address: " " })
       navigation.navigate('TabNavigation')
     }
 
   };
   const handleCreateBrand = async () => {
-   
+
     await createBrand(brand);
 
 
@@ -65,7 +65,7 @@ function AddBrand({ navigation, createBrand }) {
   const addConcernPerson = () => {
     setBrand({
       ...brand,
-      concernPersons: [...brand.concernPersons, { name: '', email: '', designation:'' }],
+      concernPersons: [...brand.concernPersons, { name: '', email: '', designation: '' }],
     });
   };
 
@@ -112,39 +112,6 @@ function AddBrand({ navigation, createBrand }) {
               style={AddBrandStyle.input}
               error={validation.address}
             />
-            {/* {brand.concernPersons.map((person, index) => (
-              <View key={index}>
-                <IconInput
-                  placeholder={`Name ${index + 1}`}
-                  placeholderTextColor={'#282561'}
-                  value={person.name}
-                  style={AddBrandStyle.input}
-                  onChangeText={(text) =>
-                    handleConcernPersonChange(index, 'name', text)
-                  }
-                />
-                <IconInput
-                  placeholder={`Email ${index + 1}`}
-                  placeholderTextColor={'#282561'}
-                  value={person.email}
-                  style={AddBrandStyle.input}
-                  onChangeText={(text) =>
-                    handleConcernPersonChange(index, 'email', text)
-                  }
-                />
-                  <IconInput
-                  placeholder={`Designation ${index + 1}`}
-                  placeholderTextColor={'#282561'}
-                  value={person.designation}
-                  style={AddBrandStyle.input}
-                  onChangeText={(text) =>
-                    handleConcernPersonChange(index, 'designation', text)
-                  }
-                />
-              </View>
-            ))}
-            <Button title="Add Concern Person" onPress={addConcernPerson} /> */}
-
           </View>
           <View style={AddBrandStyle.btnView}>
             <Button title={'Save'} onPress={handleSave} style={AddBrandStyle.btn} textStyle={AddBrandStyle.text} />

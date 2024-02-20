@@ -1,5 +1,5 @@
 
-import { View, Text, SafeAreaView, ImageBackground, Image, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles'
 import Images from '../../theme/Images'
@@ -10,6 +10,7 @@ import { connect, useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../config/apiConfig'
 import axios from 'axios'
 import { ActivityIndicator } from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
 
 
 function OrderDetailForCustomer({ navigation, route }) {
@@ -72,9 +73,18 @@ function OrderDetailForCustomer({ navigation, route }) {
                             {console.log(item.images[0], "item")}
                             <View style={[AppStyles.center, SingleCollectionStyle.garmentDetail]}>
                                 <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
-                                <Image
-                                    source={{ uri: item.images[0] }}
-                                    style={{ resizeMode: 'contain', width: wp(70), height: hp(40), borderRadius: 10 }} />
+                                <TouchableOpacity onPress={() => navigation.navigate('ShowFullImage', { url: item.images[0] })}>
+                                    <FastImage
+                                        // onLoadStart={() => console.log('load start......')}
+                                        // onProgress={e => console.log(e.nativeEvent.loaded / e.nativeEvent.total)}
+                                        source={{
+                                            uri: item.images[0],
+                                            // headers: { Authorization: 'someAuthToken' },
+                                            priority: FastImage.priority.high,
+                                        }}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{ width: wp(70), height: hp(40), borderRadius: 10 }} />
+                                </TouchableOpacity>
                             </View>
                         </>
                     ))}

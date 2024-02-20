@@ -17,7 +17,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AppStyles } from '../../theme/AppStyles';
 import { LoginStyle } from '../login/styles';
 import Images from '../../theme/Images';
-import { InputField } from '../../components';
+import { InputField , Icon , IconType} from '../../components';
 import { hp, wp } from '../../../App';
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,6 +44,13 @@ function Signup({ navigation, signup }) {
         { label: 'Employee', value: 'employee' }
     ]);
     const [errors, setError] = useState(null);
+     // State variable to track password visibility 
+     const [showPassword, setShowPassword] = useState(false);
+
+     // Function to toggle the password visibility state 
+     const toggleShowPassword = () => {
+         setShowPassword(!showPassword);
+     };
     console.log(error, "error")
     console.log(loading, "loading")
     console.log(name, email, password, contact, role);
@@ -149,8 +156,14 @@ const handleSignup = async () => {
                                 keyboardType={'password'}
                                 onChangeText={text => setPassword(text)}
                                 value={password}
-                                secureTextEntry={true}
+                                secureTextEntry={!showPassword}
                                 style={LoginStyle.input}
+                                icon={
+                                    <TouchableOpacity onPress={toggleShowPassword}>
+                                        {showPassword ? <Icon type={IconType.Ionicons} name={'eye'} size={20} color='#EEEEEE'/> 
+                                        : <Icon type={IconType.Ionicons} name={'eye-off'} size={20} color='#EEEEEE'/>}
+                                    </TouchableOpacity>
+                                }
                             />
                             <InputField
                                 label={'Contact'}

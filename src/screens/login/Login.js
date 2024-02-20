@@ -16,7 +16,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AppStyles } from '../../theme/AppStyles';
 import { LoginStyle } from './styles';
 import Images from '../../theme/Images';
-import { InputField } from '../../components';
+import { Icon, IconType, InputField } from '../../components';
 import { hp, wp } from '../../../App';
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,6 +24,7 @@ import { AuthContext } from '../../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { login } from '../../store/actions/authActions'
 import { connect, useSelector } from 'react-redux';
+import FastImage from 'react-native-fast-image';
 // mock server functions
 const verifyUserCredentials = payload => {
     // make an HTTP request to the server and verify user credentials
@@ -51,7 +52,14 @@ function Login({ navigation, login }) {
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(false);
+    // State variable to track password visibility 
+    const [showPassword, setShowPassword] = useState(false);
+
+    // Function to toggle the password visibility state 
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     const { loading, user, error } = useSelector((state) => state.auth);
     console.log(error, "error")
     console.log(loading, "loading")
@@ -66,13 +74,13 @@ function Login({ navigation, login }) {
                 Alert.alert("Fields can't be empty");
                 return;
             }
-    
+
             // Wait for the signup operation to complete
-            const result = await login( email, password);
-    
+            const result = await login(email, password);
+
             // Log the result to the console for debugging
             console.log("login result:", result);
-    
+
             // Check if the result has a msg property indicating success
             if (result.msg === "login sucessfully") {
                 Alert.alert('login sucessfully');
@@ -80,17 +88,14 @@ function Login({ navigation, login }) {
             } else {
                 // Handle the error case
                 // Alert.alert("Error", result.msg);
-                Alert.alert('Error' , result.error)
+                Alert.alert('Error', result.error)
             }
-    
+
             console.log("After login: ", email, password, result.msg);
         } catch (caughtError) {
             console.error("Error during login:", caughtError);
         }
     };
-    
-    
-
 
     return (
         // <KeyboardAvoidingView>
@@ -116,7 +121,14 @@ function Login({ navigation, login }) {
                     alignItems: 'center',
                     alignSelf: 'center',
                 }}> */}
-            <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
+            <FastImage
+             source={Images.purple_background}
+            //   source={{
+            //     uri: Images.purple_background,
+            //     priority: FastImage.priority.high
+            // }} 
+             style={{ flex: 1 }}
+             resizeMode={FastImage.resizeMode.cover}>
                 <Spinner visible={loading} />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
@@ -143,8 +155,14 @@ function Login({ navigation, login }) {
                                 keyboardType={'password'}
                                 onChangeText={text => setPassword(text)}
                                 value={password}
-                                secureTextEntry={true}
+                                secureTextEntry={!showPassword}
                                 style={LoginStyle.input}
+                                icon={
+                                    <TouchableOpacity onPress={toggleShowPassword}>
+                                        {showPassword ? <Icon type={IconType.Ionicons} name={'eye'} size={20} color='#EEEEEE'/> 
+                                        : <Icon type={IconType.Ionicons} name={'eye-off'} size={20} color='#EEEEEE'/>}
+                                    </TouchableOpacity>
+                                }
                             />
                         </View>
                         <TouchableOpacity
@@ -246,7 +264,7 @@ function Login({ navigation, login }) {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-            </ImageBackground>
+            </FastImage>
             {/* </View> */}
         </SafeAreaView>
         // </KeyboardAvoidingView>

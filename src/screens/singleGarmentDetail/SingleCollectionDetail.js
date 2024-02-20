@@ -10,8 +10,7 @@ import { CustomModal, InputField } from '../../components';
 import axios from 'axios';
 import { BASE_URL } from '../../config/apiConfig';
 import UploadImage from '../../components/UploadImage';
-
-
+import FastImage from 'react-native-fast-image';
 
 
 const createFormData = (photo, body = {}) => {
@@ -104,6 +103,7 @@ export default function SingleCollectionDetail({ route, navigation }) {
     setModalVisible(false);
   };
 
+
   if (!data) {
     return (
       <SafeAreaView>
@@ -126,13 +126,19 @@ export default function SingleCollectionDetail({ route, navigation }) {
             <Text style={SingleGarmentStyle.detailText}>Weave : {data.Weave}</Text>
             <Text style={SingleGarmentStyle.detailText}>Price : ${data.price}</Text>
             <Text style={SingleGarmentStyle.detailText}>Full Width : {data.fullWidth}</Text>
-            <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, marginBottom:10, borderRadius: 10 }}>
+            <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, marginBottom: 10, borderRadius: 10 }}>
               {data.images.map((imageUrl, index) => (
-                <Image
-                  key={index}
-                  source={{ uri: imageUrl }}
-                  style={{ resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 , marginBottom: 10}}
-                />
+                <TouchableOpacity key={index} onPress={toggleModal}>
+                  <FastImage
+                    key={index}
+                    source={{
+                      uri: imageUrl,
+                      priority: FastImage.priority.high,
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                    style={{ width: wp(80), height: hp(50), borderRadius: 10, marginBottom: 10 }}
+                  />
+                </TouchableOpacity>
               ))}
             </View>
             {/* <Text style={SingleGarmentStyle.detailText}>yards : {yard}</Text> */}

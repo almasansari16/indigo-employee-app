@@ -54,6 +54,7 @@ import UploadImage from '../components/UploadImage';
 import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCustomer';
 import SendEmail2 from '../screens/sendEmail/SendEmail2';
 import AllLoginCustomer from '../screens/allLoginCustomer/AllLoginCustomer';
+import ShowFullImage from '../screens/customerPortal/ShowFullImage';
 
 
 const handleLogout = async (navigation) => {
@@ -405,7 +406,7 @@ function StackNavigation() {
             title: 'Send Email',
             headerTitleAlign: 'center',
           }} />
-             <Stack.Screen
+        <Stack.Screen
           name='SendEmail2'
           component={SendEmail2}
           options={{
@@ -550,7 +551,7 @@ function StackNavigation() {
             title: 'All Employee Data',
             headerTitleAlign: 'center',
           }} />
-          <Stack.Screen
+        <Stack.Screen
           component={AllLoginCustomer}
           name='AllLoginCustomer'
           options={{
@@ -577,7 +578,7 @@ function StackNavigation() {
             title: ' Order Data Admin',
             headerTitleAlign: 'center',
           }} />
-            <Stack.Screen
+        <Stack.Screen
           component={OrderDetailForCustomer}
           name='OrderDetailForCustomer'
           options={{
@@ -602,6 +603,15 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'UploadImage',
+            headerTitleAlign: 'center',
+          }} />
+        <Stack.Screen
+          component={ShowFullImage}
+          name='ShowFullImage'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'Back',
             headerTitleAlign: 'center',
           }} />
       </Stack.Navigator>

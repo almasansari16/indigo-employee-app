@@ -30,11 +30,19 @@ export default function SingleCustomer({ route, navigation }) {
   useEffect(() => {
     console.log('Route Params:', route.params); // Check if route params are being received
     const { item } = route.params;
-    console.log('Customer Item:', item._id);
-    AsyncStorage.setItem("brandID", item._id) // Check the customer item data
-    setCustomer(item);
+    
+    if (item.brand) {
+      console.log('Customer Item:', item.brand._id); // Access the _id from the nested object
+      AsyncStorage.setItem("brandID", item.brand._id); // Check the customer item data
+      setCustomer(item.brand); // Set the brand object as the customer
+    } else {
+      console.log('Customer Item:', item._id);
+      AsyncStorage.setItem("brandID", item._id); // Check the customer item data
+      setCustomer(item);
+    }
     // console.log(customer._id, "concern person")
   }, [route.params]);
+  
 
   if (!customer) {
     return (

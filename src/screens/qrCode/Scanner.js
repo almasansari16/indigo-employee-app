@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function QrCodeScanner({navigation}) {
   const [hasPermission, setHasPermission] = React.useState(false);
   const [scanCode , setScanCode] = React.useState('')
-  // const [barcodes, setBarcodes] = React.useState('')
+  
   const devices = useCameraDevices();
   const device = devices.back;
   const barcodeRef = React.useRef(null);
@@ -23,13 +23,6 @@ export default function QrCodeScanner({navigation}) {
     checkInverted: true,
   });
 console.log(barcodes ,"barcodes.......")
-  // Alternatively you can use the underlying function:
-  //
-  // const frameProcessor = useFrameProcessor((frame) => {
-  //   'worklet';
-  //   const detectedBarcodes = scanBarcodes(frame, [BarcodeFormat.QR_CODE], { checkInverted: true });
-  //   runOnJS(setBarcodes)(detectedBarcodes);
-  // }, []);
 
   React.useEffect(() => {
     (async () => {
@@ -72,23 +65,11 @@ const scanCodes = async() => {
         {barcodes.map((barcode, idx) => (
           <Text key={idx} style={styles.barcodeTextURL}>
             {barcode.displayValue}
-            {/* {Alert.alert('Barcode value', barcode.displayValue, [
-              {
-                text: 'Cancel',
-                onPress: () => console.log("cancel"),
-                style: 'cancel',
-              },
-              {text: 'OK', onPress: () => navigation.navigate("CustomerDetail")},
-            ])} */}
           </Text>
         ))}
         <View>
           <Button title={'ok'} onPress={scanCodes}/>
         </View>
-
-        {/* <View>
-          <Button title={'ok'} onPress={getscanCodes}/>
-        </View> */}
       </>
     )
   );

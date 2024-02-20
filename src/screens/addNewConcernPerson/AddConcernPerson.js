@@ -42,11 +42,10 @@ function AddConcernPerson({ createConcernPerson, navigation }) {
     const handleCreateConcernPerson = async () => {
         console.log(concernPerson, "function");
         createConcernPerson(concernPerson);
-        navigation.navigate('SingleCustomer')
+        // navigation.navigate('SingleCustomer')
         
     };
-
-
+    
     return (
         <SafeAreaView style={[AppStyles.container]}>
             <LinearGradient

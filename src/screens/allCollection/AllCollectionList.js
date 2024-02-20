@@ -26,6 +26,7 @@ import { CustomModal, Icon, IconType, InputField } from '../../components';
 import AllCollectionStyle from './styles';
 import { createCollection } from '../../store/actions/selectExhibitionGarmentAction';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import FastImage from 'react-native-fast-image';
 
 function AllCollectionList({ navigation, createCollection }) {
   const [page, setPage] = React.useState(0);
@@ -345,7 +346,7 @@ function AllCollectionList({ navigation, createCollection }) {
               </DataTable.Header>
               {filteredItems.slice(from, to).map(item => (
                 <Swipeable
-                  // renderLeftActions={LeftSwipeActions}
+                // renderLeftActions={LeftSwipeActions}
                 // renderRightActions={() => rightSwipeActions(item)}
                 >
                   <DataTable.Row
@@ -355,15 +356,22 @@ function AllCollectionList({ navigation, createCollection }) {
                       collectionDetail(item)}
                     onLongPress={() => handleLongPress(item)}
                   >
-                    {console.log(item.images[0] , "map item.........")}
+                    {console.log(item.images[0], "map item.........")}
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.ArticleName}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.IDS}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Colour}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.FinishType}</DataTable.Cell>
                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }} >{item.Weave}</DataTable.Cell>
                     <DataTable.Cell >
-                      <Image source={{ uri: item.images[0] }}style={{ width: 50, height: 50 }} />
-                      {/* <Image source={item.Image} style={{ width: 50, height: 50 }} /> */}
+                      <FastImage
+                       
+                        source={{
+                          uri: item.images[0],
+                          // headers: { Authorization: 'someAuthToken' },
+                          priority: FastImage.priority.high,
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{ width: 50, height: 50 }} />
                     </DataTable.Cell>
                   </DataTable.Row>
                 </Swipeable>

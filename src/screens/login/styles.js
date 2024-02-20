@@ -31,11 +31,11 @@ export const LoginStyle = StyleSheet.create({
   },
   input: {
     width:wp(80),
-    borderColor:"#EEEEEE",
-    borderWidth:1,
-    borderRadius:wp(10),
-    marginBottom:hp(2),
-    fontFamily:'Lato-Regular',
+    // borderColor:"#EEEEEE",
+    // borderWidth:1,
+    // borderRadius:wp(10),
+    // marginBottom:hp(2),
+    // fontFamily:'Lato-Regular',
     color: "#EEEEEE"
     // marginVertical:10
   },

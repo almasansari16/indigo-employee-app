@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Dimensions, Image, ScrollView, ImageBackground, Alert } from 'react-native'
+import { View, Text, SafeAreaView, Dimensions, Image, ScrollView, ImageBackground, Alert, Modal, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles';
 import { SingleCollectionStyle } from './styles';
@@ -7,6 +7,8 @@ import Button from '../../components/Button';
 import Images from '../../theme/Images';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { BASE_URL } from '../../config/apiConfig';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import FastImage from 'react-native-fast-image';
 
 
 
@@ -30,6 +32,7 @@ const createFormData = (photo, body = {}) => {
 export default function SingleCollection({ route, navigation }) {
   const [collection, setCollection] = useState(null); // Initialize customer as null
   const [photo, setPhoto] = useState(null);
+
 
   useEffect(() => {
     // console.log('Route Params:', route.params); // Check if route params are being received
@@ -74,8 +77,6 @@ export default function SingleCollection({ route, navigation }) {
 
   };
 
-
-  // console.log('Customer State:', customer); // Check the customer state
   const createBarcode = () => {
     navigation.navigate('GenerateQRcode', {
       collection
@@ -103,14 +104,20 @@ export default function SingleCollection({ route, navigation }) {
             <Text style={SingleCollectionStyle.detailText}>Weave : {collection.Weave}</Text>
 
             <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, borderRadius: 10 }}>
-              <Image
-                source={{ uri: collection.images[0] }}
-                style={
-                  collection.images[0]
-                    ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
-                    : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
-                }
-              />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ShowFullImage', { url: collection.images[0] })}>
+                <FastImage
+                  source={{
+                    uri: collection.images[0],
+                    priority: FastImage.priority.high,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  style={
+                    collection.images[0]
+                      ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
+                      : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
+                  }
+                />
+              </TouchableOpacity>
             </View>
             {photo && (
               <>

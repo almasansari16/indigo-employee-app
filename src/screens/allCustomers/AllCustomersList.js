@@ -86,17 +86,19 @@ function AllCustomersList({ navigation, route }) {
   };
   console.log(filteredItems, "filterdItems...")
 
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
 
     try {
-      await getBrands();
+      await dispatch(getBrands());
     } catch (error) {
       console.log(error.message);
     } finally {
       setIsRefreshing(false);
     }
   };
+
 
 
   return (
@@ -162,13 +164,12 @@ function AllCustomersList({ navigation, route }) {
               </DataTable.Header>
               <TouchableOpacity>
                 {filteredItems.slice(from, to).map((item) => (
-
-                  <DataTable.Row key={item.key} onPress={() => customerDetail(item)} style={{ height: hp(8) }}>
-                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brandName}</DataTable.Cell>
-                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.address}</DataTable.Cell>
+                  <DataTable.Row key={item.brand ? item.brand._id : item._id} onPress={() => customerDetail(item)} style={{ height: hp(8) }}>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 5 }}>{item.brand ? item.brand.brandName : item.brandName}</DataTable.Cell>
+                    <DataTable.Cell textStyle={{ color: '#EEEEEE', marginHorizontal: 10 }}>{item.brand ? item.brand.address : item.address}</DataTable.Cell>
                   </DataTable.Row>
-
                 ))}
+
               </TouchableOpacity>
             </DataTable>
           ) : (
@@ -187,7 +188,6 @@ function AllCustomersList({ navigation, route }) {
           onItemsPerPageChange={onItemsPerPageChange}
           showFastPaginationControls
           selectPageDropdownLabel={'Rows per page'}
-
         />
       </ImageBackground>
     </SafeAreaView>

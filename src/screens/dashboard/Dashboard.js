@@ -38,7 +38,7 @@ export default function Dashboard({ navigation }) {
 
 
   const { user } = useSelector((state) => state.auth.user)
-  console.log(user.role, "user..........")
+  console.log(user.name, "user..........")
   const roles = user;
 
 
@@ -124,8 +124,8 @@ export default function Dashboard({ navigation }) {
                 title={"Next"}
                 style={[dashboardStyles.Button]}
                 onPress={() => navigation.navigate('AdminPortal')}
-              // icon={<Icon name='arrow-right' type={IconType.FontAwesome5} size={30} color='#fff'/>}
               />
+              <Text>{}</Text>
             </View>
 
             : roles.role === 'employee'
