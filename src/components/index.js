@@ -5,6 +5,7 @@ import IconInput from './IconInput';
 import CustomModal from './Modal';
 import Table from './Table';
 import QRCODE from './QRcode';
+import ExpandableTextButton from './ExpandableTextButton';
 export {
     Icon,
     IconType,
@@ -12,5 +13,6 @@ export {
     IconInput,
     CustomModal,
     Table,
-    QRCODE
+    QRCODE,
+    ExpandableTextButton 
 }

@@ -82,6 +82,7 @@ function AddConcernPerson({ createConcernPerson, navigation }) {
                             />
                         }
                         placeholder={'Email'}
+                        autoCapitalize={'none'}
                         placeholderTextColor={'#282561'}
                         onChangeText={email => setConcernPerson({ ...concernPerson, email })}
                         value={concernPerson.email}

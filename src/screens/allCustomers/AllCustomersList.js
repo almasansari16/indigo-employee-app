@@ -184,7 +184,7 @@ function AllCustomersList({ navigation, route }) {
           label={`${from + 1}-${to} of ${items.length}`}
           numberOfItemsPerPageList={numberOfItemsPerPageList}
           numberOfItemsPerPage={itemsPerPage}
-          style={AllCustomersListStyle.Pagination}
+          style={[AllCustomersListStyle.Pagination]}
           onItemsPerPageChange={onItemsPerPageChange}
           showFastPaginationControls
           selectPageDropdownLabel={'Rows per page'}

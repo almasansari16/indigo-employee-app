@@ -6,31 +6,21 @@ import Button from '../../components/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Images from '../../theme/Images';
 import { hp } from '../../../App';
-import { CustomModal, Icon, IconInput, IconType } from '../../components';
-import { createConcernPerson } from '../../store/actions/concernPersonAction';
-
+import { getConcernPersons } from '../../store/actions/concernPersonAction';
+import { connect } from 'react-redux';
 
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function SingleCustomer({ route, navigation }) {
+ function SingleCustomer({ route, navigation, getConcernPersons }) {
   const [customer, setCustomer] = useState(null); // Initialize customer as null
   const [selectedPersons, setSelectedPersons] = useState([]);
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('blur', () => {
-  //     // Reset the modal visibility when navigating away from the screen
-  //     setModalVisible(false);
-  //   })
-
-  //   return unsubscribe;
-  // }, [navigation]);
 
 
   useEffect(() => {
     console.log('Route Params:', route.params); // Check if route params are being received
     const { item } = route.params;
-    
+
     if (item.brand) {
       console.log('Customer Item:', item.brand._id); // Access the _id from the nested object
       AsyncStorage.setItem("brandID", item.brand._id); // Check the customer item data
@@ -42,7 +32,21 @@ export default function SingleCustomer({ route, navigation }) {
     }
     // console.log(customer._id, "concern person")
   }, [route.params]);
-  
+
+
+  useEffect(() => {
+    const getConcernPersonsData = async() => {
+      try {
+        const response = await getConcernPersons()
+        console.log(response, 'Get Concern Persons Data')
+      } catch (error) {
+        console.log(error , 'Error in getting concern persons')
+      }
+    }
+    getConcernPersonsData();
+  }, [])
+
+
 
   if (!customer) {
     return (
@@ -155,3 +159,11 @@ export default function SingleCustomer({ route, navigation }) {
 
   )
 }
+
+const mapStateToProps = (state) => ({
+  concernPerson: state.concernPerson.concernPersons,
+  loading: state.concernPerson.loading,
+  error: state.concernPerson.error,
+});
+
+export default connect(mapStateToProps, { getConcernPersons })(SingleCustomer);

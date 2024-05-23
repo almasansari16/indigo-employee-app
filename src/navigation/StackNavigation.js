@@ -55,6 +55,7 @@ import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCust
 import SendEmail2 from '../screens/sendEmail/SendEmail2';
 import AllLoginCustomer from '../screens/allLoginCustomer/AllLoginCustomer';
 import ShowFullImage from '../screens/customerPortal/ShowFullImage';
+import index2 from '../screens/index2';
 
 
 const handleLogout = async (navigation) => {
@@ -314,7 +315,7 @@ function StackNavigation() {
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Customer Data',
+            title: 'Customer List',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen
@@ -611,9 +612,18 @@ function StackNavigation() {
           options={{
             ...animationConfig,
             orientation: 'portrait',
-            title: 'Back',
+            title: 'Full Image',
             headerTitleAlign: 'center',
           }} />
+            {/* <Stack.Screen
+          component={index2}
+          name='index2'
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+            title: 'testing',
+            headerTitleAlign: 'center',
+          }} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

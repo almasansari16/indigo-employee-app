@@ -3,7 +3,7 @@ import {View, TextInput, StyleSheet, Text} from 'react-native';
 import {Icon, IconType} from './Icon';
 import {hp, wp} from '../../App';
 
-const IconInput = ({icon,style, placeholder, placeholderTextColor, onChangeText, value, error}) => {
+const IconInput = ({icon,style, placeholder, placeholderTextColor, autoCapitalize, onChangeText, value, error}) => {
   return (
     <>
       <View style={[styles.View , style]}>
@@ -12,6 +12,7 @@ const IconInput = ({icon,style, placeholder, placeholderTextColor, onChangeText,
           placeholder={placeholder}
           onChangeText={onChangeText}
           value={value}
+          autoCapitalize={autoCapitalize}
           placeholderTextColor={placeholderTextColor}
           style={[styles.input, error && styles.errorInput]}
         />

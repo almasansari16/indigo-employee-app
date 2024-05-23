@@ -87,11 +87,13 @@ export default function SingleCollection({ route, navigation }) {
       <ImageBackground
         source={Images.purple_background}
         style={{ width: wp(100), height: hp(100) }}>
-        <Button
+         { collection.images[0] ? null :
+           <Button
           title={'Upload Image'}
           onPress={handleChoosePhoto}
           style={[SingleCollectionStyle.btn]}
-        />
+        />}
+      
         <Button title={'Create Barcode'}
           style={SingleCollectionStyle.btn}
           onPress={() => createBarcode()} />

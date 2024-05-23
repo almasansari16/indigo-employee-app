@@ -139,13 +139,13 @@ export default function Dashboard({ navigation }) {
                   <TouchableOpacity
                     style={dashboardStyles.links}
                     onPress={() => navigation.navigate('AddBrand')}>
-                    <Text style={[dashboardStyles.linksText]}>Add New Brand</Text>
+                    <Text style={[dashboardStyles.linksText]}>Add New Customer</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={dashboardStyles.links}
                     onPress={() => navigation.navigate('AddCollection')}>
                     <Text style={[dashboardStyles.linksText]}>Add Collection</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <TouchableOpacity
                     style={dashboardStyles.links}
                     onPress={() => navigation.navigate('AllCustomersList')}>

@@ -122,13 +122,13 @@ function Login({ navigation, login }) {
                     alignSelf: 'center',
                 }}> */}
             <FastImage
-             source={Images.purple_background}
-            //   source={{
-            //     uri: Images.purple_background,
-            //     priority: FastImage.priority.high
-            // }} 
-             style={{ flex: 1 }}
-             resizeMode={FastImage.resizeMode.cover}>
+                source={Images.purple_background}
+                //   source={{
+                //     uri: Images.purple_background,
+                //     priority: FastImage.priority.high
+                // }} 
+                style={{ flex: 1 }}
+                resizeMode={FastImage.resizeMode.cover}>
                 <Spinner visible={loading} />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
@@ -159,8 +159,8 @@ function Login({ navigation, login }) {
                                 style={LoginStyle.input}
                                 icon={
                                     <TouchableOpacity onPress={toggleShowPassword}>
-                                        {showPassword ? <Icon type={IconType.Ionicons} name={'eye'} size={20} color='#EEEEEE'/> 
-                                        : <Icon type={IconType.Ionicons} name={'eye-off'} size={20} color='#EEEEEE'/>}
+                                        {showPassword ? <Icon type={IconType.Ionicons} name={'eye'} size={20} color='#EEEEEE' />
+                                            : <Icon type={IconType.Ionicons} name={'eye-off'} size={20} color='#EEEEEE' />}
                                     </TouchableOpacity>
                                 }
                             />

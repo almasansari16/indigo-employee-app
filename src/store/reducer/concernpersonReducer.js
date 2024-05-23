@@ -36,7 +36,7 @@ const concernPersonReducer = (state = initialState, action) => {
                 loading: false,
             };
         case GET_CONCERNPERSONS_SUCCESS:
-            // console.log(action.payload , "reducer console")
+            console.log(action.payload , "reducer console......")
             return {
                 ...state,
                 concernPersons: action.payload,

@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, Alert, Platform, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Image, Alert, Platform, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/AppStyles';
 import { SingleGarmentStyle } from './styles';
@@ -127,19 +127,22 @@ export default function SingleCollectionDetail({ route, navigation }) {
             <Text style={SingleGarmentStyle.detailText}>Price : ${data.price}</Text>
             <Text style={SingleGarmentStyle.detailText}>Full Width : {data.fullWidth}</Text>
             <View style={{ width: wp(80), alignSelf: 'center', marginTop: 10, marginBottom: 10, borderRadius: 10 }}>
-              {data.images.map((imageUrl, index) => (
-                <TouchableOpacity key={index} onPress={toggleModal}>
-                  <FastImage
-                    key={index}
-                    source={{
-                      uri: imageUrl,
-                      priority: FastImage.priority.high,
-                    }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={{ width: wp(80), height: hp(50), borderRadius: 10, marginBottom: 10 }}
-                  />
-                </TouchableOpacity>
-              ))}
+              
+              <TouchableOpacity onPress={() => navigation.navigate("ShowFullImage", { url: data.images[0] })}>
+                <FastImage
+                  // key={index}
+                  source={{
+                    uri: data.images[0],
+                    priority: FastImage.priority.high,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  style={
+                    data.images[0]
+                      ? { resizeMode: 'contain', width: wp(80), height: hp(50), borderRadius: 10 }
+                      : { resizeMode: 'contain', width: wp(80), borderRadius: 10 }
+                  } />
+              </TouchableOpacity>
+        
             </View>
             {/* <Text style={SingleGarmentStyle.detailText}>yards : {yard}</Text> */}
             {photo && (

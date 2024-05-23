@@ -35,7 +35,7 @@ export const createConcernPerson = (concernPerson) => async (dispatch) => {
 
 export const getConcernPersons = () => async (dispatch) => {
     try {
-        const response = await axios.get(`${BASE_URL}/get-brands`);
+        const response = await axios.get(`${BASE_URL}/get-concernPersons`);
         dispatch({ type: GET_CONCERNPERSONS_SUCCESS, payload: response.data });
         // console.log(response.data , "action console")
     } catch (error) {

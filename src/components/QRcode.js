@@ -10,11 +10,11 @@ const QRCODE = ({ value, getRef }) => {
             color="black"
             backgroundColor="white"
             getRef={getRef}
-            logo={Images.indigo_i}
-            logoMargin={5}
-            logoSize={30}
-            logoBorderRadius={10}
-            logoBackgroundColor={'#2f2260'}
+            // logo={Images.indigo_i}
+            // logoMargin={5}
+            // logoSize={30}
+            // logoBorderRadius={10}
+            // logoBackgroundColor={'#2f2260'}
         />
     )
 }

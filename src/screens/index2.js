@@ -92,3 +92,24 @@
 //     paddingRight: 6,
 //   },
 // })
+
+import React from 'react'
+import { ExpandableTextButton } from '../components';
+import { Text, View } from 'react-native';
+
+const index2 = () => {
+    return (
+        <View>
+            {/* <h2>Example of ExpandableText</h2> */}
+
+            <ExpandableTextButton descriptionLength={50}>
+                <Text>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+            </ExpandableTextButton>
+
+        </View>
+    );
+}
+
+export default index2

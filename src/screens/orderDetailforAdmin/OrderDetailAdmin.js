@@ -69,6 +69,7 @@ function OrderDetailAdmin({ navigation, route }) {
                             {console.log(item.images[0], "item")}
                             <View style={[AppStyles.center, SingleCollectionStyle.garmentDetail]}>
                                 <Text key={index} style={SingleCollectionStyle.detailText}>Article Name : {item.ArticleName}</Text>
+                                <Text style={SingleCollectionStyle.detailText}>IDS : {item.IDS}</Text>
                                 <TouchableOpacity onPress={() => navigation.navigate('ShowFullImage', { url: item.images[0] })}>
                                     <FastImage
                                         source={{
