@@ -72,7 +72,7 @@ function AllOrderData({ navigation }) {
                             value={searchText}
                         />
                     </View>
-                    <ScrollView>
+                    <ScrollView style={{marginBottom:10}}>
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>
@@ -88,7 +88,7 @@ function AllOrderData({ navigation }) {
                                     Employee
                                 </DataTable.Title>
                             </DataTable.Header>
-                            {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId, codes, extraNote }) => (
+                            {/* {meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId, codes, extraNote }) => (
                                 <DataTable.Row key={_id}
                                     onPress={() => handleDetail({ _id })}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
@@ -104,7 +104,29 @@ function AllOrderData({ navigation }) {
                                         {userId && userId.name}
                                     </DataTable.Cell>
                                 </DataTable.Row>
-                            ))}
+                            ))} */}
+                            {meetingData.length > 0 ? (
+                                meetingData && meetingData.map(({ _id, brandId, emailRecipient, meetingDate, userId, codes, extraNote }) => (
+                                    <DataTable.Row key={_id} onPress={() => handleDetail({ _id })}>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
+                                            {brandId?.brandName}
+                                        </DataTable.Cell>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
+                                            {emailRecipient?.join(', ')}
+                                        </DataTable.Cell>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
+                                            {new Date(meetingDate).toLocaleDateString()}
+                                        </DataTable.Cell>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}>
+                                            {userId?.name}
+                                        </DataTable.Cell>
+                                    </DataTable.Row>
+                                ))
+                            ) : (
+                                <View style={[AppStyles.center, { marginTop: 20 }]}>
+                                    <Text style={{ color: '#EEEEEE', fontSize: 16 }}>Sorry, there are no orders available.</Text>
+                                </View>
+                            )}
                         </DataTable>
                     </ScrollView>
 

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp(2.5),
     height: hp(7),
     fontFamily: 'Lato-Regular',
-    borderRadius: 5,
+    // borderRadius: 5,
     // marginBottom: hp(1),
   },
   inputContainer: {

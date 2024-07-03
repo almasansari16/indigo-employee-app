@@ -1,208 +1,170 @@
-import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, ImageBackground, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import DropDownPicker from 'react-native-dropdown-picker';
+import React, { useEffect, useState } from 'react';
+import Images from '../../theme/Images';
 import { AppStyles } from '../../theme/AppStyles';
 import { SendEmailStyle } from './styles';
 import Button from '../../components/Button';
-import { CustomModal, InputField } from '../../components';
-import { BASE_URL } from '../../config/apiConfig';
-import Images from '../../theme/Images';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { hp, wp } from '../../../App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../config/apiConfig';
+import axios from 'axios';
+import { CustomModal, InputField } from '../../components';
 
 export default function SendEmail({ navigation }) {
-    const [selectedConcernPersonEmails, setSelectedConcernPersonEmails] = useState([]);
-    const [selectedMarketingPersonEmails, setSelectedMarketingPersonEmails] = useState([]);
-    const [manualMarketingEmailInput, setManualMarketingEmailInput] = useState('');
-    const [manualConcernEmailInput, setManualConcernEmailInput] = useState('');
+    const [email, setEmail] = useState('');
     const [extraNote, setExtraNote] = useState('');
-    const [data, setData] = useState([]);
     const [subject, setSubject] = useState('INDIGO PVT LTD');
+    const [data, setData] = useState([]);
+    const [text, setText] = useState('testing email from application');
+    const [manuallyEnteredEmails, setManuallyEnteredEmails] = useState([]);
+    const [manualEmailInput, setManualEmailInput] = useState('');
+    const [selectedCustomerEmails, setSelectedCustomerEmails] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [emailOpen, setEmailOpen] = useState(false);
+    const [customerEmails, setCustomerEmails] = useState([]);
+    const [availableEmails, setAvailableEmails] = useState([
+        { label: 'shiraz@indigo.com.pk', value: 'shiraz@indigo.com.pk' },
+        { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
+        { label: 'sharjeel@indigo.com.pk', value: 'sharjeel@indigo.com.pk' },
+        { label: 'iqra.ismail@indigo.com.pk', value: 'iqra.ismail@indigo.com.pk' },
+        { label: 'almashanif126@gmail.com', value: 'almashanif126@gmail.com' },
+        { label: 'ali.arain@indigo.com.pk', value: 'ali.arain@indigo.com.pk' },
+    ]);
+    const [selectedEmails, setSelectedEmails] = useState([]);
 
-    useEffect(() => {
-        const fetchConcernPersonEmails = async () => {
-            try {
-                const storedEmails = await AsyncStorage.getItem('ConcernPersonEmails');
-                if (storedEmails !== null) {
-                    const concernPersonEmails = JSON.parse(storedEmails);
-                    setSelectedConcernPersonEmails(concernPersonEmails);
-                }
-            } catch (error) {
-                console.error('Error fetching concern person emails:', error);
-            }
-        };
-        fetchConcernPersonEmails();
-    }, []);
-
-    useEffect(() => {
-        const fetchScanCodes = async () => {
-            try {
-                const storedCodes = await AsyncStorage.getItem('ScanCodes');
-                if (storedCodes !== null) {
-                    const parsedCodes = JSON.parse(storedCodes);
-                    const codesWithoutImages = parsedCodes.map(({ _id, images, date, Image, ...code }) => code);
-                    setData(codesWithoutImages);
-                }
-            } catch (error) {
-                console.error('Error fetching scan codes:', error);
-            }
-        };
-        fetchScanCodes();
-    }, []);
-
-    const sendEmailMarketing = async () => {
-        const allEmails = [...selectedMarketingPersonEmails, ...manualMarketingEmailInput.split(',').map(email => email.trim())];
-        const requestData = {
-            data,
-            to: allEmails,
-            subject,
-            extraNote,
-        };
-
+    const fetchAsyncStorageData = async (key, setStateCallback) => {
         try {
-            const response = await axios.post(`${BASE_URL}/marketing-email`, requestData);
+            const data = await AsyncStorage.getItem(key);
+            if (data !== null) {
+                setStateCallback(JSON.parse(data));
+            }
+        } catch (error) {
+            console.error(`Error fetching ${key} from AsyncStorage:`, error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAsyncStorageData('ConcernPerson Emails', setEmail);
+        fetchAsyncStorageData('Extra Detail', setExtraNote);
+        fetchAsyncStorageData('ScanCodes', (codesData) => {
+            const codes = JSON.parse(codesData);
+            const cleanedData = codes.map(({ _id, images, date, Image, ...rest }) => rest);
+            setData(cleanedData);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (email) {
+            const emailObjects = email.map(emailValue => ({ label: emailValue, value: emailValue }));
+            setCustomerEmails(emailObjects);
+        }
+    }, [email]);
+
+    const sendEmail = async (url, requestData) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/${url}`, requestData);
             Alert.alert(response.data.message);
         } catch (error) {
-            console.error('Error sending marketing email:', error.message);
+            console.error('Error sending email:', error.message);
             Alert.alert(error.message);
         }
     };
 
-    const sendEmailConcernPerson = async () => {
-        const allEmails = [...selectedConcernPersonEmails, ...manualConcernEmailInput.split(',').map(email => email.trim())];
-        try {
-            const response = await axios.post(`${BASE_URL}/customer-email`, {
-                to: allEmails,
-                subject,
-                text: 'testing email from application',
-            });
-            Alert.alert(response.data.message);
-        } catch (error) {
-            console.error('Error sending concern person email:', error);
-            Alert.alert(error.message);
-        }
+    const sendEmailMarketing = () => {
+        const allEmails = [...selectedEmails, ...manuallyEnteredEmails];
+        const requestData = { data, to: allEmails, subject, extraNote };
+        sendEmail('marketing-email', requestData);
     };
 
-    const openModal = (type) => {
-        if (type === 'marketing') {
-            setManualMarketingEmailInput('');
-        } else if (type === 'concern') {
-            setManualConcernEmailInput('');
-        }
-        setModalVisible(true);
-        setModalType(type);
+    const sendEmailConcernPerson = () => {
+        const requestData = { data, to: selectedCustomerEmails, subject, text };
+        sendEmail('customer-email', requestData);
     };
 
-    const closeModal = (type) => {
-        if (type === 'marketing') {
-            if (manualMarketingEmailInput && !selectedMarketingPersonEmails.includes(manualMarketingEmailInput)) {
-                setSelectedMarketingPersonEmails([...selectedMarketingPersonEmails, manualMarketingEmailInput]);
-                setManualMarketingEmailInput('');
-            }
-        } else if (type === 'concern') {
-            if (manualConcernEmailInput && !selectedConcernPersonEmails.includes(manualConcernEmailInput)) {
-                setSelectedConcernPersonEmails([...selectedConcernPersonEmails, manualConcernEmailInput]);
-                setManualConcernEmailInput('');
-            }
+    const handleAddEmail = () => {
+        if (manualEmailInput && !manuallyEnteredEmails.includes(manualEmailInput)) {
+            setManuallyEnteredEmails([...manuallyEnteredEmails, manualEmailInput]);
+            setManualEmailInput('');
         }
         setModalVisible(false);
     };
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalType, setModalType] = useState('');
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ImageBackground source={Images.purple_background} style={{ flex: 1 }}>
-                <View style={[AppStyles.center]}>
+                <View style={AppStyles.center}>
                     <Button
-                        title="Add Marketing Email Manually"
+                        title="Add Email Manually"
                         style={[SendEmailStyle.btn, { width: wp(50), marginTop: 10 }]}
-                        onPress={() => openModal('marketing')}
-                    />
-                    <Button
-                        title="Add Concern Person Email Manually"
-                        style={[SendEmailStyle.btn, { width: wp(50), marginTop: 10 }]}
-                        onPress={() => openModal('concern')}
+                        onPress={() => setModalVisible(true)}
                     />
                     <View style={SendEmailStyle.view}>
                         <View style={{ zIndex: 2000 }}>
                             <DropDownPicker
-                                placeholder="Select Concern Person's Email"
-                                open={false}
-                                value={selectedConcernPersonEmails}
-                                items={selectedConcernPersonEmails.map(email => ({ label: email, value: email }))}
-                                multiple
-                                setOpen={() => {}}
-                                setValue={setSelectedConcernPersonEmails}
-                                setItems={() => {}}
+                                placeholder="Select Concern Persons Email"
+                                open={emailOpen}
+                                value={selectedCustomerEmails}
+                                items={customerEmails}
+                                multiple={true}
+                                setOpen={setEmailOpen}
+                                setValue={setSelectedCustomerEmails}
+                                setItems={setCustomerEmails}
                                 theme="LIGHT"
                                 listMode="SCROLLVIEW"
                                 zIndex={1000}
                                 zIndexInverse={3000}
-                                style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
+                                style={{ width: wp(80), alignSelf: 'center' }}
                                 containerStyle={{ width: wp(80), alignSelf: 'center' }}
                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
-                                dropDownContainerStyle={{
-                                    borderColor: '#2f2260',
-                                    position: 'relative',
-                                    top: 0,
-                                }}
+                                dropDownContainerStyle={{ borderColor: '#2f2260' }}
                             />
                         </View>
                         <Button
-                            title="Send Email to Concern Persons"
+                            title="Send Email Concern Persons"
                             style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
                             onPress={sendEmailConcernPerson}
                         />
                         <View style={{ zIndex: 1000, marginTop: hp(5) }}>
                             <DropDownPicker
                                 placeholder="Select Marketing Person Email"
-                                open={false}
-                                value={selectedMarketingPersonEmails}
-                                items={selectedMarketingPersonEmails.map(email => ({ label: email, value: email }))}
-                                multiple
-                                setOpen={() => {}}
-                                setValue={setSelectedMarketingPersonEmails}
-                                setItems={() => {}}
+                                open={emailOpen}
+                                value={selectedEmails}
+                                items={availableEmails}
+                                multiple={true}
+                                setOpen={setEmailOpen}
+                                setValue={setSelectedEmails}
+                                setItems={setAvailableEmails}
                                 theme="LIGHT"
-                                zIndex={1000}
                                 listMode="SCROLLVIEW"
+                                zIndex={1000}
                                 zIndexInverse={3000}
-                                style={{ width: wp(80), justifyContent: 'center', alignSelf: 'center', marginHorizontal: wp(10) }}
+                                style={{ width: wp(80), alignSelf: 'center' }}
                                 containerStyle={{ width: wp(80), alignSelf: 'center' }}
                                 textStyle={{ fontSize: wp(4), color: '#2f2260' }}
-                                dropDownContainerStyle={{
-                                    borderColor: '#2f2260',
-                                    position: 'relative',
-                                    top: 0,
-                                }}
+                                dropDownContainerStyle={{ borderColor: '#2f2260' }}
                             />
                         </View>
                         <Button
-                            title="Send Email to Marketing Team"
+                            title="Send Email Marketing Team"
                             style={[SendEmailStyle.btn, { marginTop: hp(5), width: wp(50) }]}
                             onPress={sendEmailMarketing}
                         />
                         <Button
                             title="Check Your Order"
                             style={[SendEmailStyle.btn, { top: 0, width: wp(50) }]}
-                            onPress={() => navigation.navigate('Testing')}
+                            onPress={() => navigation.navigate("Testing")}
                         />
                     </View>
-                    <CustomModal visible={modalVisible} hideModal={() => setModalVisible(false)}>
+                    <CustomModal visible={modalVisible} hideModal={handleAddEmail}>
                         <InputField
-                            placeholder="Enter Email"
+                            placeholder="Enter Marketing Person Email"
                             style={SendEmailStyle.input}
                             placeholderTextColor="#282561"
-                            onChangeText={text => modalType === 'marketing' ? setManualMarketingEmailInput(text) : setManualConcernEmailInput(text)}
-                            value={modalType === 'marketing' ? manualMarketingEmailInput : manualConcernEmailInput}
+                            onChangeText={setManualEmailInput}
+                            value={manualEmailInput}
                         />
-                        <Button
-                            title="Add Email"
-                            onPress={() => closeModal(modalType)}
-                        />
+                        <Button title="Add Email" onPress={handleAddEmail} />
                     </CustomModal>
                 </View>
             </ImageBackground>

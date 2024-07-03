@@ -56,7 +56,23 @@ function AllEmployeeData({ getAllUsers }) {
                                 <DataTable.Title textStyle={{ color: '#EEEEEE' }}>Role</DataTable.Title>
                             </DataTable.Header>
                             {/* Loop through the filtered items and display them */}
-                            {employees.map((item, index) => (
+                            {employees.length > 0 ? (
+                                employees.map((item, index) => (
+                                    <DataTable.Row key={index}>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
+                                            numberOfLines={2}>{item.name}</DataTable.Cell>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
+                                            numberOfLines={2}>{item.email}</DataTable.Cell>
+                                        <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
+                                            numberOfLines={2}>{item.role}</DataTable.Cell>
+                                    </DataTable.Row>
+                                ))
+                            ) : (
+                                <View style={[AppStyles.center, { marginTop: 20 }]}>
+                                    <Text style={{ color: '#EEEEEE', fontSize: 16 }}>Sorry, there are no employees available.</Text>
+                                </View>
+                            )}
+                            {/* {employees.map((item, index) => (
                                 <DataTable.Row key={index}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
                                         numberOfLines={2}>{item.name}</DataTable.Cell>
@@ -65,7 +81,7 @@ function AllEmployeeData({ getAllUsers }) {
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
                                         numberOfLines={2}>{item.role}</DataTable.Cell>
                                 </DataTable.Row>
-                            ))}
+                            ))} */}
                             {/* {users.map((item, index) => (
                                 <DataTable.Row key={index}>
                                     <DataTable.Cell textStyle={{ color: '#EEEEEE' }}

@@ -4,8 +4,8 @@ import { hp, wp } from "../../../App";
 export const SendEmailStyle = StyleSheet.create({
     btn:{
         backgroundColor:'#EEEEEE',
-        width:wp(80),
-        height:hp(5),
+        width:wp(100),
+        height:hp(6),
         borderRadius:wp(3),
         marginBottom:hp(3),
         alignSelf:'center'
@@ -23,7 +23,8 @@ export const SendEmailStyle = StyleSheet.create({
         borderRadius:wp(5),
         marginBottom:hp(2),
         fontFamily:'Lato-Regular',
-        color: "#282561"
-        // marginVertical:10
+        color: "#282561",
+        alignSelf:'center'
+      
       },
 })

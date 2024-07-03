@@ -58,13 +58,22 @@ export const LoginStyle = StyleSheet.create({
   },
   linkText :{
     color: '#EEEEEE',
-    textAlign: 'center',
+    // textAlign: 'center',
     fontSize:hp(1.8),
     fontWeight:'500',
     alignSelf:'center',
     marginVertical:hp(2),
     fontFamily:'Lato-Regular'
   },
+  forgotPasswodText :{
+    color: '#EEEEEE',
+    textAlign: 'right',
+    fontSize:hp(1.8),
+    fontWeight:'500',
+    marginHorizontal:hp(2),
+    fontFamily:'Lato-Regular'
+  },
+  
   boldText:{
     fontWeight: '700',
     fontSize:hp(2),

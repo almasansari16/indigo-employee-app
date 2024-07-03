@@ -56,6 +56,8 @@ import SendEmail2 from '../screens/sendEmail/SendEmail2';
 import AllLoginCustomer from '../screens/allLoginCustomer/AllLoginCustomer';
 import ShowFullImage from '../screens/customerPortal/ShowFullImage';
 import index2 from '../screens/index2';
+import ForgotPassword from '../screens/forgotPassword/ForgotPassword';
+import ResetPassword from '../screens/forgotPassword/ResetPassword';
 
 
 const handleLogout = async (navigation) => {
@@ -205,6 +207,26 @@ function StackNavigation() {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+
+            headerShown: false,
+          }}
+        />
+          <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
+          options={{
+            ...animationConfig,
+            orientation: 'portrait',
+
+            headerShown: false,
+          }}
+        />
+         <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
           options={{
             ...animationConfig,
             orientation: 'portrait',

@@ -19,7 +19,7 @@ const CustomModal = ({ visible, hideModal, children }) => {
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: 'white',
-      padding: 20,
+      padding:30,
       margin: 20,
       borderRadius:wp(5)
     },
