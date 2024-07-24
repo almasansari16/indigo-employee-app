@@ -33,7 +33,6 @@ const authReducer = (state = initialState, action) => {
             console.log(action.payload, "payload data ")
             return {
                 ...state,
-                // users:[...user , action.payload],
                 user: action.payload,
                 isAuthenticated: true,
                 loading: false,

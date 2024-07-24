@@ -79,7 +79,7 @@ export const FinalDetailStyle = StyleSheet.create({
         marginTop:-8,
       },
       input:{
-       backgroundColor:'#EEEEEE',
+       color:'#EEEEEE',
        borderRadius:wp(8),
        width:wp(90)
       }

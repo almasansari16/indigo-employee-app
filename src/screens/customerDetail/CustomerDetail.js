@@ -25,9 +25,6 @@ export default function CustomerDetail({ navigation }) {
   const [billingAddress, setBillingAddress] = useState('');
   const [frontId, setFrontId] = useState('');
   const [scanCode, setScanCode] = useState('');
-  // const [extraDetailOne, setExtraDetailOne] = useState('');
-  // const [extraDetailTwo, setExtraDetailTwo] = useState('');
-  // const [extraDetailThree, setExtraDetailThree] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,33 +70,6 @@ export default function CustomerDetail({ navigation }) {
   console.log(scanCode, '...................')
   console.log([new Set(scanCode)])
 
-  // const getscanCodes = async () => {
-
-  //   try {
-  //     const a = await AsyncStorage.getItem('barcode')
-  //     console.log("sucess gett codeeeeee", JSON.parse(a))
-
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
-  // }
-  // useEffect(() => {
-  //   const fetchModalData = async () => {
-  //     const one = await AsyncStorage.getItem('one');
-  //     if (one !== null) {
-  //       setExtraDetailOne(one);
-  //     }
-  //     const two = await AsyncStorage.getItem('two');
-  //     if (two !== null) {
-  //       setExtraDetailTwo(two);
-  //     }
-  //     const three = await AsyncStorage.getItem('three');
-  //     if (three !== null) {
-  //       setExtraDetailThree(three);
-  //     }
-  //   }
-  //   fetchModalData()
-  // }, [extraDetailOne, extraDetailTwo, extraDetailThree]);
 
   return (
     <SafeAreaView style={[AppStyles.container]}>

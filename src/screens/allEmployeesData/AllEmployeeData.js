@@ -72,26 +72,6 @@ function AllEmployeeData({ getAllUsers }) {
                                     <Text style={{ color: '#EEEEEE', fontSize: 16 }}>Sorry, there are no employees available.</Text>
                                 </View>
                             )}
-                            {/* {employees.map((item, index) => (
-                                <DataTable.Row key={index}>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.name}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.email}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.role}</DataTable.Cell>
-                                </DataTable.Row>
-                            ))} */}
-                            {/* {users.map((item, index) => (
-                                <DataTable.Row key={index}>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.name}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.email}</DataTable.Cell>
-                                    <DataTable.Cell textStyle={{ color: '#EEEEEE' }}
-                                        numberOfLines={2}>{item.role}</DataTable.Cell>
-                                </DataTable.Row>
-                            ))} */}
                         </DataTable>
                     </ScrollView>
 

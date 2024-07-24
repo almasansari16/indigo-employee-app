@@ -3,6 +3,6 @@
   <color name="colorPrimary">#6200EE</color>
   <color name="colorPrimaryDark">#3700B3</color>
   <color name="colorAccent">#03DAC5</color>
-    <color name="splashBackground">#3D3658</color>
+    <color name="splashBackground">#2f2260</color>
     <color name="statusBarColor">#D11F27</color>
 </resources>

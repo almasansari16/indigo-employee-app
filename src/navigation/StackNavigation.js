@@ -31,7 +31,6 @@ import CollectionDetail from '../screens/collectionDetail/CollectionDetail';
 import NewQrCode from '../screens/barcodeScan/NewQrCode';
 import FinalDetail from '../screens/finalDetail/FinalDetail';
 import AddBrand from '../screens/addBrand/AddBrand';
-import ExcelExportScreen from '../screens';
 import Testing from '../screens/testingScreen/Testing';
 import AddConcernPerson from '../screens/addNewConcernPerson/AddConcernPerson';
 import GenerateQRcode from '../screens/generateQRcode/GenerateQRcode';
@@ -46,16 +45,13 @@ import AllOrderData from '../screens/allOrdersData/AllOrderData';
 import OrderDetailAdmin from '../screens/orderDetailforAdmin/OrderDetailAdmin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../config/apiConfig';
-// import { AuthContext } from '../context/authContext';
 import { useNavigation } from '@react-navigation/native';
 import SwipeGesture from '../screens/swipable/Swipable';
 import SingleCollectionDetail from '../screens/singleGarmentDetail/SingleCollectionDetail';
 import UploadImage from '../components/UploadImage';
 import OrderDetailForCustomer from '../screens/customerPortal/OrderDetailForCustomer';
-import SendEmail2 from '../screens/sendEmail/SendEmail2';
 import AllLoginCustomer from '../screens/allLoginCustomer/AllLoginCustomer';
 import ShowFullImage from '../screens/customerPortal/ShowFullImage';
-import index2 from '../screens/index2';
 import ForgotPassword from '../screens/forgotPassword/ForgotPassword';
 import ResetPassword from '../screens/forgotPassword/ResetPassword';
 
@@ -427,15 +423,6 @@ function StackNavigation() {
             ...animationConfig,
             orientation: 'portrait',
             title: 'Send Email',
-            headerTitleAlign: 'center',
-          }} />
-        <Stack.Screen
-          name='SendEmail2'
-          component={SendEmail2}
-          options={{
-            ...animationConfig,
-            orientation: 'portrait',
-            title: 'Send Email 2',
             headerTitleAlign: 'center',
           }} />
         <Stack.Screen

@@ -57,9 +57,6 @@ const ResetPassword = ({ route, navigation }) => {
                     <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
                         <Text style={styles.btnText}>Reset Password</Text>
                     </TouchableOpacity>
-                    {/* <Button title="Reset Password"
-                    // 
-                    /> */}
                 </View>
             </FastImage>
         </SafeAreaView>

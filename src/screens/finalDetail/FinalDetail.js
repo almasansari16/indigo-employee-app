@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jestConfig from '../../../jest.config';
 import { FinalDetailStyle } from './styles';
 import { AppStyles } from '../../theme/AppStyles';
-import { IconInput, Table } from '../../components';
+import { IconInput, InputField, Table } from '../../components';
 import Button from '../../components/Button';
 import { hp, wp } from '../../../App';
 import { createMeeting } from '../../store/actions/meetingAction';
@@ -152,7 +152,7 @@ function FinalDetail({ navigation, createMeeting }) {
             })
         console.log(codesData, "codes data.....")
         setFilteredCodeData(codesData)
-       
+
         try {
             await AsyncStorage.setItem("Extra Detail", extraDetail)
         } catch (error) {
@@ -196,7 +196,7 @@ function FinalDetail({ navigation, createMeeting }) {
                         </View>
                         <Text style={FinalDetailStyle.heading}>Garment Selections</Text>
                         <View style={FinalDetailStyle.detailView}>
-                        {barcodesValue && (
+                            {barcodesValue && (
                                 <View>
                                     {barcodesValue
                                         .map((jsonString) => JSON.parse(jsonString))
@@ -219,44 +219,14 @@ function FinalDetail({ navigation, createMeeting }) {
                                                         marginVertical: 10,
                                                     }}
                                                 />
-                                                {console.log(data , "code data.....")}
-                                              
+                                                {console.log(data, "code data.....")}
+
                                             </View>
                                         ))}
                                 </View>
                             )}
-
-                            {/* {barcodesValue && (
-                                <View>
-                                    {barcodesValue
-                                        .map((data, index) => ({ data, index }))
-                                        .filter((item) => item !== null)
-                                        .filter((item, index, self) => {
-                                            const jsonString = JSON.stringify(item.data);
-                                            return index === self.findIndex((d) => JSON.stringify(d.data) === jsonString);
-                                        })
-                                        .map((item) => (
-                                            <View key={item.index}>
-                                                {item.data && (
-                                                    <>
-                                                        {console.log('item data', item.data)}
-                                                        <Text style={FinalDetailStyle.detailText}>{JSON.stringify(item.data, null, 2)}</Text>
-                                                        <View
-                                                            style={{
-                                                                borderBottomWidth: 1,
-                                                                borderBottomColor: '#2f2260',
-                                                                marginVertical: 10,
-                                                            }}
-                                                        />
-                                                    </>
-                                                )}
-                                            </View>
-                                        ))}
-                                </View>
-                            )} */}
-
-                           
                         </View>
+                     
                         <View>
                             {/* <Table data={data}/> */}
                         </View>

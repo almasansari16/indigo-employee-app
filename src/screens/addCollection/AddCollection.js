@@ -111,9 +111,6 @@ export default function AddCollection({ navigation }) {
     }
   };
 
-  // const handleCamera = () => {
-  //   navigation.navigate("CameraPage")
-  // }
   return (
     <SafeAreaView style={[AppStyles.container]}>
      <LinearGradient
@@ -125,14 +122,6 @@ export default function AddCollection({ navigation }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={[AddCollectionStyle.center]}>
             <IconInput
-              // icon={
-              //   <Icon
-              //     type={IconType.FontAwesome5}
-              //     name={'user'}
-              //     color="#282561"
-              //     style={{margin: 15}}
-              //   />
-              // }
               placeholder={'Article Name'}
               placeholderTextColor={'#282561'}
               onChangeText={articleName => setAddCollection({ ...addCollection, articleName })}
@@ -141,14 +130,6 @@ export default function AddCollection({ navigation }) {
               error={validation.articleName}
             />
              <IconInput
-              // icon={
-              //   <Icon
-              //     type={IconType.FontAwesome5}
-              //     name={'user'}
-              //     color="#282561"
-              //     style={{margin: 15}}
-              //   />
-              // }
               placeholder={'IDS'}
               placeholderTextColor={'#282561'}
               onChangeText={IDS => setAddCollection({ ...addCollection, IDS })}
@@ -157,14 +138,6 @@ export default function AddCollection({ navigation }) {
               error={validation.IDS}
             />
             <IconInput
-              // icon={
-              //   <Icon
-              //     type={IconType.Feather}
-              //     name={'phone'}
-              //     color="#282561"
-              //     style={{margin: 15}}
-              //   />
-              // }
               placeholder={'Finish Type'}
               placeholderTextColor={'#282561'}
               keyboardType={'number-pad'}

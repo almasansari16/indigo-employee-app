@@ -18,13 +18,18 @@ export const SendEmailStyle = StyleSheet.create({
       },
       input: {
         width:wp(80),
-        borderColor:"#282561",
+        borderRadius:wp(5),
+        fontFamily:'Lato-Regular',
+  
+        alignSelf:'center',
+        color:"#EEEEEE"
+      },
+      modalInput:{
+        width:wp(80),
         borderWidth:1,
         borderRadius:wp(5),
-        marginBottom:hp(2),
         fontFamily:'Lato-Regular',
         color: "#282561",
-        alignSelf:'center'
-      
-      },
+        alignSelf:'center',
+      }
 })

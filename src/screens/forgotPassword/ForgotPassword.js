@@ -16,11 +16,16 @@ const ForgotPassword = ({ navigation }) => {
     try {
       const response = await axios.post(`${BASE_URL}/forgot-password`, { email });
       setMessage(response.data.message);
+
       if (response.data.token) {
         navigation.navigate('ResetPassword', { token: response.data.token });
       }
+
     } catch (error) {
       setMessage(error.response?.data?.message || 'An error occurred, please try again.');
+      if (email === "") {
+        setMessage("Please enter your email address");
+      }
     }
   };
 

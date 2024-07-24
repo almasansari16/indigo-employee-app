@@ -18,7 +18,7 @@ export default function SendEmail({ navigation }) {
     const [email, setEmail] = useState('');
     const [extraNote, setExtraNote] = useState('')
     const [selectedEmail, setSelectedEmail] = useState(emailOptions[0]); // Default to the first option
-    const [subject, setSubject] = useState('INDIGO PVT LTD');
+    const [subject, setSubject] = useState('');
     const [data, setData] = useState([])
     const [text, setText] = useState('testing email from application');
     const [manuallyEnteredEmails, setManuallyEnteredEmails] = useState([]);
@@ -103,37 +103,6 @@ export default function SendEmail({ navigation }) {
         fetchData();
         fetchExtraNote();
     }, []);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const extraDetail = await AsyncStorage.getItem("Extra Detail")
-    //             console.log(extraDetail)
-    //             setExtraNote(extraDetail)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     fetchData()
-    // }, []);
-
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const codesData = await AsyncStorage.getItem('ScanCodes');
-    //             if (codesData !== null) {
-    //                 // We have data!!
-    //                 const newArr = JSON.parse(codesData);
-    //                 setData(newArr)
-    //                 console.log(newArr , 'codes.........')
-    //             }
-    //         } catch (error) {
-    //             // Error retrieving data
-    //             console.log(error, 'error')
-    //         }
-    //     }
-    //     fetchData()
-    // }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -184,7 +153,6 @@ export default function SendEmail({ navigation }) {
         { label: 'shiraz@indigo.com.pk', value: 'shiraz@indigo.com.pk' },
         { label: 'shakaib@indigo.com.pk', value: 'shakaib@indigo.com.pk' },
         { label: 'faisal.liaquat@indigo.com.pk', value: 'faisal.liaquat@indigo.com.pk' },
-        { label: 'shariq.usmani@indigo.com.pk', value: 'shariq.usmani@indigo.com.pk' },
         { label: 'jawwad.khalil@indigo.com.pk', value: 'jawwad.khalil@indigo.com.pk' },
         { label: 'ahsan.haq@indigo.com.pk', value: 'ahsan.haq@indigo.com.pk' },
         { label: 'sultan@indigo.com.pk', value: 'sultan@indigo.com.pk' },
@@ -238,7 +206,12 @@ export default function SendEmail({ navigation }) {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={[AppStyles.center]}>
 
-
+                        <InputField
+                            placeholder={'Add email subject'}
+                            placeholderTextColor={'#EEEEEE'}
+                            value={subject}
+                            onChangeText={text => setSubject(text)}
+                            style={SendEmailStyle.input} />
                         <View style={SendEmailStyle.view}>
                             <View
                                 style={{ zIndex: 2000 }}>
@@ -319,7 +292,7 @@ export default function SendEmail({ navigation }) {
                         <View>
                             <CustomModal visible={modalVisible} hideModal={closeModal}>
                                 <TextInput placeholder={'Enter Marketing Person Email'}
-                                    style={SendEmailStyle.input}
+                                    style={SendEmailStyle.modalInput}
                                     placeholderTextColor={'#282561'}
                                     onChangeText={(text) => setManualEmailInput(text)}
                                     value={manualEmailInput}
@@ -332,7 +305,7 @@ export default function SendEmail({ navigation }) {
                         <View>
                             <CustomModal visible={modalVisible2} hideModal={closeModal2}>
                                 <TextInput placeholder={'Enter new customer email'}
-                                    style={SendEmailStyle.input}
+                                    style={SendEmailStyle.modalInput}
                                     placeholderTextColor={'#282561'}
                                     onChangeText={(text) => setManualEmailInput2(text)}
                                     value={manualEmailInput2}

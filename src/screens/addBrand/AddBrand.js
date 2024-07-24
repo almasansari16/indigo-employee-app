@@ -17,14 +17,6 @@ function AddBrand({ navigation, createBrand }) {
   console.log(brand, "brand...........")
   const [validation, setValidation] = useState({});
 
-  const saveData = async () => {
-    try {
-      await AsyncStorage.setItem('BrandName', brand.brandName);
-      await AsyncStorage.setItem('BrandAddress', brand.address);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const handleSave = () => {
     const errors = {};
